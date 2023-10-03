@@ -2,11 +2,8 @@
 
 import {useEffect} from 'react';
 
-import {page} from './page.css';
-
-import Button from '@components/atom/button';
-import Footer from '@components/atom/Footer';
-import Logo from '@components/atom/Logo';
+import {Box, Icon} from '@components/atom';
+import {Header} from '@components/molecule';
 
 const Home = () => {
   useEffect(() => {
@@ -25,13 +22,15 @@ const Home = () => {
     }
   }, []);
   return (
-    <>
-      <main className={page}>
-        <Logo />
-        <Button>Button</Button>
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Header.Container>
+        <Header.Left icon="Search" disabled onClick={() => console.log(1)} />
+        <Header.Center title="바다로 보내는 편지" />
+        <Header.Right icon="HamburgerButton" />
+      </Header.Container>
+      <Box>hi</Box>
+      <Icon.Home />
+    </main>
   );
 };
 
