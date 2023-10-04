@@ -3,7 +3,7 @@
 import {useEffect} from 'react';
 
 import {Box, Icon} from '@components/atom';
-import {Header} from '@components/molecule';
+import {EmptyLayout} from '@components/template';
 
 const Home = () => {
   useEffect(() => {
@@ -22,15 +22,14 @@ const Home = () => {
     }
   }, []);
   return (
-    <main>
-      <Header.Container>
-        <Header.Left icon="Search" disabled onClick={() => console.log(1)} />
-        <Header.Center title="바다로 보내는 편지" />
-        <Header.Right icon="HamburgerButton" />
-      </Header.Container>
+    <EmptyLayout
+      headerShown
+      headerLeftProps={{icon: 'Search', disabled: true}}
+      headerCenterProps={{title: '바다로 보내는 편지'}}
+      headerRightProps={{icon: 'HamburgerButton'}}>
       <Box>hi</Box>
       <Icon.Home />
-    </main>
+    </EmptyLayout>
   );
 };
 
