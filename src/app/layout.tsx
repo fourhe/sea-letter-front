@@ -2,7 +2,7 @@ import {Inter} from 'next/font/google';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
-import {Drawer} from '@components/organism';
+import {Drawer, BottomSheet} from '@components/organism';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -26,6 +26,7 @@ const RootLayout = (props: RootLayoutProps) => {
               <li>menu2</li>
             </ul>
           </Drawer>
+          <BottomSheet>content</BottomSheet>
           {children}
         </Providers>
       </body>
