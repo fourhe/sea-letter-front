@@ -3,9 +3,10 @@ import {useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon as Icons} from '@components/atom';
+import type {IconName} from '@components/atom/Icon';
 
 export type HeaderRightProps = {
-  icon?: keyof typeof Icons;
+  icon?: IconName;
   text?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -17,7 +18,6 @@ const HeaderRight = (props: HeaderRightProps) => {
   const {icon, text, onClick, disabled, style, children} = props;
   const theme = useTheme();
   const Icon = useMemo(() => (icon ? Icons[icon] : null), [icon]);
-
   return (
     <Container style={style} onClick={onClick}>
       {/* eslint-disable-next-line no-nested-ternary */}

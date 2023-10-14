@@ -1,11 +1,15 @@
+'use client';
+
 import type {NextPage} from 'next';
 
-const AboutPage: NextPage = (props, context) => {
-  console.log('about page', props, context);
-  return (
-    <div>
-      <h1>Test Page</h1>
-    </div>
-  );
-};
+import {Icon} from '@components/atom';
+
+const AboutPage: NextPage = () => (
+  <div>
+    <input />
+    <Icon.HamburgerButton />
+    about
+  </div>
+);
+
 export default AboutPage;

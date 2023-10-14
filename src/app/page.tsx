@@ -1,9 +1,12 @@
 'use client';
 
+import {useSetAtom} from 'jotai';
 import {useEffect} from 'react';
 
-import {Box, Icon} from '@components/atom';
-import {Header} from '@components/molecule';
+import {Icon, Link} from '@components/atom';
+import {Accordion} from '@components/organism';
+import {drawerAtom} from '@components/organism/Drawer';
+import {EmptyLayout} from '@components/template';
 
 const Home = () => {
   useEffect(() => {
@@ -21,17 +24,36 @@ const Home = () => {
       console.log('desktop');
     }
   }, []);
+  const setDrawer = useSetAtom(drawerAtom);
+  const openMenu = () => setDrawer(true);
+
   return (
-    <main>
-      <Header.Container>
-        <Header.Left icon="Search" disabled onClick={() => console.log(1)} />
-        <Header.Center title="바다로 보내는 편지" />
-        <Header.Right icon="HamburgerButton" />
-      </Header.Container>
-      <Box>hi</Box>
-      <Icon.Home />
-    </main>
+    <EmptyLayout
+      headerShown
+      headerLeftProps={{isBack: true}}
+      headerCenterProps={{title: '바다로 보내는 편지'}}
+      headerRightProps={{
+        icon: 'HamburgerButton',
+        onClick: openMenu,
+      }}>
+      <Icon.HamburgerButton />
+      <Link href="/about">about</Link>
+      <div style={{display: 'grid', gap: 5}}>
+        {accordion.map(item => (
+          <Accordion.Container key={item.id}>
+            <Accordion.Header>{item.title}</Accordion.Header>
+            <Accordion.Body>{item.body}</Accordion.Body>
+          </Accordion.Container>
+        ))}
+      </div>
+    </EmptyLayout>
   );
 };
 
 export default Home;
+
+const accordion = [
+  {id: 1, title: 'title1', body: 'body1'},
+  {id: 2, title: 'title2', body: 'body2'},
+  {id: 3, title: 'title3', body: 'body3'},
+];

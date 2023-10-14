@@ -5,14 +5,14 @@ import type {IconProps} from './withIconProps';
 
 import * as svgs from '@assets/svgs';
 
-type SvgName = keyof typeof svgs;
-const svgNameList = Object.keys(svgs) as SvgName[];
+export type IconName = keyof typeof svgs;
+const svgNameList = Object.keys(svgs) as IconName[];
 
 const SvgMap = {} as {
-  [k in SvgName]: FC<IconProps>;
+  [k in IconName]: FC<IconProps>;
 };
 
-svgNameList.forEach((svgName: SvgName) => {
+svgNameList.forEach((svgName: IconName) => {
   SvgMap[svgName] = withIconProps(svgs[svgName]);
 });
 

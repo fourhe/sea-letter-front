@@ -2,23 +2,33 @@ import {Inter} from 'next/font/google';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
+import {Drawer, BottomSheet} from '@components/organism';
 
 const inter = Inter({subsets: ['latin']});
 
-type Props = {
+type RootLayoutProps = {
   children: ReactNode;
 };
-const RootLayout = (props: Props) => {
+
+const RootLayout = (props: RootLayoutProps) => {
   const {children} = props;
   return (
     <html lang="ko">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
         <title>마음을 담다</title>
       </head>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Drawer>
+            <ul>
+              <li>menu1</li>
+              <li>menu2</li>
+            </ul>
+          </Drawer>
+          <BottomSheet>content</BottomSheet>
+          {children}
+        </Providers>
       </body>
     </html>
   );

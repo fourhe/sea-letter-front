@@ -4,9 +4,10 @@ import type {ReactNode, CSSProperties} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon as Icons} from '@components/atom';
+import type {IconName} from '@components/atom/Icon';
 
 export type HeaderLeftProps = {
-  icon?: keyof typeof Icons;
+  icon?: IconName;
   text?: string;
   onClick?: () => void;
   isBack?: boolean;
