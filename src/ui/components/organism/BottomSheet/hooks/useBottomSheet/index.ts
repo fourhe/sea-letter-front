@@ -6,7 +6,7 @@ import {useEffect} from 'react';
 
 import usePreviousValue from '../usePreviousValue';
 
-export const bottomSheetStorm = atom(true);
+export const bottomSheetStorm = atom(false);
 
 const useBottomSheet = () => {
   const [isOpen, setIsOpen] = useAtom(bottomSheetStorm);
@@ -14,7 +14,7 @@ const useBottomSheet = () => {
   const prevIsOpen = usePreviousValue(isOpen);
 
   const onDragEnd = async (info: PointerEvent) => {
-    const shouldClose = info?.y > 20 || info?.y >= 0;
+    const shouldClose = info?.y > 400;
 
     if (shouldClose) {
       await controls.start('hidden');

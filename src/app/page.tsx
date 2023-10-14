@@ -4,6 +4,7 @@ import {useSetAtom} from 'jotai';
 import {useEffect} from 'react';
 
 import {Icon, Link} from '@components/atom';
+import {Accordion} from '@components/organism';
 import {drawerAtom} from '@components/organism/Drawer';
 import {EmptyLayout} from '@components/template';
 
@@ -24,20 +25,35 @@ const Home = () => {
     }
   }, []);
   const setDrawer = useSetAtom(drawerAtom);
-  const openDrawer = () => setDrawer(true);
+  const openMenu = () => setDrawer(true);
+
   return (
     <EmptyLayout
       headerShown
-      headerLeftProps={{icon: 'Search'}}
+      headerLeftProps={{isBack: true}}
       headerCenterProps={{title: '바다로 보내는 편지'}}
       headerRightProps={{
         icon: 'HamburgerButton',
-        onClick: openDrawer,
+        onClick: openMenu,
       }}>
-      <Icon.Home />
+      <Icon.HamburgerButton />
       <Link href="/about">about</Link>
+      <div style={{display: 'grid', gap: 5}}>
+        {accordion.map(item => (
+          <Accordion.Container key={item.id}>
+            <Accordion.Header>{item.title}</Accordion.Header>
+            <Accordion.Body>{item.body}</Accordion.Body>
+          </Accordion.Container>
+        ))}
+      </div>
     </EmptyLayout>
   );
 };
 
 export default Home;
+
+const accordion = [
+  {id: 1, title: 'title1', body: 'body1'},
+  {id: 2, title: 'title2', body: 'body2'},
+  {id: 3, title: 'title3', body: 'body3'},
+];
