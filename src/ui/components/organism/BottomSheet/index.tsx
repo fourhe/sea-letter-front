@@ -47,12 +47,13 @@ const Container = styled(motion.div)`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  background: white;
   width: 100%;
   height: 100%;
   overflow: auto;
 `;
 
 const ContentContainer = styled.div`
-  height: 80vh;
+  height: 90vh;
   padding: 10px;
 `;

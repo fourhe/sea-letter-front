@@ -6,7 +6,7 @@ import {useEffect} from 'react';
 
 import usePreviousValue from '../usePreviousValue';
 
-export const bottomSheetStorm = atom(false);
+const bottomSheetStorm = atom(false);
 
 const useBottomSheet = () => {
   const [isOpen, setIsOpen] = useAtom(bottomSheetStorm);

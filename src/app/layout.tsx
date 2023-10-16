@@ -2,16 +2,17 @@ import {Inter} from 'next/font/google';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
-import {Drawer, BottomSheet} from '@components/organism';
+import {PortalId} from '@components/atom/Portal/portal.enum';
 
 const inter = Inter({subsets: ['latin']});
 
 type RootLayoutProps = {
   children: ReactNode;
+  drawer: ReactNode;
 };
 
 const RootLayout = (props: RootLayoutProps) => {
-  const {children} = props;
+  const {children, drawer} = props;
   return (
     <html lang="ko">
       <head>
@@ -20,13 +21,8 @@ const RootLayout = (props: RootLayoutProps) => {
       </head>
       <body className={inter.className}>
         <Providers>
-          <Drawer>
-            <ul>
-              <li>menu1</li>
-              <li>menu2</li>
-            </ul>
-          </Drawer>
-          <BottomSheet>content</BottomSheet>
+          {drawer}
+          <div id={PortalId.BottomSheet} />
           {children}
         </Providers>
       </body>
