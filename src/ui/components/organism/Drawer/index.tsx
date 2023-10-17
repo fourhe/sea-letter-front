@@ -1,12 +1,11 @@
 'use client';
 
-import {atom, useAtom} from 'jotai';
 import type {ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {Backdrop} from '@components/atom';
+import {useDrawer} from './hook';
 
-export const drawerAtom = atom(false);
+import {Backdrop} from '@components/atom';
 
 type DrawerProps = {
   children: ReactNode;
@@ -14,12 +13,11 @@ type DrawerProps = {
 
 const Drawer = (props: DrawerProps) => {
   const {children} = props;
-  const [open, setOpen] = useAtom(drawerAtom);
-  const onClose = () => setOpen(false);
+  const {open, handleClose} = useDrawer();
   return (
     <>
       <Container className={open ? 'active' : ''}>{children}</Container>
-      <Backdrop open={open} onClose={onClose} />
+      <Backdrop open={open} onClose={handleClose} />
     </>
   );
 };

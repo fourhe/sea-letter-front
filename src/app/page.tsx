@@ -1,11 +1,10 @@
 'use client';
 
-import {useSetAtom} from 'jotai';
 import {useEffect} from 'react';
 
 import {Icon, Link} from '@components/atom';
 import {Accordion} from '@components/organism';
-import {drawerAtom} from '@components/organism/Drawer';
+import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 
 const Home = () => {
@@ -24,8 +23,7 @@ const Home = () => {
       console.log('desktop');
     }
   }, []);
-  const setDrawer = useSetAtom(drawerAtom);
-  const openMenu = () => setDrawer(true);
+  const {handleOpen} = useDrawer();
 
   return (
     <EmptyLayout
@@ -34,7 +32,7 @@ const Home = () => {
       headerCenterProps={{title: '바다로 보내는 편지'}}
       headerRightProps={{
         icon: 'HamburgerButton',
-        onClick: openMenu,
+        onClick: handleOpen,
       }}>
       <Icon.HamburgerButton />
       <Link href="/about">about</Link>
