@@ -3,16 +3,16 @@ import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
 import {PortalId} from '@components/atom/Portal/portal.enum';
+import {Drawer} from '@components/organism';
 
 const inter = Inter({subsets: ['latin']});
 
 type RootLayoutProps = {
   children: ReactNode;
-  drawer: ReactNode;
 };
 
 const RootLayout = (props: RootLayoutProps) => {
-  const {children, drawer} = props;
+  const {children} = props;
   return (
     <html lang="ko">
       <head>
@@ -21,8 +21,14 @@ const RootLayout = (props: RootLayoutProps) => {
       </head>
       <body className={inter.className}>
         <Providers>
-          {drawer}
+          <Drawer>
+            <ul>
+              <li>menu1</li>
+              <li>menu2</li>
+            </ul>
+          </Drawer>
           <div id={PortalId.BottomSheet} />
+          <div id={PortalId.Dialog} />
           {children}
         </Providers>
       </body>

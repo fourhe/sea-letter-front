@@ -11,7 +11,7 @@ type PortalProps = {
 
 const Portal = (props: PortalProps) => {
   const {children, portalId} = props;
-  const [mounted, setMounted] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);

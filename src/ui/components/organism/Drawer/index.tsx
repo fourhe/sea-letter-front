@@ -15,10 +15,9 @@ const Drawer = (props: DrawerProps) => {
   const {children} = props;
   const {open, handleClose} = useDrawer();
   return (
-    <>
+    <Backdrop open={open} onClose={handleClose}>
       <Container className={open ? 'active' : ''}>{children}</Container>
-      <Backdrop open={open} onClose={handleClose} />
-    </>
+    </Backdrop>
   );
 };
 

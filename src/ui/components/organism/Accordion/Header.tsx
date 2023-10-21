@@ -13,16 +13,22 @@ type HeaderProps = {
 } & ComponentPropsWithRef<'div'>;
 
 const Header = (props: HeaderProps) => {
-  const {expandIcon = 'ChevronRight', onClick: onClickProp, children} = props;
+  const {
+    expandIcon = 'ChevronRight',
+    onClick: onClickProp,
+    children,
+    ...restProps
+  } = props;
   const Icon = useMemo(() => Icons[expandIcon], [expandIcon]);
   const {open, setOpen} = useContext(AccordionContext);
   const onClick = () => {
+    if (onClickProp) onClickProp();
     setOpen(pre => !pre);
-    onClickProp?.();
   };
 
   return (
-    <Container onClick={onClick}>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Container onClick={onClick} {...restProps}>
       {children}
       <IconContainer open={open}>
         <Icon />

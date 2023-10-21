@@ -9,31 +9,31 @@ import usePreviousValue from '../usePreviousValue';
 const bottomSheetStorm = atom(false);
 
 const useBottomSheet = () => {
-  const [isOpen, setIsOpen] = useAtom(bottomSheetStorm);
+  const [open, setOpen] = useAtom(bottomSheetStorm);
   const controls = useAnimation();
-  const prevIsOpen = usePreviousValue(isOpen);
+  const prevIsOpen = usePreviousValue(open);
 
   const onDragEnd = async (info: PointerEvent) => {
     const shouldClose = info?.y > 400;
 
     if (shouldClose) {
       await controls.start('hidden');
-      setIsOpen(false);
+      setOpen(false);
     } else {
       await controls.start('visible');
-      setIsOpen(true);
+      setOpen(true);
     }
   };
 
   useEffect(() => {
-    if (prevIsOpen && !isOpen) {
+    if (prevIsOpen && !open) {
       controls.start('hidden');
-    } else if (!prevIsOpen && isOpen) {
+    } else if (!prevIsOpen && open) {
       controls.start('visible');
     }
-  }, [controls, isOpen, prevIsOpen]);
+  }, [controls, open, prevIsOpen]);
 
-  return {onDragEnd, controls, setIsOpen, isOpen};
+  return {onDragEnd, controls, setOpen, open};
 };
 
 export default useBottomSheet;

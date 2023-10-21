@@ -7,13 +7,10 @@ import {AccordionContext} from './Container';
 type BodyProps = ComponentPropsWithRef<'div'>;
 
 const Body = (props: BodyProps) => {
-  const {children, style} = props;
   const {open} = useContext(AccordionContext);
-
   return (
-    <Container open={open} style={style}>
-      {children}
-    </Container>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Container open={open} {...props} />
   );
 };
 
