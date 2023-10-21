@@ -20,7 +20,6 @@ const Container = (props: ContainerProps) => {
 
   return (
     <AccordionContext.Provider value={store}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <AccordionContainer {...props} />
     </AccordionContext.Provider>
   );

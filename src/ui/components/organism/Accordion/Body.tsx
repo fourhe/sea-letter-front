@@ -8,10 +8,7 @@ type BodyProps = ComponentPropsWithRef<'div'>;
 
 const Body = (props: BodyProps) => {
   const {open} = useContext(AccordionContext);
-  return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Container open={open} {...props} />
-  );
+  return <Container open={open} {...props} />;
 };
 
 export default Body;

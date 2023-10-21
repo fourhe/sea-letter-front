@@ -16,7 +16,6 @@ const withIconProps =
         fill={fill ?? defaultFill}
         width={width ?? defaultSize}
         height={height ?? defaultSize}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...restProps}
       />
     );

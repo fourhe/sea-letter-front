@@ -28,6 +28,7 @@ module.exports = {
         'no-shadow': 'off',
         'no-undef': 'off',
         'react/button-has-type': 'off',
+        'react/jsx-props-no-spreading': 'off',
       },
     },
   ],

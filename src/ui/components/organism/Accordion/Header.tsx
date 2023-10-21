@@ -27,7 +27,6 @@ const Header = (props: HeaderProps) => {
   };
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Container onClick={onClick} {...restProps}>
       {children}
       <IconContainer open={open}>

@@ -52,7 +52,6 @@ const Box = (props: BoxProps) => {
       backgroundColor={backgroundColor}
       border={borderColor ? `1px solid ${borderColor}` : ''}
       style={style}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...restProps}>
       {children}
     </Container>

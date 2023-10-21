@@ -14,7 +14,6 @@ const Header = (props: HeaderProps) => {
   const {children, isClose, closeHandler, ...restProps} = props;
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Container {...restProps}>
       {children}
       {isClose && <Icon.Close onClick={closeHandler} />}
