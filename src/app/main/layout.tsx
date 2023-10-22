@@ -15,7 +15,9 @@ const MainLayout = (props: MainLayoutProps) => {
   return (
     <>
       <Portal portalId={PortalId.BottomSheet}>
-        <BottomSheet>main</BottomSheet>
+        <BottomSheet>
+          <input />
+        </BottomSheet>
       </Portal>
       {children}
     </>

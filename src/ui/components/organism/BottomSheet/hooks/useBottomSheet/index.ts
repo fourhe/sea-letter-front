@@ -14,7 +14,7 @@ const useBottomSheet = () => {
   const prevIsOpen = usePreviousValue(open);
 
   const onDragEnd = async (info: PointerEvent) => {
-    const shouldClose = info?.y > 400;
+    const shouldClose = info?.y > 250;
 
     if (shouldClose) {
       await controls.start('hidden');
@@ -33,7 +33,7 @@ const useBottomSheet = () => {
     }
   }, [controls, open, prevIsOpen]);
 
-  return {onDragEnd, controls, setOpen, open};
+  return {onDragEnd, controls, setOpen, open, prevIsOpen};
 };
 
 export default useBottomSheet;
