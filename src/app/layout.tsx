@@ -1,11 +1,13 @@
-import {Inter} from 'next/font/google';
+import localFont from 'next/font/local';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Drawer} from '@components/organism';
 
-const inter = Inter({subsets: ['latin']});
+const Pretendard = localFont({
+  src: '../../public/font/PretendardVariable.woff2',
+});
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -19,7 +21,7 @@ const RootLayout = (props: RootLayoutProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>마음을 담다</title>
       </head>
-      <body className={inter.className}>
+      <body className={Pretendard.className}>
         <Providers>
           <Drawer>
             <ul>

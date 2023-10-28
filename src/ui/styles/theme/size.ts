@@ -50,24 +50,24 @@ const size = {
   '5/6': '83.333%',
   full: '100%',
   box: {
-    large: 610,
-    normal: 450,
     small: 280,
+    normal: 450,
+    large: 610,
   },
   button: {
-    large: 66,
-    normal: 49,
     small: 44,
+    normal: 49,
+    large: 66,
   },
   list: {
-    large: 66,
-    normal: 49,
     small: 44,
+    normal: 49,
+    large: 66,
   },
   icon: {
     small: 14,
-    normal: 18,
-    large: 24,
+    normal: 24,
+    large: 40,
   },
 } as const;
 

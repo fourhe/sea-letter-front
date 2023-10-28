@@ -8,8 +8,8 @@ const withIconProps =
   // eslint-disable-next-line react/display-name
   (iconProps: IconProps) => {
     const theme = useTheme();
-    const defaultFill = theme.color.text[700];
-    const defaultSize = theme.size[6];
+    const defaultFill = theme.color.white;
+    const defaultSize = theme.size[8];
     const {fill, width, height, ...restProps} = iconProps;
     return (
       <Icon

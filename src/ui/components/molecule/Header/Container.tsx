@@ -3,7 +3,7 @@ import {useMemo, Children} from 'react';
 import styled from 'styled-components';
 
 export type HeaderContainerProps = {
-  children: ReactNode;
+  children?: ReactNode;
   style?: CSSProperties;
 };
 
@@ -54,13 +54,13 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${({theme}) => theme.size[2]}px;
+  padding: ${({theme}) => theme.size[5]}px;
 `;
 
 const SideBlock = styled.div`
   flex-direction: row;
-  min-width: ${({theme}) => theme.size[6]}px;
-  min-height: ${({theme}) => theme.size[6]}px;
+  min-width: ${({theme}) => theme.size[8]}px;
+  min-height: ${({theme}) => theme.size[8]}px;
 `;
 
 const CenterBlock = styled.div`

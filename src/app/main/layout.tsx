@@ -2,7 +2,7 @@
 
 import type {ReactNode} from 'react';
 
-import {Portal} from '@components/atom';
+import {BackGround, Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {BottomSheet} from '@components/organism';
 
@@ -14,6 +14,7 @@ const MainLayout = (props: MainLayoutProps) => {
   const {children} = props;
   return (
     <>
+      <BackGround />
       <Portal portalId={PortalId.BottomSheet}>
         <BottomSheet>
           <input />

@@ -24,8 +24,7 @@ const Carousel = (props: CarouselProps) => {
 
   useEffect(() => {
     setDotLength(childrenArray.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [childrenArray.length, setDotLength]);
 
   const calculateNewX = useMemo(
     () => -index * (containerRef.current?.clientWidth || 0),

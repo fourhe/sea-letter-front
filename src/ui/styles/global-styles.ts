@@ -9,6 +9,14 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  body {
+    font-family: RIDIBatang, serif;
+  }
+
+  @font-face {
+    font-family: RIDIBatang;
+    src: url('/font/RIDIBatang.otf');
+  }
 `;
 
 export default GlobalStyle;
