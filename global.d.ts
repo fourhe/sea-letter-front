@@ -22,4 +22,9 @@ export declare global {
 
   type ArrayElementType<T extends ReadonlyArray<unknown>> =
     T extends ReadonlyArray<infer ElementType> ? ElementType : never;
+
+  // styled-components
+  type TDollarPrefix<T> = {
+    [K in keyof T as `$${string & K}`]: T[K];
+  };
 }

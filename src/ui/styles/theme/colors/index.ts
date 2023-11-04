@@ -1,4 +1,2 @@
-import dark from './dark';
-import light from './light';
-
-export {light, dark};
+export {default as dark} from './dark';
+export {default as light} from './light';

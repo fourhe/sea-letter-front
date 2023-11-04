@@ -16,28 +16,19 @@ const Drawer = (props: DrawerProps) => {
   const {open, handleClose} = useDrawer();
   return (
     <Backdrop open={open} onClose={handleClose}>
-      <Container className={open ? 'active' : ''}>{children}</Container>
+      <Container open={open}>{children}</Container>
     </Backdrop>
   );
 };
 
 export default Drawer;
 
-const Container = styled.div`
+const Container = styled.div<{open: boolean}>`
   position: fixed;
   z-index: 3;
   height: 100vh;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #17141d;
-  color: white;
+  background-color: ${({theme}) => theme.color.primary.lightPink};
   left: 0;
-  transform: translateX(-100%);
+  transform: translateX(${({open}) => (open ? 0 : -100)}%);
   transition: transform 0.3s linear;
-
-  &.active {
-    transform: translateX(0);
-  }
 `;

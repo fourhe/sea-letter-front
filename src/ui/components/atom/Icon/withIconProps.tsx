@@ -1,8 +1,7 @@
-import type {FC, SVGProps} from 'react';
+import type {FC, SVGProps, ComponentPropsWithRef} from 'react';
 import {useTheme} from 'styled-components';
 
-export type IconProps = SVGProps<SVGSVGElement>;
-
+export type IconProps = SVGProps<ComponentPropsWithRef<'svg'>>;
 const withIconProps =
   (Icon: FC<IconProps>) =>
   // eslint-disable-next-line react/display-name

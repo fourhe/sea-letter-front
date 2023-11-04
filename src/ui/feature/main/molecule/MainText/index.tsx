@@ -51,6 +51,6 @@ const TextContainer = styled.div`
   left: 30%;
   white-space: pre-wrap;
   font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
-  font-weight: ${({theme}) => theme.typography.fontWeights.bold};
+  font-weight: ${({theme}) => theme.typography.fontWeights.medium};
   line-height: ${({theme}) => theme.typography.lineHeights.sm}px;
 `;

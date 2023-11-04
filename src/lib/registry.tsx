@@ -11,7 +11,7 @@ type StyledComponentsProps = {
 
 const StyledComponentsRegistry = (props: StyledComponentsProps) => {
   const {children} = props;
-  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
+  const styledComponentsStyleSheet = useState(() => new ServerStyleSheet())[0];
 
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement();

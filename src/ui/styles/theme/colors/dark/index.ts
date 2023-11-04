@@ -121,14 +121,14 @@ export const neutral = {
 
 export const primary = {
   lemonCream: '#FFFDE7',
-  'light-pink': '#F1D4DC',
-  'bg-pink': '#E7A8BB',
-  'point-pink': '#D5708E',
+  lightPink: '#F1D4DC',
+  bgPink: '#E7A8BB',
+  pointPink: '#D5708E',
 } as const;
 
 export const secondary = {
   brown: '#CA9C8F',
-  'light-brown': '#F4E5E1',
+  lightBrown: '#F4E5E1',
   beige: '#FCFAF2',
 } as const;
 
