@@ -7,14 +7,8 @@ import {AccordionContext} from './Container';
 type BodyProps = ComponentPropsWithRef<'div'>;
 
 const Body = (props: BodyProps) => {
-  const {children, style} = props;
   const {open} = useContext(AccordionContext);
-
-  return (
-    <Container open={open} style={style}>
-      {children}
-    </Container>
-  );
+  return <Container open={open} {...props} />;
 };
 
 export default Body;

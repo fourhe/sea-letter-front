@@ -24,11 +24,11 @@ const HeaderRight = (props: HeaderRightProps) => {
       {Icon ? (
         <Icon
           fill={theme.color.text[disabled ? 300 : 700]}
-          width={theme.size[6]}
-          height={theme.size[6]}
+          width={theme.size[8]}
+          height={theme.size[8]}
         />
       ) : text ? (
-        <Text color={theme.color.text[disabled ? 300 : 700]}>{text}</Text>
+        <Text>{text}</Text>
       ) : null}
       {children}
     </Container>
@@ -43,12 +43,15 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({theme}) => theme.size[6]}px;
-  min-height: ${({theme}) => theme.size[6]}px;
-  margin-right: ${({theme}) => theme.size[5]}px;
+  min-width: ${({theme}) => theme.size[8]}px;
+  min-height: ${({theme}) => theme.size[8]}px;
   cursor: pointer;
 `;
 
-const Text = styled.span<{color: string}>`
-  color: ${({color}) => color};
+const Text = styled.span`
+  color: #fff;
+  font-size: ${({theme}) => theme.typography.fontSizes.md}px;
+  font-style: normal;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
+  line-height: ${({theme}) => theme.typography.lineHeights.md}px;
 `;

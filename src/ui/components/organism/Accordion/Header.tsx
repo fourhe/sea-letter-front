@@ -1,32 +1,32 @@
-import {useContext, useMemo} from 'react';
+import {useContext} from 'react';
 import type {ComponentPropsWithRef} from 'react';
 import styled from 'styled-components';
 
 import {AccordionContext} from './Container';
 
-import {Icon as Icons} from '@components/atom';
-import type {IconName} from '@components/atom/Icon';
+import {Icon} from '@components/atom';
 
 type HeaderProps = {
-  expandIcon?: IconName;
   onClick?: () => void;
 } & ComponentPropsWithRef<'div'>;
 
 const Header = (props: HeaderProps) => {
-  const {expandIcon = 'ChevronRight', onClick: onClickProp, children} = props;
-  const Icon = useMemo(() => Icons[expandIcon], [expandIcon]);
+  const {onClick: onClickProp, children, ...restProps} = props;
   const {open, setOpen} = useContext(AccordionContext);
   const onClick = () => {
+    if (onClickProp) onClickProp();
     setOpen(pre => !pre);
-    onClickProp?.();
   };
 
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} {...restProps}>
       {children}
-      <IconContainer open={open}>
-        <Icon />
-      </IconContainer>
+      <Icon.ChevronRight
+        transform={`rotate(${open ? 90 : 0})`}
+        style={{
+          transition: 'transform 0.4s',
+        }}
+      />
     </Container>
   );
 };
@@ -40,9 +40,4 @@ const Container = styled.div`
   padding: 10px;
   background-color: #f0f0f0;
   text-align: center;
-`;
-
-const IconContainer = styled.div<{open: boolean}>`
-  transform: rotateZ(${({open}) => (open ? 90 : 0)}deg);
-  transition: transform 0.4s;
 `;

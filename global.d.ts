@@ -1,11 +1,7 @@
 export declare global {
   type Recursive<T> = {[P in keyof T]: Recursive<T[P]>};
 
-  type RangeNumber<Min extends number, Max extends number> =
-    | Min
-    | Max
-    | (Min | Max)[]
-    | (Min | Max)[][];
+  type Union<T> = T[keyof T];
 
   type Values<T> = T[keyof T];
 
@@ -26,4 +22,9 @@ export declare global {
 
   type ArrayElementType<T extends ReadonlyArray<unknown>> =
     T extends ReadonlyArray<infer ElementType> ? ElementType : never;
+
+  // styled-components
+  type TDollarPrefix<T> = {
+    [K in keyof T as `$${string & K}`]: T[K];
+  };
 }

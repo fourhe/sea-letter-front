@@ -1,12 +1,11 @@
 'use client';
 
-import {atom, useAtom} from 'jotai';
 import type {ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {Backdrop} from '@components/atom';
+import {useDrawer} from './hook';
 
-export const drawerAtom = atom(false);
+import {Backdrop} from '@components/atom';
 
 type DrawerProps = {
   children: ReactNode;
@@ -14,35 +13,22 @@ type DrawerProps = {
 
 const Drawer = (props: DrawerProps) => {
   const {children} = props;
-  const [open, setOpen] = useAtom(drawerAtom);
-  const onClose = () => setOpen(false);
+  const {open, handleClose} = useDrawer();
   return (
-    <>
-      <Container className={open ? 'active' : ''} id="potal">
-        {children}
-      </Container>
-      <Backdrop open={open} onClose={onClose} />
-    </>
+    <Backdrop open={open} onClose={handleClose}>
+      <Container open={open}>{children}</Container>
+    </Backdrop>
   );
 };
 
 export default Drawer;
 
-const Container = styled.div`
+const Container = styled.div<{open: boolean}>`
   position: fixed;
   z-index: 3;
   height: 100vh;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #17141d;
-  color: white;
+  background-color: ${({theme}) => theme.color.primary.lightPink};
   left: 0;
-  transform: translateX(-100%);
+  transform: translateX(${({open}) => (open ? 0 : -100)}%);
   transition: transform 0.3s linear;
-
-  &.active {
-    transform: translateX(0);
-  }
 `;

@@ -28,6 +28,7 @@ module.exports = {
         'no-shadow': 'off',
         'no-undef': 'off',
         'react/button-has-type': 'off',
+        'react/jsx-props-no-spreading': 'off',
       },
     },
   ],
@@ -38,10 +39,7 @@ module.exports = {
     ],
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
-    'react-hooks/exhaustive-deps': [
-      'error',
-      {additionalHooks: 'useUpdateEffect'},
-    ],
+    'react-hooks/exhaustive-deps': 'error',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -71,7 +69,7 @@ module.exports = {
       'always',
       {exceptAfterSingleLine: true},
     ],
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': 'error',
     camelcase: 'off',
   },
   ignorePatterns: ['node_modules'],

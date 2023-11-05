@@ -40,9 +40,6 @@
       "@application/*": [
         "./src/application/*"
       ],
-      "@repositories/*": [
-        "./src/application/repositories/*"
-      ],
       "@services/*": [
         "./src/services/*"
       ],

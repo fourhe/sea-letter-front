@@ -5,7 +5,6 @@ import {Provider, createStore} from 'jotai';
 import type {ReactNode} from 'react';
 import {ThemeProvider} from 'styled-components';
 
-import GlobalStyle from '@/ui/styles/global-styles';
 import theme, {ColorScheme} from '@/ui/styles/theme';
 import StyledComponentsRegistry from '@lib/registry';
 
@@ -25,7 +24,6 @@ const Providers = (props: ProvidersProps) => {
       <Provider store={store}>
         <StyledComponentsRegistry>
           <ThemeProvider theme={theme[ColorScheme.LIGHT]}>
-            <GlobalStyle />
             {children}
           </ThemeProvider>
         </StyledComponentsRegistry>

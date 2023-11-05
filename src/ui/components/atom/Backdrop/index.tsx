@@ -1,4 +1,22 @@
+import type {ReactNode} from 'react';
 import styled from 'styled-components';
+
+type BackdropProps = {
+  open?: boolean;
+  onClose: () => void;
+  children?: ReactNode;
+};
+
+const Backdrop = (props: BackdropProps) => {
+  const {open, onClose, children} = props;
+  return (
+    <Container className={open ? 'active' : ''} onClick={onClose}>
+      {children}
+    </Container>
+  );
+};
+
+export default Backdrop;
 
 const Container = styled.div`
   height: 100vh;
@@ -11,15 +29,3 @@ const Container = styled.div`
     background-color: rgba(0, 0, 0, 0.4);
   }
 `;
-
-type BackdropProps = {
-  open?: boolean;
-  onClose: () => void;
-};
-
-const Backdrop = (props: BackdropProps) => {
-  const {open, onClose} = props;
-  return <Container className={open ? 'active' : ''} onClick={onClose} />;
-};
-
-export default Backdrop;

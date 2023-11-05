@@ -15,13 +15,12 @@ export const AccordionContext = createContext<ContextType>({
 });
 
 const Container = (props: ContainerProps) => {
-  const {children, style} = props;
   const [open, setOpen] = useState(false);
   const store = useMemo(() => ({open, setOpen}), [open, setOpen]);
 
   return (
     <AccordionContext.Provider value={store}>
-      <AccordionContainer style={style}>{children}</AccordionContainer>
+      <AccordionContainer {...props} />
     </AccordionContext.Provider>
   );
 };

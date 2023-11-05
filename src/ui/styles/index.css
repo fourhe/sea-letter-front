@@ -1,0 +1,14 @@
+a:link, a:visited {
+    text-decoration: none;
+}
+
+body {
+    font-family: RIDIBatang, serif;
+    margin: 0;
+    overscroll-behavior-y: contain;
+}
+
+@font-face {
+    font-family: RIDIBatang;
+    src: url('/public/font/RIDIBatang.otf');
+}

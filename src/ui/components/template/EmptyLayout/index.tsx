@@ -8,7 +8,7 @@ import type {
   HeaderRightProps,
 } from '@components/molecule/Header';
 
-export type EmptyLayoutProps = {
+type EmptyLayoutProps = {
   children?: ReactNode;
   headerShown?: boolean;
   headerContainerProps?: HeaderContainerProps;
@@ -30,13 +30,9 @@ const EmptyLayout = (props: EmptyLayoutProps) => {
   return (
     <section>
       {headerShown && (
-        // eslint-disable-next-line react/jsx-props-no-spreading
         <Header.Container {...headerContainerProps}>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Header.Left {...headerLeftProps} />
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Header.Center {...headerCenterProps} />
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Header.Right {...headerRightProps} />
         </Header.Container>
       )}
