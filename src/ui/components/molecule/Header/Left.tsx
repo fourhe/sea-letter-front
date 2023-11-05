@@ -4,9 +4,10 @@ import type {ReactNode, CSSProperties} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon as Icons} from '@components/atom';
+import type {IconName} from '@components/atom/Icon';
 
 export type HeaderLeftProps = {
-  icon?: keyof typeof Icons;
+  icon?: IconName;
   text?: string;
   onClick?: () => void;
   isBack?: boolean;
@@ -47,11 +48,7 @@ const HeaderLeft = (props: HeaderLeftProps) => {
     <Container style={style} onClick={onClick}>
       {/* eslint-disable-next-line no-nested-ternary */}
       {Icon ? (
-        <Icon
-          fill={theme.color.text[disabled ? 300 : 700]}
-          width={theme.size[6]}
-          height={theme.size[6]}
-        />
+        <Icon fill="none" width={theme.size[8]} height={theme.size[8]} />
       ) : text ? (
         <Text color={theme.color.text[disabled ? 300 : 700]}>{text}</Text>
       ) : null}
@@ -68,9 +65,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({theme}) => theme.size[6]}px;
-  min-height: ${({theme}) => theme.size[6]}px;
-  margin-left: ${({theme}) => theme.size[5]}px;
+  min-width: ${({theme}) => theme.size[8]}px;
+  min-height: ${({theme}) => theme.size[8]}px;
   cursor: pointer;
 `;
 

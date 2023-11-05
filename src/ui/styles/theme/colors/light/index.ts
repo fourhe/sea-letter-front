@@ -107,15 +107,42 @@ export const error = {
   900: '#1d0000',
 } as const;
 
-export const thirdparty = {
-  kakao: '#FEE500',
-  apple: '#000000',
-  google: {green: '#34A853'},
+export const neutral = {
+  100: '#F5F5F5',
+  200: '#E9E9E9',
+  300: '#C4C4C4',
+  400: '#9D9D9D',
+  500: '#7B7B7B',
+  600: '#555555',
+  700: '#434343',
+  800: '#262626',
+  900: '#000000',
+} as const;
+
+export const primary = {
+  lemonCream: '#FFFDE7',
+  lightPink: '#F1D4DC',
+  bgPink: '#E7A8BB',
+  pointPink: '#D5708E',
+} as const;
+
+export const secondary = {
+  brown: '#CA9C8F',
+  lightBrown: '#F4E5E1',
+  beige: '#FCFAF2',
+} as const;
+
+export const yellowGray = {
+  700: '#43413B',
 } as const;
 
 const light = {
   white,
   black,
+  neutral,
+  primary,
+  secondary,
+  yellowGray,
   green,
   blue,
   yellow,
@@ -123,12 +150,11 @@ const light = {
   purple,
   red,
   gray,
-  error,
   text,
   content,
   box,
   toggle,
-  thirdparty,
+  error,
 };
 
 export default light;

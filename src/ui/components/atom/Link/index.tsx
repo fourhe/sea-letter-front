@@ -16,13 +16,7 @@ const SLink = styled(NLink)`
 
 const Link = (props: LinkProps) => {
   const {children, ...restProps} = props;
-  return (
-    <SLink
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...restProps}>
-      {children}
-    </SLink>
-  );
+  return <SLink {...restProps}>{children}</SLink>;
 };
 
 export default Link;

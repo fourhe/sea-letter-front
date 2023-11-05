@@ -1,11 +1,25 @@
-import type {NextPage} from 'next';
+'use client';
 
-const AboutPage: NextPage = (props, context) => {
-  console.log('about page', props, context);
+import {Icon} from '@components/atom';
+import {useBottomSheet} from '@components/organism/BottomSheet/hooks';
+import {useDialog} from '@components/organism/Dialog/hook';
+import {EmptyLayout} from '@components/template';
+
+const AboutPage = () => {
+  const {handleOpen} = useDialog();
+  const {setOpen} = useBottomSheet();
   return (
-    <div>
-      <h1>Test Page</h1>
-    </div>
+    <EmptyLayout
+      headerShown
+      headerLeftProps={{isBack: true}}
+      headerCenterProps={{title: '어바웃 페이지'}}
+      headerRightProps={{
+        icon: 'HamburgerButton',
+        onClick: handleOpen,
+      }}>
+      <Icon.HamburgerButton onClick={() => setOpen(pre => !pre)} />
+    </EmptyLayout>
   );
 };
+
 export default AboutPage;
