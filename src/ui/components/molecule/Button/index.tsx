@@ -45,7 +45,11 @@ const Button = (props: ButtonProps) => {
   }, [disabled, colorProp, theme]);
 
   return (
-    <SButton background={background} color={color} {...restProps}>
+    <SButton
+      background={background}
+      disabled={disabled}
+      color={color}
+      {...restProps}>
       {children}
     </SButton>
   );

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useTheme} from 'styled-components';
+import styled, {useTheme} from 'styled-components';
 
 import {Icon} from '@components/atom';
 
@@ -20,13 +20,18 @@ const Rating = () => {
   };
 
   return (
-    <>
+    <Container>
       {ratingArray.map((value, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Icon.Star key={index} fill={value} onClick={() => onClick(index)} />
       ))}
-    </>
+    </Container>
   );
 };
 
 export default Rating;
+
+const Container = styled.div`
+  display: flex;
+  gap: 11px;
+`;
