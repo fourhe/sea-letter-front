@@ -4,6 +4,7 @@ import {useTheme} from 'styled-components';
 
 import {Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
+import {Rating, Switch} from '@components/molecule';
 import {Toast} from '@components/organism';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
@@ -24,6 +25,8 @@ const Main = () => {
       }}>
       <MainText showIcon text={'아래로 내려\n편지를 주워보세요.'} />
       <IconButton />
+      <Rating />
+      <Switch onClick={() => console.log(1)} />
       <Portal portalId={PortalId.Toast}>
         <Toast />
       </Portal>

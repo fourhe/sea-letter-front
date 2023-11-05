@@ -8,3 +8,5 @@ export {default as MessageNotification} from './message-notification.svg';
 export {default as ChevronRight} from './chevron-right.svg';
 export {default as VectorDown} from './Vector-down.svg';
 export {default as Settings} from './settings.svg';
+export {default as Switch} from './switch.svg';
+export {default as Star} from './star.svg';
