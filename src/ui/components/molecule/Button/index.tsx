@@ -3,12 +3,12 @@ import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
   color?: 'white' | 'brown' | 'gray' | 'pink';
+  size?: 'large' | 'normal' | 'small' | 'full' | number;
 } & ComponentPropsWithRef<'button'>;
 
 const Button = (props: ButtonProps) => {
   const {children, color: colorProp, disabled, ...restProps} = props;
   const theme = useTheme();
-
   const {background, color} = useMemo(() => {
     if (disabled)
       return {
@@ -43,12 +43,11 @@ const Button = (props: ButtonProps) => {
         };
     }
   }, [disabled, colorProp, theme]);
-
   return (
     <SButton
-      background={background}
+      $background={background}
+      $color={color}
       disabled={disabled}
-      color={color}
       {...restProps}>
       {children}
     </SButton>
@@ -57,25 +56,30 @@ const Button = (props: ButtonProps) => {
 
 export default Button;
 
-const SButton = styled.button<{
-  background: string;
-  color: string;
-}>`
+const SButton = styled.button<
+  TDollarPrefix<{
+    background: string;
+    color: string;
+  }>
+>`
+  width: 100%;
+  height: ${({theme}) => theme.size.button.small}px;
   font-family: inherit;
   padding: 6px 12px;
   border-radius: 6px;
+  margin: 0;
   border: 0;
   cursor: pointer;
-  background: ${({background}) => background};
-  color: ${({color}) => color};
+  background: ${({$background}) => $background};
+  color: ${({$color}) => $color};
 
   &:hover {
-    background-color: ${({theme, background}) =>
-      background + theme.opacity[80]};
+    background-color: ${({theme, $background}) =>
+      $background + theme.opacity[80]};
   }
 
   &:active {
-    background-color: ${({theme, background}) =>
-      background + theme.opacity[90]};
+    background-color: ${({theme, $background}) =>
+      $background + theme.opacity[90]};
   }
 `;
