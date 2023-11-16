@@ -1,6 +1,8 @@
 'use client';
 
+import {usePathname} from 'next/navigation';
 import type {ReactNode} from 'react';
+import {useEffect} from 'react';
 import styled from 'styled-components';
 
 import {useDrawer} from './hook';
@@ -14,10 +16,19 @@ type DrawerProps = {
 const Drawer = (props: DrawerProps) => {
   const {children} = props;
   const {open, handleClose} = useDrawer();
+  const pathName = usePathname();
+
+  useEffect(() => {
+    if (pathName === '/') {
+      handleClose();
+    }
+  }, [handleClose, pathName]);
+
   return (
-    <Backdrop open={open} onClose={handleClose}>
+    <>
+      <Backdrop open={open} onClose={handleClose} />
       <Container open={open}>{children}</Container>
-    </Backdrop>
+    </>
   );
 };
 
@@ -27,6 +38,7 @@ const Container = styled.div<{open: boolean}>`
   position: fixed;
   z-index: 3;
   height: 100vh;
+  width: 72vw;
   background-color: ${({theme}) => theme.color.primary.lightPink};
   left: 0;
   transform: translateX(${({open}) => (open ? 0 : -100)}%);

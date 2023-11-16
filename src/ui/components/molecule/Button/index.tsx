@@ -2,12 +2,20 @@ import {ComponentPropsWithRef, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
-  color?: 'white' | 'brown' | 'gray' | 'pink';
+  color?: 'white' | 'brown' | 'gray' | 'pink' | string;
   size?: 'large' | 'normal' | 'small' | 'full' | number;
+  bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
 
 const Button = (props: ButtonProps) => {
-  const {children, color: colorProp, disabled, ...restProps} = props;
+  const {
+    children,
+    color: colorProp,
+    disabled,
+    bold,
+    size = 'small',
+    ...restProps
+  } = props;
   const theme = useTheme();
   const {background, color} = useMemo(() => {
     if (disabled)
@@ -39,14 +47,16 @@ const Button = (props: ButtonProps) => {
       default:
         return {
           background: theme.color.content[0],
-          color: theme.color.text[700],
+          color: colorProp || theme.color.text[700],
         };
     }
   }, [disabled, colorProp, theme]);
   return (
     <SButton
+      $size={size}
       $background={background}
       $color={color}
+      $bold={bold}
       disabled={disabled}
       {...restProps}>
       {children}
@@ -54,24 +64,26 @@ const Button = (props: ButtonProps) => {
   );
 };
 
-export default Button;
-
 const SButton = styled.button<
   TDollarPrefix<{
     background: string;
     color: string;
+    bold?: boolean;
+    size: 'large' | 'normal' | 'small' | 'full' | number;
   }>
 >`
   width: 100%;
-  height: ${({theme}) => theme.size.button.small}px;
-  font-family: inherit;
+  height: ${({theme, $size}) =>
+    typeof $size === 'string' ? `${theme.size.button[$size]}px` : $size};
   padding: 6px 12px;
   border-radius: 6px;
   margin: 0;
   border: 0;
-  cursor: pointer;
   background: ${({$background}) => $background};
   color: ${({$color}) => $color};
+  font-family: inherit;
+  font-weight: ${({$bold}) => ($bold ? 700 : 'normal')};
+  font-size: 16px;
 
   &:hover {
     background-color: ${({theme, $background}) =>
@@ -83,3 +95,5 @@ const SButton = styled.button<
       $background + theme.opacity[90]};
   }
 `;
+
+export default Button;

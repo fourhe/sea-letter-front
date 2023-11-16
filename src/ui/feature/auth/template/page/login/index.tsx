@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import {useAuthenticate} from '@application/authenticate';
 import {Carousel} from '@components/organism';
 import Dots from '@components/organism/Carousel/Dots';
 import {useCarousel} from '@components/organism/Carousel/hook';
@@ -12,6 +13,8 @@ const colors = ['#f90', '#ef0', '#e0f'];
 
 const Login = () => {
   const {index, dotLength} = useCarousel();
+
+  const {logInFormUrl} = useAuthenticate();
 
   return (
     <EmptyLayout headerShown headerCenterProps={{title: '바다로 보내는 편지'}}>
@@ -28,9 +31,7 @@ const Login = () => {
           ))}
         </Carousel>
         <Dots length={dotLength} activeIndex={index} />
-        <Link
-          passHref
-          href="http://letter2sea-be-prod-env.ap-northeast-2.elasticbeanstalk.com/login/form">
+        <Link passHref href={logInFormUrl}>
           로그인
         </Link>
       </CarouselContainer>

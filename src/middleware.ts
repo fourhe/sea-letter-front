@@ -7,7 +7,7 @@ export const middleware = (request: NextRequest) => {
   if (refreshToken) {
     return NextResponse.next();
   }
-  return NextResponse.redirect(new URL('/auth/signin', request.url));
+  return NextResponse.redirect(new URL('/auth/login', request.url));
 };
 
 export const config = {
