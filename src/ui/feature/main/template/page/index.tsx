@@ -1,5 +1,6 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
 import {useTheme} from 'styled-components';
 
 import {Portal} from '@components/atom';
@@ -15,6 +16,7 @@ const Main = () => {
   const {handleOpen} = useDrawer();
   const theme = useTheme();
 
+  const route = useRouter();
   return (
     <EmptyLayout
       headerShown
@@ -26,7 +28,9 @@ const Main = () => {
       <MainText showIcon text={'아래로 내려\n편지를 주워보세요.'} />
       <IconButton />
       <Rating />
-      <Button color="brown">복구</Button>
+      <Button color="brown" onClick={() => route.push('/about')}>
+        복구
+      </Button>
       <Portal portalId={PortalId.Toast}>
         <Toast />
       </Portal>

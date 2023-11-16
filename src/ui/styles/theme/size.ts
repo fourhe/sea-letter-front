@@ -58,6 +58,7 @@ const size = {
     small: 44,
     normal: 49,
     large: 66,
+    full: '100%',
   },
   list: {
     small: 44,
