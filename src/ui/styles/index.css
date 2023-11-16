@@ -8,6 +8,15 @@ body {
     overscroll-behavior-y: contain;
 }
 
+li {
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
 @font-face {
     font-family: RIDIBatang;
     src: url('/public/font/RIDIBatang.otf');
