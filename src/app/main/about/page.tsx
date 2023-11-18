@@ -14,10 +14,10 @@ const AboutPage = () => {
       headerLeftProps={{isBack: true}}
       headerCenterProps={{title: '어바웃 페이지'}}
       headerRightProps={{
-        icon: 'HamburgerButton',
+        icon: 'Hamburger',
         onClick: handleOpen,
       }}>
-      <Icon.HamburgerButton onClick={() => setOpen(pre => !pre)} />
+      <Icon.Hamburger onClick={() => setOpen(pre => !pre)} />
     </EmptyLayout>
   );
 };

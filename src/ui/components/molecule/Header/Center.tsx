@@ -29,4 +29,7 @@ const Container = styled.div`
 
 const Text = styled.h2`
   margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 32px;
 `;

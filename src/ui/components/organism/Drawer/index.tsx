@@ -1,8 +1,6 @@
 'use client';
 
-import {usePathname} from 'next/navigation';
 import type {ReactNode} from 'react';
-import {useEffect} from 'react';
 import styled from 'styled-components';
 
 import {useDrawer} from './hook';
@@ -16,13 +14,6 @@ type DrawerProps = {
 const Drawer = (props: DrawerProps) => {
   const {children} = props;
   const {open, handleClose} = useDrawer();
-  const pathName = usePathname();
-
-  useEffect(() => {
-    if (pathName === '/') {
-      handleClose();
-    }
-  }, [handleClose, pathName]);
 
   return (
     <>

@@ -8,6 +8,7 @@ import type {IconName} from '@components/atom/Icon';
 
 export type HeaderLeftProps = {
   icon?: IconName;
+  iconColor?: string;
   text?: string;
   onClick?: () => void;
   isBack?: boolean;
@@ -21,6 +22,7 @@ const HeaderLeft = (props: HeaderLeftProps) => {
   const {
     children,
     icon,
+    iconColor = 'none',
     text,
     onClick: onClickProp,
     isBack,
@@ -48,7 +50,7 @@ const HeaderLeft = (props: HeaderLeftProps) => {
     <Container style={style} onClick={onClick}>
       {/* eslint-disable-next-line no-nested-ternary */}
       {Icon ? (
-        <Icon fill="none" width={theme.size[8]} height={theme.size[8]} />
+        <Icon fill={iconColor} width={theme.size[8]} height={theme.size[8]} />
       ) : text ? (
         <Text color={theme.color.text[disabled ? 300 : 700]}>{text}</Text>
       ) : null}

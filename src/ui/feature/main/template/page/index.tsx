@@ -20,7 +20,7 @@ const Main = () => {
   return (
     <EmptyLayout
       headerShown
-      headerLeftProps={{icon: 'HamburgerButton', onClick: handleOpen}}
+      headerLeftProps={{icon: 'Hamburger', onClick: handleOpen}}
       headerRightProps={{
         style: {color: theme.color.white},
         text: '우편함',
