@@ -7,26 +7,37 @@ import type {IconName} from '@components/atom/Icon';
 
 export type HeaderRightProps = {
   icon?: IconName;
+  disabled?: boolean;
+  iconColor?: string;
   text?: string;
   onClick?: () => void;
-  disabled?: boolean;
   children?: ReactNode;
   style?: CSSProperties;
 };
 
 const HeaderRight = (props: HeaderRightProps) => {
-  const {icon, text, onClick, disabled, style, children} = props;
+  const {
+    icon,
+    text,
+    onClick: onClickProp,
+    iconColor = 'none',
+    disabled,
+    style,
+    children,
+  } = props;
   const theme = useTheme();
   const Icon = useMemo(() => (icon ? Icons[icon] : null), [icon]);
+  const onClick = useMemo(() => {
+    if (disabled) {
+      return undefined;
+    }
+    return onClickProp;
+  }, [disabled, onClickProp]);
   return (
     <Container style={style} onClick={onClick}>
       {/* eslint-disable-next-line no-nested-ternary */}
       {Icon ? (
-        <Icon
-          fill={theme.color.text[disabled ? 300 : 700]}
-          width={theme.size[8]}
-          height={theme.size[8]}
-        />
+        <Icon fill={iconColor} width={theme.size[8]} height={theme.size[8]} />
       ) : text ? (
         <Text>{text}</Text>
       ) : null}

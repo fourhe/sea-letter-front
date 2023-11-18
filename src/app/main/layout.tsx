@@ -1,5 +1,6 @@
 'use client';
 
+import {usePathname} from 'next/navigation';
 import type {ReactNode} from 'react';
 
 import {BackGround, Portal} from '@components/atom';
@@ -12,9 +13,10 @@ type MainLayoutProps = {
 
 const MainLayout = (props: MainLayoutProps) => {
   const {children} = props;
+  const pathName = usePathname();
   return (
     <>
-      <BackGround />
+      {pathName === '/main' ? <BackGround /> : null}
       <Portal portalId={PortalId.BottomSheet}>
         <BottomSheet>
           <input />

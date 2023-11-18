@@ -5,6 +5,7 @@ class Api {
   private readonly axiosInstance: AxiosInstance;
   private readonly token: string | undefined;
   readonly baseURL: string;
+
   constructor(token?: string) {
     this.token = token;
     this.baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -24,6 +25,15 @@ class Api {
         return config;
       });
     }
+
+    api.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response.status === 400) {
+          fetch('/refresh');
+        }
+      },
+    );
     return api;
   }
 

@@ -1,4 +1,5 @@
-export {default as HamburgerButton} from './hamburger-button.svg';
+export {default as Hamburger} from './hamburger.svg';
+export {default as HamburgerBlack} from './hamburger-black.svg';
 export {default as Home} from './home.svg';
 export {default as Close} from './close.svg';
 export {default as ArrowLeft} from './arrow-left.svg';

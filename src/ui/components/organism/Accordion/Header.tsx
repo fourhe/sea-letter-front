@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import type {ComponentPropsWithRef} from 'react';
-import styled from 'styled-components';
+import styled, {useTheme} from 'styled-components';
 
 import {AccordionContext} from './Container';
 
@@ -13,6 +13,7 @@ type HeaderProps = {
 const Header = (props: HeaderProps) => {
   const {onClick: onClickProp, children, ...restProps} = props;
   const {open, setOpen} = useContext(AccordionContext);
+  const theme = useTheme();
   const onClick = () => {
     if (onClickProp) onClickProp();
     setOpen(pre => !pre);
@@ -22,6 +23,7 @@ const Header = (props: HeaderProps) => {
     <Container onClick={onClick} {...restProps}>
       {children}
       <Icon.ChevronRight
+        fill={theme.color.text[700]}
         transform={`rotate(${open ? 90 : 0})`}
         style={{
           transition: 'transform 0.4s',
@@ -38,6 +40,6 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: inherit;
   text-align: center;
 `;
