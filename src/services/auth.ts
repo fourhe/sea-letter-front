@@ -42,4 +42,6 @@ class AuthenticationService extends Api implements IAuthenticationService {
   }
 }
 
-export default AuthenticationService;
+const authenticationService = new AuthenticationService();
+
+export default authenticationService;

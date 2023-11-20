@@ -54,13 +54,15 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${({theme}) => theme.size[5]}px;
+  padding: ${({theme}) => theme.size[6]}px;
 `;
 
 const SideBlock = styled.div`
+  display: flex;
+  align-items: flex-start;
   flex-direction: row;
   min-width: ${({theme}) => theme.size[8]}px;
-  min-height: ${({theme}) => theme.size[8]}px;
+  min-height: ${({theme}) => theme.size[14]}px;
 `;
 
 const CenterBlock = styled.div`

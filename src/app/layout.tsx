@@ -1,6 +1,5 @@
-'use client';
-
 import localFont from 'next/font/local';
+import {CookiesProvider} from 'next-client-cookies/server';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
@@ -25,15 +24,17 @@ const RootLayout = ({children}: RootLayoutProps) => (
       <title>마음을 담다</title>
     </head>
     <body className={Pretendard.className}>
-      <Providers>
-        <Drawer>
-          <Menu />
-        </Drawer>
-        <div id={PortalId.BottomSheet} />
-        <div id={PortalId.Dialog} />
-        <div id={PortalId.Toast} />
-        {children}
-      </Providers>
+      <CookiesProvider>
+        <Providers>
+          <Drawer>
+            <Menu />
+          </Drawer>
+          <div id={PortalId.BottomSheet} />
+          <div id={PortalId.Dialog} />
+          <div id={PortalId.Toast} />
+          {children}
+        </Providers>
+      </CookiesProvider>
     </body>
   </html>
 );

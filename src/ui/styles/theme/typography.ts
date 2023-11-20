@@ -28,8 +28,8 @@ export const fontSizes = {
   xs: 14,
   sm: 16,
   md: 18,
-  lg: 20,
-  xl: 22,
+  lg: 24,
+  xl: 26,
 } as const;
 const typography = {letterSpacings, lineHeights, fontWeights, fontSizes};
 export default typography;

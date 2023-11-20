@@ -30,7 +30,7 @@ class Api {
       response => response,
       error => {
         if (error.response.status === 400) {
-          fetch('/refresh');
+          fetch('api/reissue/access-token');
         }
       },
     );

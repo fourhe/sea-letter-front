@@ -7,9 +7,7 @@ import AuthenticationService from '@services/auth';
 export const GET = async (request: NextRequest) => {
   const code = request.nextUrl.searchParams.get('code');
   if (!code) throw new Error('No code');
-  const {accessToken, refreshToken} = await new AuthenticationService().logIn(
-    code,
-  );
+  const {accessToken, refreshToken} = await AuthenticationService.logIn(code);
   cookies().set('access-token', accessToken, {httpOnly: true});
   cookies().set('refresh-token', refreshToken, {httpOnly: true});
 

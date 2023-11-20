@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-    <path d="M18 3L22.635 12.39L33 13.905L25.5 21.21L27.27 31.53L18 26.655L8.73 31.53L10.5 21.21L3 13.905L13.365 12.39L18 3Z"
-          stroke="#E7A8BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="star">
+        <path id="Vector"
+              d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+              stroke="#D5708E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
 </svg>

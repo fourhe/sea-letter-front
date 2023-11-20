@@ -3,7 +3,7 @@ import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
   color?: 'white' | 'brown' | 'gray' | 'pink' | string;
-  size?: 'large' | 'normal' | 'small' | 'full' | number;
+  size?: 'large' | 'normal' | 'small' | number;
   bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
 
@@ -69,10 +69,11 @@ const SButton = styled.button<
     background: string;
     color: string;
     bold?: boolean;
-    size: 'large' | 'normal' | 'small' | 'full' | number;
+    size: 'large' | 'normal' | 'small' | number;
   }>
 >`
-  width: 100%;
+  width: ${({theme, $size}) =>
+    typeof $size === 'string' ? `${theme.size.button[$size] * 2}px` : $size};
   height: ${({theme, $size}) =>
     typeof $size === 'string' ? `${theme.size.button[$size]}px` : $size};
   padding: 6px 12px;

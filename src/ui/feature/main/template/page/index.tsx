@@ -1,7 +1,6 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import {useTheme} from 'styled-components';
 
 import {Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
@@ -14,15 +13,17 @@ import {MainText} from '@feature/main/molecule';
 
 const Main = () => {
   const {handleOpen} = useDrawer();
-  const theme = useTheme();
 
   const route = useRouter();
   return (
     <EmptyLayout
       headerShown
-      headerLeftProps={{icon: 'Hamburger', onClick: handleOpen}}
+      headerLeftProps={{
+        icon: 'Hamburger',
+        onClick: handleOpen,
+      }}
       headerRightProps={{
-        style: {color: theme.color.white},
+        icon: 'Mail',
         text: '우편함',
       }}>
       <MainText showIcon text={'아래로 내려\n편지를 주워보세요.'} />
