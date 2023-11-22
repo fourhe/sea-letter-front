@@ -3,7 +3,7 @@ a:link, a:visited {
 }
 
 body {
-    font-family: RIDIBatang, serif;
+    font-family: Pretendard, RIDIBatang, Arial, sans-serif;;
     margin: 0;
     overscroll-behavior-y: contain;
 }
@@ -20,4 +20,9 @@ ul {
 @font-face {
     font-family: RIDIBatang;
     src: url('/public/font/RIDIBatang.otf');
+}
+
+@font-face {
+    font-family: Pretendard;
+    src: url('/public/font/PretendardVariable.woff2');
 }

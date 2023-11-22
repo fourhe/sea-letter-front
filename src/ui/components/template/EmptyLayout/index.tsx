@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import {Header} from '@components/molecule';
 import type {
-  HeaderContainerProps,
   HeaderCenterProps,
+  HeaderContainerProps,
   HeaderLeftProps,
   HeaderRightProps,
 } from '@components/molecule/Header';
@@ -29,7 +29,8 @@ const EmptyLayout = (props: EmptyLayoutProps) => {
   } = props;
 
   return (
-    <section>
+    <section
+      style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
       {headerShown && (
         <Header.Container {...headerContainerProps}>
           <Header.Left {...headerLeftProps} />
@@ -46,4 +47,5 @@ export default EmptyLayout;
 
 const Container = styled.article`
   padding: ${({theme}) => theme.size[0]} ${({theme}) => theme.size[6]}px;
+  flex: 1;
 `;

@@ -28,7 +28,7 @@ export const fontSizes = {
   xs: 14,
   sm: 16,
   md: 18,
-  lg: 24,
+  lg: 20,
   xl: 26,
 } as const;
 const typography = {letterSpacings, lineHeights, fontWeights, fontSizes};
