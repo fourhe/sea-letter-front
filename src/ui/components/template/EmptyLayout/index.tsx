@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import styled from 'styled-components';
 
 import {Header} from '@components/molecule';
 import type {
@@ -36,9 +37,13 @@ const EmptyLayout = (props: EmptyLayoutProps) => {
           <Header.Right {...headerRightProps} />
         </Header.Container>
       )}
-      {children}
+      <Container>{children}</Container>
     </section>
   );
 };
 
 export default EmptyLayout;
+
+const Container = styled.article`
+  padding: ${({theme}) => theme.size[0]} ${({theme}) => theme.size[6]}px;
+`;

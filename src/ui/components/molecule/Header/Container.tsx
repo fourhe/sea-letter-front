@@ -55,6 +55,7 @@ const Container = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: ${({theme}) => theme.size[6]}px;
+  padding-bottom: ${({theme}) => theme.size[0]}px;
 `;
 
 const SideBlock = styled.div`
@@ -67,6 +68,7 @@ const SideBlock = styled.div`
 
 const CenterBlock = styled.div`
   flex: 1;
+  min-height: ${({theme}) => theme.size[14]}px;
 `;
 
 const RestBlock = styled.div``;

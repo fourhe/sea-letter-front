@@ -56,7 +56,7 @@ const size = {
   },
   button: {
     small: 40,
-    normal: 49,
+    normal: 60,
     large: 66,
   },
   list: {

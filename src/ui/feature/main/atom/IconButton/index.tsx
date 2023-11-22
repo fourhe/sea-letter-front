@@ -1,11 +1,18 @@
+import {useRouter} from 'next/navigation';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon} from '@components/atom';
 
 const IconButton = () => {
   const theme = useTheme();
+  const router = useRouter();
+
+  const goWriting = () => {
+    router.push('/main/letter/writing');
+  };
+
   return (
-    <Container>
+    <Container onClick={goWriting}>
       <Icon.Pencil
         fill={theme.color.white}
         width={theme.size.icon.large}
