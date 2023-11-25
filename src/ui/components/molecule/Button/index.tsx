@@ -1,4 +1,5 @@
-import {ComponentPropsWithRef, useMemo} from 'react';
+import type {ComponentPropsWithRef} from 'react';
+import {useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
@@ -72,6 +73,7 @@ const SButton = styled.button<
     size: 'normal' | 'small' | 'full';
   }>
 >`
+  white-space: nowrap;
   width: ${({$size}) => ($size === 'full' ? '100%' : 'auto')};
   height: ${({theme, $size}) =>
     theme.size.button[$size === 'full' ? 'normal' : $size]}px;

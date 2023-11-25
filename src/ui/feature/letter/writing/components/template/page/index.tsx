@@ -1,10 +1,14 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
 import {useForm} from 'react-hook-form';
 import styled from 'styled-components';
 
+import {SendDialog} from '../../organism';
+
 import type {LetterForm} from '@application/ports/letter';
 import {Button} from '@components/molecule';
+import {useDialog} from '@components/organism/Dialog/hook';
 import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 
@@ -14,15 +18,13 @@ const defaultValues: LetterForm = {
 };
 
 const Writing = () => {
-  const {register, handleSubmit} = useForm<LetterForm>({
+  const {register, handleSubmit, getValues} = useForm<LetterForm>({
     defaultValues,
   });
-
+  const {handleOpen, handleClose} = useDialog();
+  const {push} = useRouter();
   const {writeLetter} = useLetter();
-  const onSubmit = (data: LetterForm) => {
-    writeLetter(data).then(console.log);
-    console.log(data);
-  };
+  const onSubmit = () => handleOpen();
 
   return (
     <EmptyLayout
@@ -40,6 +42,15 @@ const Writing = () => {
           </Button>
         ),
       }}>
+      <SendDialog
+        handleOpen={async () => {
+          const data = getValues();
+          console.log(data);
+          await writeLetter(data);
+          handleClose();
+          push('/main');
+        }}
+      />
       <Container id="writing" onSubmit={handleSubmit(onSubmit)}>
         <Title {...register('title', {required: true})} placeholder="제목" />
         <Content

@@ -4,7 +4,7 @@ export type Letter = {
   id: number;
   title: string;
   content: string;
-  createdAt: CreatedAt;
+  createddAt: CreatedAt;
 };
 
 export type LetterForm = {

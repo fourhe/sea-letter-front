@@ -1,3 +1,3 @@
-import {Writing} from '@feature/letter/writing/template';
+import {Writing} from '@feature/letter/writing/components/template';
 
 export default Writing;

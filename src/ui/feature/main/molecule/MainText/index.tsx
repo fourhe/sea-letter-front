@@ -1,12 +1,14 @@
+import type {CSSProperties} from 'react';
 import styled from 'styled-components';
 
 type MainTextProps = {
   text: string;
+  style?: CSSProperties;
 };
 
 const MainText = (props: MainTextProps) => {
-  const {text} = props;
-  return <TextContainer>{text}</TextContainer>;
+  const {text, style} = props;
+  return <TextContainer style={style}>{text}</TextContainer>;
 };
 
 export default MainText;

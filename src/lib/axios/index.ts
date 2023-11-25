@@ -1,4 +1,4 @@
-import type {AxiosInstance, AxiosRequestConfig} from 'axios';
+import type {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
 import axios from 'axios';
 
 class Api {
@@ -30,9 +30,9 @@ class Api {
 
     api.interceptors.response.use(
       response => response,
-      error => {
-        if (error.response.status === 401) {
-          fetch('api/reissue/access-token');
+      async (error: AxiosError) => {
+        if (error.response?.status === 401) {
+          await fetch('api/reissue/access-token');
         }
       },
     );

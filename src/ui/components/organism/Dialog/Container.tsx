@@ -50,10 +50,10 @@ const DialogContainer = (props: DialogContainerProps) => {
       <Container open={open} style={containerStyle}>
         {headerChildren.length > 0 && <SideBlock> {headerChildren} </SideBlock>}
         {(bodyChildren.length > 0 || restChildren.length > 0) && (
-          <CenterBlock>
+          <div>
             {bodyChildren.length > 0 && bodyChildren}
             {restChildren.length > 0 && restChildren}
-          </CenterBlock>
+          </div>
         )}
         {footerChildren.length > 0 && <SideBlock> {footerChildren} </SideBlock>}
       </Container>
@@ -64,26 +64,22 @@ const DialogContainer = (props: DialogContainerProps) => {
 export default DialogContainer;
 
 const Container = styled.div<{open: boolean}>`
-  align-items: center;
-  box-sizing: border-box;
+  width: 50vw;
   display: ${({open}) => (open ? 'flex' : 'none')};
   flex-direction: column;
-  position: absolute;
+  gap: ${({theme}) => theme.size[4]}px;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: ${({theme}) => theme.color.white};
   z-index: 3;
-  overflow: auto;
-  padding: ${({theme}) => theme.size[2]}px;
+  padding: ${({theme}) => theme.size[6]}px;
+  border-radius: ${({theme}) => theme.size[2]}px;
 `;
 
 const SideBlock = styled.div`
   flex-direction: row;
   min-width: ${({theme}) => theme.size[6]}px;
   min-height: ${({theme}) => theme.size[6]}px;
-`;
-
-const CenterBlock = styled.div`
-  flex: 1;
 `;
