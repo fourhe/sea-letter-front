@@ -62,7 +62,7 @@ const Title = styled.input`
   &::placeholder {
     align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: RIDIBatang, serif;
+    font-family: var(--RIDIBatang);
     font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
     font-weight: ${({theme}) => theme.typography.fontWeights.normal};
     line-height: normal;
@@ -80,7 +80,7 @@ const Content = styled.textarea`
   &::placeholder {
     align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: RIDIBatang, serif;
+    font-family: var(--RIDIBatang);
     font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
     font-weight: ${({theme}) => theme.typography.fontWeights.normal};
     line-height: normal;
