@@ -6,10 +6,21 @@ import styled from 'styled-components';
 import type {LetterForm} from '@application/ports/letter';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
+import {useLetter} from '@feature/letter/hook';
+
+const defaultValues: LetterForm = {
+  title: '',
+  content: '',
+};
 
 const Writing = () => {
-  const {register, handleSubmit} = useForm<LetterForm>();
+  const {register, handleSubmit} = useForm<LetterForm>({
+    defaultValues,
+  });
+
+  const {writeLetter} = useLetter();
   const onSubmit = (data: LetterForm) => {
+    writeLetter(data).then(console.log);
     console.log(data);
   };
 
