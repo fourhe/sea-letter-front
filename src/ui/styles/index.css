@@ -1,9 +1,12 @@
+* {
+    user-select: none;
+}
+
 a:link, a:visited {
     text-decoration: none;
 }
 
 body {
-    font-family: RIDIBatang, serif;
     margin: 0;
     overscroll-behavior-y: contain;
 }
@@ -15,9 +18,4 @@ li {
 ul {
     padding: 0;
     margin: 0;
-}
-
-@font-face {
-    font-family: RIDIBatang;
-    src: url('/public/font/RIDIBatang.otf');
 }

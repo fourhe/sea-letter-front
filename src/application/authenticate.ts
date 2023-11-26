@@ -5,7 +5,7 @@ import AuthenticationService from '@services/auth';
 export const useAuthenticate = () => {
   const {data} = useQuery({
     queryKey: ['auth'],
-    queryFn: () => new AuthenticationService().logInForm(),
+    queryFn: () => AuthenticationService.logInForm(),
   });
 
   return {

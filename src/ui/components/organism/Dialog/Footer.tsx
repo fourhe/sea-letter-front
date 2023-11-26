@@ -14,7 +14,6 @@ Footer.displayName = 'DialogFooter';
 
 const Container = styled.footer`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: ${({theme}) => theme.size[2]}px;
+  justify-content: space-between;
+  gap: ${({theme}) => theme.size[4]}px;
 `;

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import styled from 'styled-components';
 
 import {useAuthenticate} from '@application/authenticate';
 import {Carousel} from '@components/organism';
@@ -18,7 +17,7 @@ const Login = () => {
 
   return (
     <EmptyLayout headerShown headerCenterProps={{title: '바다로 보내는 편지'}}>
-      <CarouselContainer>
+      <div>
         <Carousel>
           {colors.map(item => (
             <div
@@ -34,16 +33,9 @@ const Login = () => {
         <Link passHref href={logInFormUrl}>
           로그인
         </Link>
-      </CarouselContainer>
+      </div>
     </EmptyLayout>
   );
 };
 
 export default Login;
-
-const CarouselContainer = styled.div`
-  padding: 0 20px;
-  margin: 0 auto;
-  width: 90vw;
-  height: 100%;
-`;

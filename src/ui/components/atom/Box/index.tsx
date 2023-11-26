@@ -15,24 +15,12 @@ type BoxProps = {
   type?: 'circle' | 'rectangle' | 'square' | 'chip';
 } & DivProps;
 
-const Container = styled.div<BoxProps>`
-  width: ${({size}) => size}px;
-  height: ${({size}) => size}px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: ${({borderRadius}) => borderRadius || 0}px;
-  aspect-ratio: ${({aspectRatio}) => aspectRatio};
-  background-color: ${({backgroundColor}) => backgroundColor};
-  border: ${({border}) => border};
-`;
-
 const Box = (props: BoxProps) => {
   const theme = useTheme();
   const {
     children,
     style,
-    size: sizeProp = 'large',
+    size: sizeProp = 'normal',
     type = 'rectangle',
     borderColor,
     backgroundColor,
@@ -46,11 +34,11 @@ const Box = (props: BoxProps) => {
 
   return (
     <Container
-      size={size}
-      borderRadius={borderRadius}
-      aspectRatio={aspectRatio}
-      backgroundColor={backgroundColor}
-      border={borderColor ? `1px solid ${borderColor}` : ''}
+      $size={size}
+      $borderRadius={borderRadius}
+      $aspectRatio={aspectRatio}
+      $backgroundColor={backgroundColor}
+      $border={borderColor ? `1px solid ${borderColor}` : ''}
       style={style}
       {...restProps}>
       {children}
@@ -59,3 +47,24 @@ const Box = (props: BoxProps) => {
 };
 
 export default Box;
+
+type BoxContainerProps = {
+  size: number;
+  borderRadius?: number;
+  backgroundColor?: string;
+  aspectRatio?: number;
+  border?: string;
+};
+
+const Container = styled.div<TDollarPrefix<BoxContainerProps>>`
+  width: ${({$size}) => $size * 3}px;
+  height: ${({$size}) => $size}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: ${({$aspectRatio}) => $aspectRatio};
+  border-radius: ${({$borderRadius}) => $borderRadius || 0}px;
+  background-color: ${({$backgroundColor}) => $backgroundColor};
+  border: ${({$border}) => $border};
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.16);
+`;

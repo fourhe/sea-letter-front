@@ -28,8 +28,7 @@ const Container = (props: ContainerProps) => {
 export default Container;
 
 const AccordionContainer = styled.div`
-  border: 1px solid #ccc;
+  padding: ${({theme}) => theme.size[3]}px 0;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;

@@ -8,6 +8,7 @@ import type {IconName} from '@components/atom/Icon';
 
 export type HeaderLeftProps = {
   icon?: IconName;
+  iconColor?: string;
   text?: string;
   onClick?: () => void;
   isBack?: boolean;
@@ -21,6 +22,7 @@ const HeaderLeft = (props: HeaderLeftProps) => {
   const {
     children,
     icon,
+    iconColor = 'none',
     text,
     onClick: onClickProp,
     isBack,
@@ -46,12 +48,10 @@ const HeaderLeft = (props: HeaderLeftProps) => {
 
   return (
     <Container style={style} onClick={onClick}>
-      {/* eslint-disable-next-line no-nested-ternary */}
       {Icon ? (
-        <Icon fill="none" width={theme.size[8]} height={theme.size[8]} />
-      ) : text ? (
-        <Text color={theme.color.text[disabled ? 300 : 700]}>{text}</Text>
+        <Icon fill={iconColor} width={theme.size[8]} height={theme.size[8]} />
       ) : null}
+      {text ? <Text>{text}</Text> : null}
       {children}
     </Container>
   );
@@ -63,6 +63,7 @@ export default HeaderLeft;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-width: ${({theme}) => theme.size[8]}px;
@@ -70,6 +71,10 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const Text = styled.span<{color: string}>`
-  color: ${({color}) => color};
+const Text = styled.span`
+  color: #fff;
+  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
+  font-style: normal;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
+  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
 `;

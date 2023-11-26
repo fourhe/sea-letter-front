@@ -7,29 +7,38 @@ import type {IconName} from '@components/atom/Icon';
 
 export type HeaderRightProps = {
   icon?: IconName;
+  disabled?: boolean;
+  iconColor?: string;
   text?: string;
   onClick?: () => void;
-  disabled?: boolean;
   children?: ReactNode;
   style?: CSSProperties;
 };
 
 const HeaderRight = (props: HeaderRightProps) => {
-  const {icon, text, onClick, disabled, style, children} = props;
+  const {
+    icon,
+    text,
+    onClick: onClickProp,
+    iconColor = 'none',
+    disabled,
+    style,
+    children,
+  } = props;
   const theme = useTheme();
   const Icon = useMemo(() => (icon ? Icons[icon] : null), [icon]);
+  const onClick = useMemo(() => {
+    if (disabled) {
+      return undefined;
+    }
+    return onClickProp;
+  }, [disabled, onClickProp]);
   return (
     <Container style={style} onClick={onClick}>
-      {/* eslint-disable-next-line no-nested-ternary */}
       {Icon ? (
-        <Icon
-          fill={theme.color.text[disabled ? 300 : 700]}
-          width={theme.size[8]}
-          height={theme.size[8]}
-        />
-      ) : text ? (
-        <Text>{text}</Text>
+        <Icon fill={iconColor} width={theme.size[8]} height={theme.size[8]} />
       ) : null}
+      {text ? <Text>{text}</Text> : null}
       {children}
     </Container>
   );
@@ -41,6 +50,7 @@ export default HeaderRight;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-width: ${({theme}) => theme.size[8]}px;
@@ -50,8 +60,8 @@ const Container = styled.div`
 
 const Text = styled.span`
   color: #fff;
-  font-size: ${({theme}) => theme.typography.fontSizes.md}px;
+  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
   font-style: normal;
   font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-  line-height: ${({theme}) => theme.typography.lineHeights.md}px;
+  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
 `;
