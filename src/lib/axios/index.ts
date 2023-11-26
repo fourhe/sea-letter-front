@@ -1,5 +1,5 @@
+import type {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
 import axios from 'axios';
-import type {AxiosInstance, AxiosRequestConfig} from 'axios';
 
 class Api {
   private readonly axiosInstance: AxiosInstance;
@@ -7,7 +7,9 @@ class Api {
   readonly baseURL: string;
 
   constructor(token?: string) {
-    this.token = token;
+    if (token) {
+      this.token = token;
+    }
     this.baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
     this.axiosInstance = axios.create({
       baseURL: this.baseURL,
@@ -28,9 +30,9 @@ class Api {
 
     api.interceptors.response.use(
       response => response,
-      error => {
-        if (error.response.status === 400) {
-          fetch('/refresh');
+      async (error: AxiosError) => {
+        if (error.response?.status === 401) {
+          await fetch('api/reissue/access-token');
         }
       },
     );

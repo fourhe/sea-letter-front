@@ -8,7 +8,7 @@ class AuthenticationService extends Api implements IAuthenticationService {
   }
 
   async logIn(code: string): Promise<Token> {
-    const {headers} = await this.post(`${this.baseURL}/login`, {code});
+    const {headers} = await this.post('/login', {code});
     const accessToken = headers['access-token'];
     const refreshToken = headers['refresh-token'];
 
@@ -42,4 +42,6 @@ class AuthenticationService extends Api implements IAuthenticationService {
   }
 }
 
-export default AuthenticationService;
+const authenticationService = new AuthenticationService();
+
+export default authenticationService;

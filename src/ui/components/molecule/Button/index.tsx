@@ -1,9 +1,10 @@
-import {ComponentPropsWithRef, useMemo} from 'react';
+import type {ComponentPropsWithRef} from 'react';
+import {useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
   color?: 'white' | 'brown' | 'gray' | 'pink' | string;
-  size?: 'large' | 'normal' | 'small' | 'full' | number;
+  size?: 'normal' | 'small' | 'full';
   bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
 
@@ -69,13 +70,14 @@ const SButton = styled.button<
     background: string;
     color: string;
     bold?: boolean;
-    size: 'large' | 'normal' | 'small' | 'full' | number;
+    size: 'normal' | 'small' | 'full';
   }>
 >`
-  width: 100%;
+  white-space: nowrap;
+  width: ${({$size}) => ($size === 'full' ? '100%' : 'auto')};
   height: ${({theme, $size}) =>
-    typeof $size === 'string' ? `${theme.size.button[$size]}px` : $size};
-  padding: 6px 12px;
+    theme.size.button[$size === 'full' ? 'normal' : $size]}px;
+  padding: 8px 12px;
   border-radius: 6px;
   margin: 0;
   border: 0;

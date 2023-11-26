@@ -23,6 +23,8 @@ const Header = (props: HeaderProps) => {
     <Container onClick={onClick} {...restProps}>
       {children}
       <Icon.ChevronRight
+        width={theme.size[6]}
+        height={theme.size[6]}
         fill={theme.color.text[700]}
         transform={`rotate(${open ? 90 : 0})`}
         style={{
@@ -38,8 +40,6 @@ export default Header;
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px;
   background-color: inherit;
   text-align: center;
 `;
