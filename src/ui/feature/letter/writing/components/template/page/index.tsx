@@ -22,7 +22,7 @@ const Writing = () => {
     defaultValues,
   });
   const {handleOpen, handleClose} = useDialog();
-  const {push} = useRouter();
+  const route = useRouter();
   const {writeLetter} = useLetter();
   const onSubmit = () => handleOpen();
 
@@ -48,7 +48,7 @@ const Writing = () => {
           console.log(data);
           await writeLetter(data);
           handleClose();
-          push('/main');
+          route.push('/main?data=writing');
         }}
       />
       <Container id="writing" onSubmit={handleSubmit(onSubmit)}>

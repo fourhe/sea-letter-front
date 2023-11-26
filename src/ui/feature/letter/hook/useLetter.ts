@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {AxiosError} from 'axios';
+import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 import {useMemo} from 'react';
 
@@ -24,7 +24,7 @@ const useLetter = (props?: LetterHookProps) => {
     queryKey: ['letters'],
     queryFn: () => repository.getLetterId(),
     staleTime: 1000 * 60 * 60 * 24,
-    enabled: props?.isUpEvent,
+    enabled: !!props?.isUpEvent,
   });
 
   const id = useMemo(() => {
