@@ -45,7 +45,6 @@ const Writing = () => {
       <SendDialog
         handleOpen={async () => {
           const data = getValues();
-          console.log(data);
           await writeLetter(data);
           handleClose();
           route.push('/main?data=writing');

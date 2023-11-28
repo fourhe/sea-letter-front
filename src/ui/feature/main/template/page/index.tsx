@@ -37,7 +37,6 @@ const Main = () => {
     const touchEndY = e.touches[0].clientY;
     const deltaY = touchEndY - touchStartY;
     if (deltaY < 0) {
-      console.log(id);
       setTouchStartY(0);
       setIsUpEvent(true);
     }
