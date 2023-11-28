@@ -23,7 +23,7 @@ class Api {
     if (!hasAuthorizationHeader && hasToken) {
       api.interceptors.request.use(config => {
         // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = `Bearer ${this.token}`;
+        config.headers.Authorization = this.token;
         return config;
       });
     }
