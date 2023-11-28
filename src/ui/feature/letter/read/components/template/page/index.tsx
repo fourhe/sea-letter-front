@@ -8,23 +8,14 @@ import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 
 type ReadProps = {
-  ld?: string;
+  id?: number;
 };
 
 const Read = (props: NextPageProps<ReadProps>) => {
   const {params} = props;
   const {push} = useRouter();
   const goHome = () => push('/main');
-  const {letter} = useLetter({letterId: Number(params.ld)});
-  console.log(params.ld);
-
-  console.log(letter);
-
-  const {createddAt, title, content} = {
-    title: '고민있습니다',
-    content: '어떤 고민이냐면요....',
-    createddAt: '2022-12-30 14:02',
-  };
+  const {letter} = useLetter({letterId: params.id});
 
   return (
     <EmptyLayout
@@ -40,11 +31,11 @@ const Read = (props: NextPageProps<ReadProps>) => {
         onClick: goHome,
       }}>
       <HeaderContainer>
-        <Title>{title}</Title>
-        <CreatedAt>{createddAt}</CreatedAt>
+        <Title>{letter.title}</Title>
+        <CreatedAt>{letter.createdAt}</CreatedAt>
       </HeaderContainer>
       <Container>
-        <Content>{content}</Content>
+        <Content>{letter.content}</Content>
         <Button
           style={{
             fontWeight: 700,

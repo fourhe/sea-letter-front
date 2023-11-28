@@ -3,7 +3,7 @@ import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 import {useMemo} from 'react';
 
-import type {LetterForm} from '@application/ports/letter';
+import type {Letter, LetterForm} from '@application/ports/letter';
 import LetterService from '@services/letter';
 
 type LetterHookProps = {
@@ -39,10 +39,30 @@ const useLetter = (props?: LetterHookProps) => {
     enabled: !!props?.letterId,
   });
 
+  const letterData = useMemo(() => {
+    const initLetter: Letter = {
+      title: '',
+      content: '',
+      createdAt: null,
+    };
+    if (!letter) return initLetter;
+    const inputDate = new Date(letter.createdAt!);
+    const createdAt = new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false, // 24시간 형식 사용
+    }).format(inputDate);
+
+    return {...letter, createdAt};
+  }, [letter]);
+
   return {
     writeLetter: mutateAsync,
     id,
-    letter,
+    letter: letterData,
     isLetterPending,
   };
 };

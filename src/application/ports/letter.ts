@@ -1,10 +1,8 @@
-type CreatedAt = `${number}-${number}-${number} ${number}:${number}`;
-
 export type Letter = {
-  id: number;
+  id?: number;
   title: string;
   content: string;
-  createddAt: CreatedAt;
+  createdAt: string | null;
 };
 
 export type LetterForm = {
