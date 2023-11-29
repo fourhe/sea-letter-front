@@ -13,7 +13,6 @@ import LetterService from '@services/letter';
 type LetterHookProps = {
   isUpEvent?: boolean;
   letterId?: number;
-  replyForm?: LetterReplyForm;
 };
 
 const useLetter = (props?: LetterHookProps) => {
