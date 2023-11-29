@@ -3,12 +3,17 @@ import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 import {useMemo} from 'react';
 
-import type {Letter, LetterForm} from '@application/ports/letter';
+import type {
+  Letter,
+  LetterForm,
+  LetterReplyForm,
+} from '@application/ports/letter';
 import LetterService from '@services/letter';
 
 type LetterHookProps = {
   isUpEvent?: boolean;
   letterId?: number;
+  replyForm?: LetterReplyForm;
 };
 
 const useLetter = (props?: LetterHookProps) => {
@@ -18,6 +23,14 @@ const useLetter = (props?: LetterHookProps) => {
 
   const {mutateAsync} = useMutation<void, AxiosError, LetterForm>({
     mutationFn: variables => repository.writeLetter(variables),
+  });
+
+  const {mutateAsync: sendReply} = useMutation<
+    void,
+    AxiosError,
+    LetterReplyForm
+  >({
+    mutationFn: variables => repository.sendReply(variables),
   });
 
   const {data, isPending} = useQuery({
@@ -60,6 +73,7 @@ const useLetter = (props?: LetterHookProps) => {
   }, [letter]);
 
   return {
+    sendReply,
     writeLetter: mutateAsync,
     id,
     letter: letterData,

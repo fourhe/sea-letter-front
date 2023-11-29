@@ -6,16 +6,17 @@ import {useDialog} from '@components/organism/Dialog/hook';
 
 type SendDialogProps = {
   handleOpen: () => void;
+  title: string;
 };
 
 const SendDialog = (props: SendDialogProps) => {
-  const {handleOpen} = props;
+  const {handleOpen, title} = props;
   const {handleClose} = useDialog();
 
   return (
     <Portal portalId={PortalId.Dialog}>
       <Dialog.Container>
-        <Dialog.Body>편지를 바다로 보낼까요?</Dialog.Body>
+        <Dialog.Body>{title}</Dialog.Body>
         <Dialog.Footer>
           <Button color="gray" onClick={handleClose}>
             아니요
