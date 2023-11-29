@@ -26,8 +26,9 @@ const Menu = () => {
         </Button>
       </SettingContainer>
       <TextContainer>
-        <h2 style={{margin: '0 auto'}}>안녕하세요!</h2>
-        <h2 style={{margin: '0 auto'}}>소라게님</h2>
+        <h2 style={{margin: '0 auto', whiteSpace: 'pre-wrap'}}>
+          {`안녕하세요!\n  소라게님`}
+        </h2>
       </TextContainer>
       <MusicContainer>
         <Box backgroundColor={theme.color.white}>
@@ -44,7 +45,7 @@ const Menu = () => {
             <DashboardNumber>10</DashboardNumber>
           </DashboardContainer>
         </Box>
-        <Ul>
+        <Ol>
           <li>
             <Li href="/main/notice" onClick={handleClose}>
               <Icon.Announcement height={theme.size[6]} width={theme.size[6]} />
@@ -69,7 +70,7 @@ const Menu = () => {
               설정
             </Li>
           </li>
-        </Ul>
+        </Ol>
       </MusicContainer>
       <TrashContainer>
         <TrashIconContainer>
@@ -108,7 +109,7 @@ const MusicContainer = styled.div`
   margin-top: 20px;
   height: 65%;
 `;
-const Ul = styled.ul`
+const Ol = styled.ol`
   display: flex;
   flex-direction: column;
   gap: 20px;

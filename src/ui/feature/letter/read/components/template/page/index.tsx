@@ -4,6 +4,7 @@ import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {Button} from '@components/molecule';
+import {useBottomSheet} from '@components/organism/BottomSheet/hooks';
 import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 
@@ -14,6 +15,7 @@ type ReadProps = {
 const Read = (props: NextPageProps<ReadProps>) => {
   const {params} = props;
   const {push} = useRouter();
+  const {setOpen} = useBottomSheet();
   const goHome = () => push('/main');
   const {letter} = useLetter({letterId: params.id});
 
@@ -37,6 +39,7 @@ const Read = (props: NextPageProps<ReadProps>) => {
       <Container>
         <Content>{letter.content}</Content>
         <Button
+          onClick={() => setOpen(true)}
           style={{
             fontWeight: 700,
             fontSize: 20,

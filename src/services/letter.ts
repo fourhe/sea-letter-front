@@ -22,6 +22,12 @@ export default class LetterService extends Api implements ILetterService {
   }
 
   async sendReply(data: LetterReplyForm): Promise<void> {
-    await this.post(`/letter/${data.id}/reply`, data);
+    await this.post<void, Omit<LetterReplyForm, 'id'>>(
+      `/letter/${data.id}/reply`,
+      {
+        title: data.title,
+        content: data.content,
+      },
+    );
   }
 }
