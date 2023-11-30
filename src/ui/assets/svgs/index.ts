@@ -17,3 +17,5 @@ export {default as Trash} from './trash.svg';
 export {default as Union} from './union.svg';
 export {default as Letter} from './letter.svg';
 export {default as HideLetter} from './hide-letter.svg';
+export {default as newMessage} from './new-message.svg';
+export {default as message} from './message.svg';

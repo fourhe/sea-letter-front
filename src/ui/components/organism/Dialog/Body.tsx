@@ -10,5 +10,6 @@ Body.displayName = 'DialogBody';
 
 const Container = styled.main`
   text-align: center;
+  white-space: pre-wrap;
   line-height: ${({theme}) => theme.typography.lineHeights.sm}px;
 `;

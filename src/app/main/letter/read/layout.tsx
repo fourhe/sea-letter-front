@@ -34,7 +34,7 @@ const WritingLayout = (props: ReadLayoutProps) => {
       <BackGround />
       <SendDialog
         title="답장을 바다로 보낼까요?"
-        handleOpen={async () => {
+        ok={async () => {
           const data = getValues();
           await sendReply({...data, id: Number(id)});
           handleClose();
