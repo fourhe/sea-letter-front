@@ -58,7 +58,7 @@ const BottomSheet = (props: BottomSheetProps) => {
 export default BottomSheet;
 
 const Container = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   z-index: 2;
   top: 10vh;
   border-top-left-radius: 17px;

@@ -11,7 +11,6 @@ export default Header;
 
 const Container = styled(motion.div)`
   display: flex;
-  align-content: center;
   justify-content: center;
   height: 48px;
 `;
