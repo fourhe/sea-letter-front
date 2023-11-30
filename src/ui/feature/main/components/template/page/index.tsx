@@ -8,8 +8,8 @@ import {Icon} from '@components/atom';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
-import {IconButton} from '@feature/main/atom';
-import {MainText} from '@feature/main/molecule';
+import {IconButton} from '@feature/main/components/atom';
+import {MainText} from '@feature/main/components/molecule';
 
 const message = {
   writing: '편지가 성공적으로\n바다로 보내졌습니다.',
@@ -27,6 +27,7 @@ const Main = () => {
   const {id} = useLetter({isUpEvent});
   const {get} = useSearchParams();
   const data = get('data') as Message;
+
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     if (isUpEvent) return;
     setTouchStartY(e.touches[0].clientY);
@@ -77,6 +78,8 @@ const Main = () => {
     [data, isUpEvent, openLetter],
   );
 
+  const goMailBox = useCallback(() => route.push('/main/letter-box'), [route]);
+
   return (
     <EmptyLayout
       headerShown
@@ -87,6 +90,7 @@ const Main = () => {
       headerRightProps={{
         icon: 'Mail',
         text: '우편함',
+        onClick: goMailBox,
       }}>
       <Container
         $isUpEvent={isUpEvent}

@@ -32,10 +32,14 @@ const useLetter = (props?: LetterHookProps) => {
     mutationFn: variables => repository.sendReply(variables),
   });
 
-  const {data, isPending} = useQuery({
+  const {
+    data,
+    isPending,
+    isError: isLetterIdError,
+  } = useQuery({
     queryKey: ['letters'],
     queryFn: () => repository.getLetterId(),
-    staleTime: 1000 * 60 * 60 * 24,
+    initialData: null,
     enabled: !!props?.isUpEvent,
   });
 
@@ -47,7 +51,6 @@ const useLetter = (props?: LetterHookProps) => {
   const {data: letter, isPending: isLetterPending} = useQuery({
     queryKey: ['letters', props?.letterId],
     queryFn: () => repository.getLetter(props?.letterId!),
-    staleTime: 1000 * 60 * 60 * 24,
     enabled: !!props?.letterId,
   });
 
@@ -65,7 +68,7 @@ const useLetter = (props?: LetterHookProps) => {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false, // 24시간 형식 사용
+      hour12: false,
     }).format(inputDate);
 
     return {...letter, createdAt};
@@ -77,6 +80,7 @@ const useLetter = (props?: LetterHookProps) => {
     id,
     letter: letterData,
     isLetterPending,
+    isLetterIdError,
   };
 };
 

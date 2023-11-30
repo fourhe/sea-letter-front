@@ -6,29 +6,23 @@ import {useDialog} from '@components/organism/Dialog/hook';
 
 type SendDialogProps = {
   ok: () => void;
-  cancel?: () => void;
   title: string;
 };
 
-const SendDialog = (props: SendDialogProps) => {
-  const {ok, title, cancel: cancelProp} = props;
+const DeleteDialog = (props: SendDialogProps) => {
+  const {ok, title} = props;
   const {handleClose} = useDialog();
-
-  const cancel = () => {
-    if (cancelProp) cancelProp();
-    handleClose();
-  };
 
   return (
     <Portal portalId={PortalId.Dialog}>
       <Dialog.Container>
         <Dialog.Body>{title}</Dialog.Body>
         <Dialog.Footer>
-          <Button color="gray" onClick={cancel}>
-            아니요
+          <Button color="gray" onClick={handleClose}>
+            취소
           </Button>
           <Button color="brown" onClick={ok}>
-            네, 보낼게요
+            삭제하기
           </Button>
         </Dialog.Footer>
       </Dialog.Container>
@@ -36,4 +30,4 @@ const SendDialog = (props: SendDialogProps) => {
   );
 };
 
-export default SendDialog;
+export default DeleteDialog;
