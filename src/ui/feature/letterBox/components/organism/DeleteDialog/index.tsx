@@ -15,9 +15,15 @@ const DeleteDialog = (props: SendDialogProps) => {
 
   return (
     <Portal portalId={PortalId.Dialog}>
-      <Dialog.Container>
+      <Dialog.Container
+        containerStyle={{
+          width: '60vw',
+        }}>
         <Dialog.Body>{title}</Dialog.Body>
-        <Dialog.Footer>
+        <Dialog.Footer
+          style={{
+            justifyContent: 'space-evenly',
+          }}>
           <Button color="gray" onClick={handleClose}>
             취소
           </Button>
