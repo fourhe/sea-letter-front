@@ -10,18 +10,15 @@ const Header = () => (
 export default Header;
 
 const Container = styled(motion.div)`
+  display: flex;
+  justify-content: center;
   height: 48px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  position: relative;
-  padding-top: 16px;
-  padding-bottom: 4px;
 `;
 
 const Bar = styled(motion.div)`
-  width: 32px;
-  height: 4px;
+  width: 40px;
+  height: 5px;
   border-radius: 2px;
-  background-color: #d0d0d0;
+  background: rgba(131, 101, 97, 1);
   margin: auto;
 `;

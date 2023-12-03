@@ -1,5 +1,5 @@
-import React from 'react';
 import type {ComponentPropsWithRef} from 'react';
+import React from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type DivProps = ComponentPropsWithRef<'div'> & {
@@ -57,7 +57,6 @@ type BoxContainerProps = {
 };
 
 const Container = styled.div<TDollarPrefix<BoxContainerProps>>`
-  width: ${({$size}) => $size * 3}px;
   height: ${({$size}) => $size}px;
   display: flex;
   align-items: center;

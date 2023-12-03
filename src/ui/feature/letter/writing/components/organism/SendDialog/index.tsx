@@ -5,22 +5,29 @@ import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
 
 type SendDialogProps = {
-  handleOpen: () => void;
+  ok: () => void;
+  cancel?: () => void;
+  title: string;
 };
 
 const SendDialog = (props: SendDialogProps) => {
-  const {handleOpen} = props;
+  const {ok, title, cancel: cancelProp} = props;
   const {handleClose} = useDialog();
+
+  const cancel = () => {
+    if (cancelProp) cancelProp();
+    handleClose();
+  };
 
   return (
     <Portal portalId={PortalId.Dialog}>
       <Dialog.Container>
-        <Dialog.Body>편지를 바다로 보낼까요?</Dialog.Body>
+        <Dialog.Body>{title}</Dialog.Body>
         <Dialog.Footer>
-          <Button color="gray" onClick={handleClose}>
+          <Button color="gray" onClick={cancel}>
             아니요
           </Button>
-          <Button color="brown" onClick={handleOpen}>
+          <Button color="brown" onClick={ok}>
             네, 보낼게요
           </Button>
         </Dialog.Footer>

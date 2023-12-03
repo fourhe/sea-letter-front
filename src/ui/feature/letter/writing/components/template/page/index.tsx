@@ -43,7 +43,8 @@ const Writing = () => {
         ),
       }}>
       <SendDialog
-        handleOpen={async () => {
+        title="편지를 바다로 보낼까요?"
+        ok={async () => {
           const data = getValues();
           await writeLetter(data);
           handleClose();

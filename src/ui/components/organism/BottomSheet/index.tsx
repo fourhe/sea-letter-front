@@ -16,9 +16,17 @@ type BottomSheetProps = {
 
 const BottomSheet = (props: BottomSheetProps) => {
   const {children} = props;
-  const {onDragEnd, controls, prevIsOpen} = useBottomSheet();
+  const {
+    onDragEnd,
+    controls,
+    prevIsOpen,
+    setOpen: setBottomOpen,
+  } = useBottomSheet();
   const [open, setOpen] = useState(false);
-  const onClose = () => setOpen(!prevIsOpen);
+  const onClose = () => {
+    setBottomOpen(!prevIsOpen);
+    setOpen(!prevIsOpen);
+  };
 
   return (
     <>
@@ -51,10 +59,10 @@ export default BottomSheet;
 
 const Container = styled(motion.div)`
   position: fixed;
-  z-index: 10;
-  top: 5vh;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  z-index: 2;
+  top: 10vh;
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   background: white;
   width: 100%;
