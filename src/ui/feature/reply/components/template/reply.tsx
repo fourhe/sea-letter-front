@@ -1,24 +1,18 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
+import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
-import {useBottomSheet} from '@components/organism/BottomSheet/hooks';
 import {EmptyLayout} from '@components/template';
-import {useLetter} from '@feature/letter/hook';
 
-type ReadProps = {
+type ReplyProps = {
   id?: number;
 };
 
-const Read = (props: NextPageProps<ReadProps>) => {
+const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
-  const {push} = useRouter();
-  const {setOpen} = useBottomSheet();
-  const goHome = () => push('/main');
-  const {letter} = useLetter({letterId: params.id});
-
+  console.log(params);
   return (
     <EmptyLayout
       headerShown
@@ -29,31 +23,39 @@ const Read = (props: NextPageProps<ReadProps>) => {
         title: '누군가의 편지',
       }}
       headerRightProps={{
-        icon: 'Home',
-        onClick: goHome,
+        children: <Button color="brown">삭제</Button>,
       }}>
       <HeaderContainer>
-        <Title>{letter?.title}</Title>
-        <CreatedAt>{letter?.createdAt}</CreatedAt>
+        <Title>딸에게 보내는 심리학 편지</Title>
+        <CreatedAt>2023. 09. 24</CreatedAt>
       </HeaderContainer>
       <Container>
-        <Content>{letter?.content}</Content>
+        <Content>
+          프랑스 대문호 빅토르 위고는 인생 최고의 기쁨은 자신이 사랑받고 있다는
+          확신에서 나온다. 좀 더 정확히는, 자신의 모습에도 불구하고 사랑을 받고
+          있다는. 이라는 말을 남겼다. 사랑을 받는다는 것은 인간에게 주어진
+          최고의 기쁨이다.
+        </Content>
         <Button
-          onClick={() => setOpen(true)}
           style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
             fontWeight: 700,
             fontSize: 20,
           }}
           color="brown"
           size="full">
-          답장하기
+          <Icon.FaceWink width={28} height={28} stroke="white" />
+          감사 인사 전하기
         </Button>
       </Container>
     </EmptyLayout>
   );
 };
 
-export default Read;
+export default Reply;
 
 const HeaderContainer = styled.div`
   display: flex;
