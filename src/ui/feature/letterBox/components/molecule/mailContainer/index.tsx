@@ -14,7 +14,7 @@ const LetterContainer = (props: LetterContainerProps) => {
   const {title, hasNewReply, onClick, id} = props;
   const theme = useTheme();
   const Icon = useMemo(
-    () => Icons[hasNewReply ? 'newMessage' : 'message'],
+    () => Icons[hasNewReply ? 'NewMessage' : 'Message'],
     [hasNewReply],
   );
 

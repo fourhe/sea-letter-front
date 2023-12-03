@@ -3,11 +3,7 @@ import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 import {useMemo} from 'react';
 
-import type {
-  Letter,
-  LetterForm,
-  LetterReplyForm,
-} from '@application/ports/letter';
+import type {LetterForm, LetterReplyForm} from '@application/ports/letter';
 import LetterService from '@services/letter';
 
 type LetterHookProps = {
@@ -52,33 +48,28 @@ const useLetter = (props?: LetterHookProps) => {
     queryKey: ['letters', props?.letterId],
     queryFn: () => repository.getLetter(props?.letterId!),
     enabled: !!props?.letterId,
+    select: letterData => {
+      const inputDate = new Date(letterData.createdAt!);
+      const createdAt = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).format(inputDate);
+      return {
+        ...letterData,
+        createdAt,
+      };
+    },
   });
-
-  const letterData = useMemo(() => {
-    const initLetter: Letter = {
-      title: '',
-      content: '',
-      createdAt: null,
-    };
-    if (!letter) return initLetter;
-    const inputDate = new Date(letter.createdAt!);
-    const createdAt = new Intl.DateTimeFormat('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    }).format(inputDate);
-
-    return {...letter, createdAt};
-  }, [letter]);
 
   return {
     sendReply,
     writeLetter: mutateAsync,
     id,
-    letter: letterData,
+    letter,
     isLetterPending,
     isLetterIdError,
   };

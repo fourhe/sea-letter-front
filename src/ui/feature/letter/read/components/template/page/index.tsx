@@ -33,11 +33,11 @@ const Read = (props: NextPageProps<ReadProps>) => {
         onClick: goHome,
       }}>
       <HeaderContainer>
-        <Title>{letter.title}</Title>
-        <CreatedAt>{letter.createdAt}</CreatedAt>
+        <Title>{letter?.title}</Title>
+        <CreatedAt>{letter?.createdAt}</CreatedAt>
       </HeaderContainer>
       <Container>
-        <Content>{letter.content}</Content>
+        <Content>{letter?.content}</Content>
         <Button
           onClick={() => setOpen(true)}
           style={{
