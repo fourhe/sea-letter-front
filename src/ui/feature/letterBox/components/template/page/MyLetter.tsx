@@ -1,13 +1,11 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {DeleteDialog} from '../../organism';
 
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
-import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {useLetterBox} from '@feature/letterBox/hook';
 
@@ -17,32 +15,31 @@ type MyLetterProps = {
 
 const MyLetter = (props: NextPageProps<MyLetterProps>) => {
   const {params} = props;
-  const {push} = useRouter();
-  const {handleOpen} = useDrawer();
   const {handleOpen: deleteOpen} = useDialog();
-  const goHome = () => push('/main');
   const {letterDetail} = useLetterBox({id: params.id});
 
   return (
     <EmptyLayout
       headerShown
       headerLeftProps={{
-        icon: 'HamburgerBlack',
-        onClick: handleOpen,
+        isBack: true,
       }}
       headerCenterProps={{
         title: '누군가의 편지',
       }}
       headerRightProps={{
-        icon: 'Home',
-        onClick: goHome,
+        children: (
+          <Button style={{height: 36}} onClick={deleteOpen} color="brown">
+            삭제
+          </Button>
+        ),
       }}>
       <HeaderContainer>
         <Title>{letterDetail?.title}</Title>
         <CreatedAt>{letterDetail?.createdAt}</CreatedAt>
       </HeaderContainer>
       <DeleteDialog
-        title={`편지를 삭제 할까요?\n삭제된 편지는 휴지통으로 이동하며 1개월 뒤 영구 삭제 됩니다.`}
+        title={`편지를 삭제 할까요?\n이 편지에 대한 답장도 함께 삭제되며\n삭제된 편지는 1개월간\n휴지통에 보관 됩니다.`}
         ok={() => {
           console.log(1);
         }}
@@ -50,14 +47,13 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
       <Container>
         <Content>{letterDetail?.content}</Content>
         <Button
-          onClick={deleteOpen}
           style={{
             fontWeight: 700,
             fontSize: 20,
           }}
           color="brown"
           size="full">
-          삭제하기
+          답장 확인하기
         </Button>
       </Container>
     </EmptyLayout>

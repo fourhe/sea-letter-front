@@ -6,6 +6,7 @@ import styled, {useTheme} from 'styled-components';
 import {Box, Icon, Link} from '@components/atom';
 import {Button} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
+import {useToast} from '@components/organism/Toast/hook';
 import AuthenticationService from '@services/auth';
 
 const Menu = () => {
@@ -16,6 +17,23 @@ const Menu = () => {
     await AuthenticationService.logOut();
     handleClose();
     route.push('/');
+  };
+
+  const {showToast} = useToast();
+
+  const handleCopyClipBoard = () => {
+    const text = window.location.href;
+    try {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast({
+          message: '클립보드에 링크가 복사되었습니다.',
+        });
+      });
+    } catch (e) {
+      showToast({
+        message: '복사에 실패 하였습니다.',
+      });
+    }
   };
 
   return (
@@ -52,14 +70,21 @@ const Menu = () => {
               공지사항
             </Li>
           </li>
-          <li>
-            <Li href="/main/notice" onClick={handleClose}>
-              <Icon.Share height={theme.size[6]} width={theme.size[6]} />
-              공유하기
-            </Li>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
+          <li
+            onClick={handleCopyClipBoard}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              cursor: 'pointer',
+              color: theme.color.text[700],
+            }}>
+            <Icon.Share height={theme.size[6]} width={theme.size[6]} />
+            공유하기
           </li>
           <li>
-            <Li href="/main/notice" onClick={handleClose}>
+            <Li href="/main/notice" onClick={handleCopyClipBoard}>
               <Icon.Star height={theme.size[6]} width={theme.size[6]} />
               리뷰와 별점주기
             </Li>

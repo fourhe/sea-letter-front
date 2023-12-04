@@ -1,6 +1,6 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
+import {notFound, useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {Button} from '@components/molecule';
@@ -9,14 +9,18 @@ import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 
 type ReadProps = {
-  id?: number;
+  id?: number | 'null';
 };
 
 const Read = (props: NextPageProps<ReadProps>) => {
   const {params} = props;
+  if (params.id === 'null') {
+    notFound();
+  }
   const {push} = useRouter();
   const {setOpen} = useBottomSheet();
   const goHome = () => push('/main');
+
   const {letter} = useLetter({letterId: params.id});
 
   return (
