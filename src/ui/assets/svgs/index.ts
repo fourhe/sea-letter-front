@@ -8,6 +8,7 @@ export {default as Pencil} from './pencil.svg';
 export {default as CheckCircle} from './check-circle.svg';
 export {default as MessageNotification} from './message-notification.svg';
 export {default as ChevronRight} from './chevron-right.svg';
+export {default as ChevronUP} from './chevron-up.svg';
 export {default as Settings} from './settings.svg';
 export {default as Switch} from './switch.svg';
 export {default as Star} from './star.svg';
