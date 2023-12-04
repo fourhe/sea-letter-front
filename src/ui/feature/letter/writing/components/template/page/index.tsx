@@ -80,14 +80,13 @@ const Title = styled.input`
   padding: ${({theme}) => theme.size[4]}px ${({theme}) => theme.size[2]}px;
   border: none;
   border-bottom: 1px solid #836561;
+  align-items: center;
+  font-family: var(--RIDIBatang);
+  font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
 
   &::placeholder {
-    align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: var(--RIDIBatang);
-    font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
-    font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-    line-height: normal;
   }
 `;
 
@@ -99,12 +98,13 @@ const Content = styled.textarea`
   padding: ${({theme}) => theme.size[4]}px ${({theme}) => theme.size[2]}px;
   resize: none;
 
+  align-items: center;
+  font-family: var(--RIDIBatang);
+  font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
+  line-height: normal;
+
   &::placeholder {
-    align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: var(--RIDIBatang);
-    font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
-    font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-    line-height: normal;
   }
 `;
