@@ -31,7 +31,7 @@ const Menu = () => {
         </h2>
       </TextContainer>
       <MusicContainer>
-        <Box backgroundColor={theme.color.white}>
+        <Box style={{boxShadow: 'none'}} backgroundColor={theme.color.white}>
           <DashboardContainer>
             <DashboardText>받은 감사</DashboardText>
             <DashboardNumber>5</DashboardNumber>
