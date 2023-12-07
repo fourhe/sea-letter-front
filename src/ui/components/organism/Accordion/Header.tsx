@@ -1,5 +1,5 @@
-import {useContext} from 'react';
 import type {ComponentPropsWithRef} from 'react';
+import {useContext} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {AccordionContext} from './Container';
@@ -22,11 +22,10 @@ const Header = (props: HeaderProps) => {
   return (
     <Container onClick={onClick} {...restProps}>
       {children}
-      <Icon.ChevronRight
+      <Icon.ChevronUP
         width={theme.size[6]}
         height={theme.size[6]}
-        fill={theme.color.text[700]}
-        transform={`rotate(${open ? 90 : 0})`}
+        transform={`rotate(${open ? 180 : 0})`}
         style={{
           transition: 'transform 0.4s',
         }}
