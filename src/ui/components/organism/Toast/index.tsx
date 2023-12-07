@@ -56,6 +56,7 @@ type ContainerProps = TDollarPrefix<
 >;
 
 const Container = styled(motion.div)<ContainerProps>`
+  z-index: 12;
   color: ${({theme, $color}) => $color || theme.color.primary.pointPink};
   background-color: ${({$containerColor}) => $containerColor || '#FFF2F6'};
   display: flex;
