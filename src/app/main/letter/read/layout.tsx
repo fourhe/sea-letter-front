@@ -97,14 +97,15 @@ const Title = styled.input`
   padding: ${({theme}) => theme.size[4]}px ${({theme}) => theme.size[2]}px;
   border: none;
   border-bottom: 1px solid #836561;
+  align-items: center;
+
+  font-family: var(--RIDIBatang), serif;
+  font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
+  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
 
   &::placeholder {
-    align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: var(--RIDIBatang);
-    font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
-    font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-    line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
   }
 `;
 
@@ -114,13 +115,14 @@ const Content = styled.textarea`
   border: none;
   padding: ${({theme}) => theme.size[4]}px ${({theme}) => theme.size[2]}px;
   resize: none;
+  align-items: center;
+
+  font-family: var(--RIDIBatang);
+  font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
+  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
+  line-height: ${({theme}) => theme.typography.lineHeights.md}px;
 
   &::placeholder {
-    align-items: center;
     color: ${({theme}) => theme.color.neutral[400]};
-    font-family: var(--RIDIBatang);
-    font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
-    font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-    line-height: ${({theme}) => theme.typography.lineHeights.md}px;
   }
 `;
