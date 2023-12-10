@@ -17,7 +17,7 @@ const DeleteDialog = (props: SendDialogProps) => {
     <Portal portalId={PortalId.Dialog}>
       <Dialog.Container
         containerStyle={{
-          width: '60vw',
+          width: '65vw',
         }}>
         <Dialog.Body>{title}</Dialog.Body>
         <Dialog.Footer

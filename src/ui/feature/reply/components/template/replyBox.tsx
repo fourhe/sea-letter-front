@@ -7,11 +7,20 @@ import {ReplyContainer} from '../molecule';
 
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
+import {useReply} from '@feature/reply/hook';
 
-const ReplyBox = () => {
+type ReplyProps = {
+  'letter-id'?: number;
+};
+
+const ReplyBox = (props: NextPageProps<ReplyProps>) => {
+  const {params} = props;
   const {handleOpen} = useDrawer();
   const route = useRouter();
   const goToHome = () => route.push('/main');
+  const goToReply = (id: number) =>
+    route.push(`${params['letter-id']}/reply/${id}`);
+  const {replyList} = useReply({letterId: params['letter-id']});
 
   return (
     <EmptyLayout
@@ -28,15 +37,19 @@ const ReplyBox = () => {
         onClick: goToHome,
       }}>
       <Container>
-        {replyBox.map(replyBox => (
-          <ReplyContainer
-            onClick={() => route.push(`reply-box/reply/${replyBox.id}`)}
-            key={replyBox.id}
-            id={replyBox.id}
-            title={replyBox.title}
-            hasThanks={replyBox.hasThanks}
-          />
-        ))}
+        {replyList?.length !== 0 ? (
+          replyList.map(replyBox => (
+            <ReplyContainer
+              onClick={goToReply}
+              key={replyBox.id}
+              id={replyBox.id}
+              title={replyBox.title}
+              hasThanks={replyBox.hasNewReply}
+            />
+          ))
+        ) : (
+          <NoReply>아직 답장이 도착하지 않았어요!</NoReply>
+        )}
       </Container>
     </EmptyLayout>
   );
@@ -44,35 +57,15 @@ const ReplyBox = () => {
 
 export default ReplyBox;
 
+const NoReply = styled.div`
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
 `;
-
-const replyBox = [
-  {
-    id: 7,
-    title: '저도 같은 고민이 있었는데요',
-    createddAt: '2022-12-30 14:02',
-    hasThanks: true,
-  },
-  {
-    id: 8,
-    title: '저도 같은 고민이 있었는데요22',
-    createddAt: '2022-12-30 14:02',
-    hasThanks: false,
-  },
-  {
-    id: 9,
-    title: '저도 같은 고민이 있었는데요33',
-    createddAt: '2022-12-30 14:02',
-    hasThanks: true,
-  },
-  {
-    id: 10,
-    title: '저도 같은 고민이 있었는데요44',
-    createddAt: '2022-12-30 14:02',
-    hasThanks: false,
-  },
-];

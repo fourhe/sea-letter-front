@@ -1,5 +1,6 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {DeleteDialog} from '../../organism';
@@ -17,7 +18,8 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
   const {params} = props;
   const {handleOpen: deleteOpen} = useDialog();
   const {letterDetail} = useLetterBox({id: params.id});
-
+  const router = useRouter();
+  const goReplyList = () => router.push(`/main/reply-box/${params.id}`);
   return (
     <EmptyLayout
       headerShown
@@ -51,6 +53,7 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
             fontWeight: 700,
             fontSize: 20,
           }}
+          onClick={goReplyList}
           color="brown"
           size="full">
           답장 확인하기
