@@ -5,14 +5,19 @@ import styled from 'styled-components';
 import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
+import {useReply} from '@feature/reply/hook';
 
 type ReplyProps = {
-  id?: number;
+  'reply-id'?: number;
+  'letter-id'?: number;
 };
 
 const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
-  console.log(params);
+  const {replyDetail} = useReply({
+    letterId: params['letter-id'],
+    replyId: params['reply-id'],
+  });
   return (
     <EmptyLayout
       headerShown
@@ -26,16 +31,11 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
         children: <Button color="brown">삭제</Button>,
       }}>
       <HeaderContainer>
-        <Title>딸에게 보내는 심리학 편지</Title>
-        <CreatedAt>2023. 09. 24</CreatedAt>
+        <Title>{replyDetail?.title}</Title>
+        <CreatedAt>{replyDetail?.createdAt}</CreatedAt>
       </HeaderContainer>
       <Container>
-        <Content>
-          프랑스 대문호 빅토르 위고는 인생 최고의 기쁨은 자신이 사랑받고 있다는
-          확신에서 나온다. 좀 더 정확히는, 자신의 모습에도 불구하고 사랑을 받고
-          있다는. 이라는 말을 남겼다. 사랑을 받는다는 것은 인간에게 주어진
-          최고의 기쁨이다.
-        </Content>
+        <Content>{replyDetail?.content}</Content>
         <Button
           style={{
             display: 'flex',

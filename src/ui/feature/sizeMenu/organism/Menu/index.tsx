@@ -22,7 +22,7 @@ const Menu = () => {
   const {showToast} = useToast();
 
   const handleCopyClipBoard = () => {
-    const text = window.location.href;
+    const text = window.location.host;
     try {
       navigator.clipboard.writeText(text).then(() => {
         showToast({
