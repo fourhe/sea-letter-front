@@ -117,7 +117,7 @@ const Content = styled.textarea`
   resize: none;
   align-items: center;
 
-  font-family: var(--RIDIBatang);
+  font-family: var(--RIDIBatang), serif;
   font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
   font-weight: ${({theme}) => theme.typography.fontWeights.normal};
   line-height: ${({theme}) => theme.typography.lineHeights.md}px;
