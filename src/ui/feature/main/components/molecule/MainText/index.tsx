@@ -1,5 +1,5 @@
 import type {CSSProperties} from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 type MainTextProps = {
   text: string;
@@ -13,6 +13,15 @@ const MainText = (props: MainTextProps) => {
 
 export default MainText;
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const TextContainer = styled.div`
   color: ${({theme}) => theme.color.white};
   white-space: pre-wrap;
@@ -20,4 +29,5 @@ const TextContainer = styled.div`
   font-weight: ${({theme}) => theme.typography.fontWeights.medium};
   line-height: ${({theme}) => theme.typography.lineHeights.sm}px;
   padding-left: ${({theme}) => theme.size[3]}px;
+  animation: ${fadeIn} 1.5s ease-in-out;
 `;

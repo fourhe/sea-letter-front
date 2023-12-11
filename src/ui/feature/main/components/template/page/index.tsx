@@ -1,7 +1,13 @@
 'use client';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {type TouchEvent, useCallback, useMemo, useState} from 'react';
+import {
+  type TouchEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 
 import {Icon} from '@components/atom';
@@ -43,6 +49,14 @@ const Main = () => {
     }
     setTouchStartY(touchEndY);
   };
+
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        route.replace('/main');
+      }, 1500);
+    }
+  }, [data, route]);
 
   const openLetter = useCallback(() => {
     route.push(`/main/letter/read/${id}`);
