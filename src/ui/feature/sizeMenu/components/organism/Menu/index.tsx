@@ -96,7 +96,7 @@ const Menu = () => {
             </Li>
           </li>
           <li>
-            <Li href="/main/notice" onClick={handleClose}>
+            <Li href="/main/setting" onClick={handleClose}>
               <Icon.Settings height={theme.size[6]} width={theme.size[6]} />
               설정
             </Li>
