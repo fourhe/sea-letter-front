@@ -10,7 +10,7 @@ import type {
 } from '@components/molecule/Header';
 
 type EmptyLayoutProps = {
-  children?: ReactNode;
+  children: ReactNode;
   headerShown?: boolean;
   headerContainerProps?: HeaderContainerProps;
   headerCenterProps?: HeaderCenterProps;

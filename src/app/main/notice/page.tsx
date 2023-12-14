@@ -1,3 +1,3 @@
-import {Notice} from '@feature/notice/template';
+import {Notice} from 'src/ui/feature/notice/components/template';
 
 export default Notice;
