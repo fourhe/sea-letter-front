@@ -1,3 +1,3 @@
-import {Login} from '@feature/auth/template/page';
+import {Login} from '@feature/auth/components/template/page';
 
 export default Login;

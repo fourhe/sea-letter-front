@@ -12,11 +12,17 @@ import AuthenticationService from '@services/auth';
 const Menu = () => {
   const theme = useTheme();
   const route = useRouter();
+
   const {handleClose} = useDrawer();
   const logout = async () => {
     await AuthenticationService.logOut();
     handleClose();
     route.push('/');
+  };
+
+  const goToTrash = () => {
+    handleClose();
+    route.push('/main/trash-box');
   };
 
   const {showToast} = useToast();
@@ -90,7 +96,7 @@ const Menu = () => {
             </Li>
           </li>
           <li>
-            <Li href="/main/notice" onClick={handleClose}>
+            <Li href="/main/setting" onClick={handleClose}>
               <Icon.Settings height={theme.size[6]} width={theme.size[6]} />
               설정
             </Li>
@@ -98,7 +104,7 @@ const Menu = () => {
         </Ol>
       </MusicContainer>
       <TrashContainer>
-        <TrashIconContainer>
+        <TrashIconContainer onClick={goToTrash}>
           <Icon.Trash height={theme.size[6]} width={theme.size[6]} />
           휴지통
         </TrashIconContainer>

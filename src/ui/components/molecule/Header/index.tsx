@@ -1,11 +1,7 @@
-import Center from './Center';
-import type {HeaderCenterProps} from './Center';
-import Container from './Container';
-import type {HeaderContainerProps} from './Container';
-import Left from './Left';
-import type {HeaderLeftProps} from './Left';
-import Right from './Right';
-import type {HeaderRightProps} from './Right';
+import Center, {type HeaderCenterProps} from './Center';
+import Container, {type HeaderContainerProps} from './Container';
+import Left, {type HeaderLeftProps} from './Left';
+import Right, {type HeaderRightProps} from './Right';
 
 const Header = {
   Container,

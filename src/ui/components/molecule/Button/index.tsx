@@ -3,7 +3,7 @@ import {useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
-  color?: 'white' | 'brown' | 'gray' | 'pink' | string;
+  color?: 'white' | 'brown' | 'gray' | 'pink' | 'lightBrown' | string;
   size?: 'normal' | 'small' | 'full';
   bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
@@ -29,6 +29,11 @@ const Button = (props: ButtonProps) => {
         return {
           background: theme.color.neutral[200],
           color: theme.color.black,
+        };
+      case 'lightBrown':
+        return {
+          background: theme.color.secondary.lightBrown,
+          color: theme.color.secondary.brown,
         };
       case 'brown':
         return {
