@@ -1,9 +1,7 @@
-import type {CSSProperties, ReactNode} from 'react';
-import {useMemo} from 'react';
+import {type CSSProperties, type ReactNode, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
-import {Icon as Icons} from '@components/atom';
-import type {IconName} from '@components/atom/Icon';
+import {Icon as Icons, type IconName} from '@components/atom';
 
 export type HeaderRightProps = {
   icon?: IconName;

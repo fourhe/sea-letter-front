@@ -10,12 +10,9 @@ const Rating = () => {
   );
 
   const onClick = (index: number) => {
-    const newRatingArray = [...ratingArray].map((_, i) => {
-      if (i > index) {
-        return theme.color.primary.lightPink;
-      }
-      return theme.color.primary.lemonCream;
-    });
+    const newRatingArray = [...ratingArray].map(
+      (_, i) => theme.color.primary[i > index ? 'lightPink' : 'lemonCream'],
+    );
     setRatingArray(newRatingArray);
   };
 

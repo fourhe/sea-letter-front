@@ -29,8 +29,7 @@ const EmptyLayout = (props: EmptyLayoutProps) => {
   } = props;
 
   return (
-    <section
-      style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
+    <Section>
       {headerShown && (
         <Header.Container {...headerContainerProps}>
           <Header.Left {...headerLeftProps} />
@@ -39,7 +38,7 @@ const EmptyLayout = (props: EmptyLayoutProps) => {
         </Header.Container>
       )}
       <Container>{children}</Container>
-    </section>
+    </Section>
   );
 };
 
@@ -48,4 +47,10 @@ export default EmptyLayout;
 const Container = styled.article`
   padding: ${({theme}) => theme.size[0]} ${({theme}) => theme.size[6]}px;
   flex: 1;
+`;
+
+const Section = styled.section`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;

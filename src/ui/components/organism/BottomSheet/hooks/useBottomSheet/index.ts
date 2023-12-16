@@ -28,7 +28,7 @@ const useBottomSheet = () => {
   useEffect(() => {
     if (prevIsOpen && !open) {
       controls.start('hidden');
-    } else if (!prevIsOpen && open) {
+    } else {
       controls.start('visible');
     }
   }, [controls, open, prevIsOpen]);

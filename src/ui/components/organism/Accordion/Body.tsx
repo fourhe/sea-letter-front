@@ -1,5 +1,4 @@
-import type {ComponentPropsWithRef} from 'react';
-import {useContext} from 'react';
+import {type ComponentPropsWithRef, useContext} from 'react';
 import styled from 'styled-components';
 
 import {AccordionContext} from './Container';
@@ -8,6 +7,7 @@ type BodyProps = ComponentPropsWithRef<'div'>;
 
 const Body = (props: BodyProps) => {
   const {open} = useContext(AccordionContext);
+  if (open === undefined) throw new Error('AccordionContext is not provided');
   return <Container open={open} {...props} />;
 };
 
