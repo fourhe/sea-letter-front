@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
+import {useDialog} from '@components/organism/Dialog/hook';
 import {EmptyLayout} from '@components/template';
+import {DeleteDialog} from '@feature/letterBox/components/organism';
 import {useReply} from '@feature/reply/hook';
 
 type ReplyProps = {
@@ -14,6 +16,7 @@ type ReplyProps = {
 
 const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
+  const {handleOpen: deleteOpen} = useDialog();
   const {replyDetail} = useReply({
     letterId: params['letter-id'],
     replyId: params['reply-id'],
@@ -28,12 +31,22 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
         title: '누군가의 편지',
       }}
       headerRightProps={{
-        children: <Button color="brown">삭제</Button>,
+        children: (
+          <Button color="brown" onClick={deleteOpen}>
+            삭제
+          </Button>
+        ),
       }}>
       <HeaderContainer>
         <Title>{replyDetail?.title}</Title>
         <CreatedAt>{replyDetail?.createdAt}</CreatedAt>
       </HeaderContainer>
+      <DeleteDialog
+        title={`답장을를 삭제 할까요?\n이 편지에 대한 답장도 함께 삭제되며\n삭제된 편지는 1개월간\n휴지통에 보관 됩니다.`}
+        ok={() => {
+          console.log(1);
+        }}
+      />
       <Container>
         <Content>{replyDetail?.content}</Content>
         <Button

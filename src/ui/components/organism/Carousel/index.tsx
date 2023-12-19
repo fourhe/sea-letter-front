@@ -1,7 +1,11 @@
 'use client';
 
-import type {PanInfo, ValueAnimationTransition} from 'framer-motion';
-import {animate, useMotionValue} from 'framer-motion';
+import {
+  animate,
+  type PanInfo,
+  useMotionValue,
+  type ValueAnimationTransition,
+} from 'framer-motion';
 import {Children, useCallback, useEffect, useMemo, useRef} from 'react';
 
 import Container from './Container';

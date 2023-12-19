@@ -1,7 +1,6 @@
 'use client';
 
-import type {CSSProperties, ReactNode} from 'react';
-import {Children, useMemo} from 'react';
+import {Children, type CSSProperties, type ReactNode, useMemo} from 'react';
 import styled from 'styled-components';
 
 import {useDialog} from './hook';

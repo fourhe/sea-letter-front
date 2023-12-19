@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
+import {format} from '@/utils/date';
 import LetterBoxService from '@services/letterBox';
 
 type LetterBoxProps = {
@@ -23,15 +24,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
     queryFn: () => repository.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     select: data => {
-      const inputDate = new Date(data.createdAt!);
-      const createdAt = new Intl.DateTimeFormat('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }).format(inputDate);
+      const createdAt = format(new Date(data.createdAt!));
       return {
         ...data,
         createdAt,

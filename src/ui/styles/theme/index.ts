@@ -14,14 +14,12 @@ export type Size = Recursive<typeof size>;
 export type Media = Recursive<typeof media>;
 export type Typography = Recursive<typeof typography>;
 export type Opacity = Recursive<typeof opacity>;
-export type Insets = {top: number; bottom: number; right: number; left: number};
 
 export type Theme<T extends ColorScheme> = {
   color: Color<T>;
   size: Size;
   typography: Typography;
   opacity: Opacity;
-  insets: Insets;
   media: Media;
 };
 
@@ -29,7 +27,6 @@ const themeWithoutColor: Omit<Theme<ColorScheme>, 'color'> = {
   size,
   opacity,
   typography,
-  insets: {top: 0, bottom: 0, right: 0, left: 0},
   media,
 };
 

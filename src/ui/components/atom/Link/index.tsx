@@ -1,5 +1,4 @@
-import NLink from 'next/link';
-import type {LinkProps as NLinkProps} from 'next/link';
+import NLink, {type LinkProps as NLinkProps} from 'next/link';
 import type {CSSProperties, ReactNode} from 'react';
 import styled from 'styled-components';
 

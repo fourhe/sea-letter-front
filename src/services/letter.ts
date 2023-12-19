@@ -8,7 +8,7 @@ import Api from '@lib/axios';
 
 export default class LetterService extends Api implements ILetterService {
   async getLetterId(): Promise<number> {
-    const {data} = await this.get<Pick<Letter, 'id'>>(`${this.baseURL}/letter`);
+    const {data} = await this.get<Pick<Letter, 'id'>>('/letter');
     return data.id!;
   }
 

@@ -5,7 +5,7 @@ import type {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
 import styled from 'styled-components';
 
-import {LetterReplyForm} from '@application/ports/letter';
+import type {LetterReplyForm} from '@application/ports/letter';
 import {Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';

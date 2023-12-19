@@ -1,5 +1,4 @@
-import type {ComponentPropsWithRef} from 'react';
-import {useMemo} from 'react';
+import {type ComponentPropsWithRef, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {

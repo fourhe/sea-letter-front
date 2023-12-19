@@ -14,7 +14,7 @@ const Switch = (props: SwitchProps) => {
     onClickProps();
   };
 
-  const fill = on ? theme.color.primary.bgPink : theme.color.neutral[400];
+  const fill = on ? theme.color.primary.pointPink : theme.color.neutral[400];
   const transform = `translateX(${on ? '20px' : '0'})`;
 
   return (
