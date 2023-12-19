@@ -2,8 +2,15 @@ import {type ComponentPropsWithRef, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
-  color?: 'white' | 'brown' | 'gray' | 'pink' | 'lightBrown' | string;
-  size?: 'normal' | 'small' | 'full';
+  color?:
+    | 'white'
+    | 'brown'
+    | 'gray'
+    | 'pink'
+    | 'lightBrown'
+    | 'lightPink'
+    | string;
+  size?: 'normal' | 'small' | 'xSmall' | 'full';
   bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
 
@@ -49,6 +56,11 @@ const Button = (props: ButtonProps) => {
           background: theme.color.primary.pointPink,
           color: theme.color.white,
         };
+      case 'lightPink':
+        return {
+          background: theme.color.primary.bgPink,
+          color: theme.color.white,
+        };
       default:
         return {
           background: theme.color.content[0],
@@ -74,7 +86,7 @@ const SButton = styled.button<
     background: string;
     color: string;
     bold?: boolean;
-    size: 'normal' | 'small' | 'full';
+    size: 'normal' | 'small' | 'xSmall' | 'full';
   }>
 >`
   white-space: nowrap;

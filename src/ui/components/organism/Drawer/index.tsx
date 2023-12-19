@@ -30,7 +30,7 @@ const Container = styled.div<{open: boolean}>`
   z-index: 3;
   height: 100vh;
   width: 72vw;
-  background-color: ${({theme}) => theme.color.primary.lightPink};
+  background-color: ${({theme}) => theme.color.white};
   left: 0;
   transform: translateX(${({open}) => (open ? 0 : -100)}%);
   transition: transform 0.3s linear;
