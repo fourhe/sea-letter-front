@@ -163,7 +163,6 @@ const DashboardContainer = styled.div<{$line?: boolean}>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 6px;
   flex: 1;
   border-right: ${({$line, theme}) =>
