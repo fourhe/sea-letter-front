@@ -12,6 +12,7 @@ const Setting = () => {
   const {handleOpen} = useDrawer();
   const route = useRouter();
   const goToHome = () => route.push('/main');
+  const goEmailSetting = () => route.push('/main/setting/email');
 
   const {color, size} = useTheme();
 
@@ -44,7 +45,7 @@ const Setting = () => {
               {`편지 답장과 감사인사에 대한 알림을\n이메일로 받을 수 있어요`}
             </SubContent>
           </Content>
-          <Content>
+          <Content onClick={goEmailSetting}>
             이메일 등록/변경
             <Icon.ChevronRight
               width={size.icon.normal}
