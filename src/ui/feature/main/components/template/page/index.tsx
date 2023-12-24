@@ -20,7 +20,6 @@ import {MainText} from '@feature/main/components/molecule';
 const message = {
   writing: '편지가 성공적으로\n바다로 보내졌습니다.',
   reply: '답장이 성공적으로\n바다로 보내졌습니다.',
-  review: '리뷰가 등록되었어요.\n소중한 의견 감사합니다.',
 } as const;
 
 type Message = keyof typeof message | null;
@@ -54,7 +53,7 @@ const Main = () => {
     if (data) {
       setTimeout(() => {
         route.replace('/main');
-      }, 1500);
+      }, 2000);
     }
   }, [data, route]);
 
@@ -62,35 +61,62 @@ const Main = () => {
     route.push(`/main/letter/read/${id}`);
   }, [id, route]);
 
-  const Content = useMemo(
-    () =>
-      // eslint-disable-next-line no-nested-ternary
-      data ? (
+  const Content = useMemo(() => {
+    if (data) {
+      return (
         <MainText
           style={{fontWeight: 700, fontSize: 20, lineHeight: '28px'}}
           text={message[data]}
         />
-      ) : isUpEvent ? (
-        <>
-          <Icon.Letter width={149} height={183} onClick={openLetter} />
-          <MainText
-            style={{
-              position: 'absolute',
-              bottom: '-8vh',
-              left: '50%',
-            }}
-            text={'유리병을 탭하여\n편지를 확인하세요.'}
-          />
-        </>
-      ) : (
+      );
+    }
+    if (!isUpEvent) {
+      return (
         <>
           <Icon.HideLetter width={74} height={61} />
           <Icon.Union width={28} height={56} />
           <MainText text={'위로 올려\n편지를 주워보세요.'} />
         </>
-      ),
-    [data, isUpEvent, openLetter],
-  );
+      );
+    }
+    if (isUpEvent) {
+      return (
+        <>
+          <Icon.HideLetter
+            width={74}
+            height={61}
+            style={{
+              position: 'absolute',
+              top: '-2vh',
+              right: '50%',
+            }}
+          />
+          <MainText
+            style={{
+              position: 'absolute',
+              bottom: '-15vh',
+            }}
+            text={
+              '아직 편지가 떠내려오지 않았어요!\n누군가 편지를 보내길 기다려 주세요:)'
+            }
+          />
+        </>
+      );
+    }
+    return (
+      <>
+        <Icon.Letter width={149} height={183} onClick={openLetter} />
+        <MainText
+          style={{
+            position: 'absolute',
+            bottom: '-8vh',
+            left: '50%',
+          }}
+          text={'유리병을 탭하여\n편지를 확인하세요.'}
+        />
+      </>
+    );
+  }, [data, isUpEvent, openLetter]);
 
   const goMailBox = useCallback(() => route.push('/main/letter-box'), [route]);
 

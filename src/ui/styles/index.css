@@ -2,25 +2,26 @@
     user-select: none;
 }
 
+body {
+    margin: 0;
+    overscroll-behavior-y: contain;
+}
+
+@font-face {
+    font-family: Pretendard ;
+    src: url('/font/PretendardVariable.woff2') format('woff2'),
+}
+
+button, input, input::placeholder, textarea, textarea::placeholder {
+    font-family: Pretendard, sans-serif;
+}
+
 a:link, a:visited {
     text-decoration: none;
 }
 
-p {
+p, h2, h6 {
     margin: 0;
-}
-
-h6 {
-    margin: 0;
-}
-
-h5 {
-    margin: 0;
-}
-
-body {
-    margin: 0;
-    overscroll-behavior-y: contain;
 }
 
 li {

@@ -13,6 +13,7 @@ type HeaderProps = {
 const Header = (props: HeaderProps) => {
   const {onClick: onClickProp, children, ...restProps} = props;
   const {open, setOpen} = useContext(AccordionContext);
+  if (open === undefined) throw new Error('AccordionContext is not provided');
   const theme = useTheme();
   const onClick = () => {
     if (onClickProp) onClickProp();

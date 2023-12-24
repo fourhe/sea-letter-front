@@ -55,6 +55,7 @@ const size = {
     large: 320,
   },
   button: {
+    xSmall: 30,
     small: 40,
     normal: 60,
     large: 66,

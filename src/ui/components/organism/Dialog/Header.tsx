@@ -1,5 +1,4 @@
-import type {ReactNode} from 'react';
-import {ComponentPropsWithRef} from 'react';
+import type {ComponentPropsWithRef, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {Icon} from '@components/atom';

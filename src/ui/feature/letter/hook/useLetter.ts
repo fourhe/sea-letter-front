@@ -1,8 +1,8 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
-import {useMemo} from 'react';
 
+import {format} from '@/utils/date';
 import type {LetterForm, LetterReplyForm} from '@application/ports/letter';
 import LetterService from '@services/letter';
 
@@ -28,36 +28,19 @@ const useLetter = (props?: LetterHookProps) => {
     mutationFn: variables => repository.sendReply(variables),
   });
 
-  const {
-    data,
-    isPending,
-    isError: isLetterIdError,
-  } = useQuery({
+  const {data: id, isError: isLetterIdError} = useQuery({
     queryKey: ['letters'],
     queryFn: () => repository.getLetterId(),
     initialData: null,
     enabled: !!props?.isUpEvent,
   });
 
-  const id = useMemo(() => {
-    if (isPending) return null;
-    return data;
-  }, [data, isPending]);
-
   const {data: letter, isPending: isLetterPending} = useQuery({
     queryKey: ['letters', props?.letterId],
     queryFn: () => repository.getLetter(props?.letterId!),
     enabled: !!props?.letterId,
     select: letterData => {
-      const inputDate = new Date(letterData.createdAt!);
-      const createdAt = new Intl.DateTimeFormat('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }).format(inputDate);
+      const createdAt = format(new Date(letterData.createdAt!));
       return {
         ...letterData,
         createdAt,

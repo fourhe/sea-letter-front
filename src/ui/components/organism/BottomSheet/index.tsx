@@ -1,8 +1,7 @@
 'use client';
 
 import {motion} from 'framer-motion';
-import type {ReactNode} from 'react';
-import {useState} from 'react';
+import {type ReactNode, useState} from 'react';
 import styled from 'styled-components';
 
 import Header from './Header';

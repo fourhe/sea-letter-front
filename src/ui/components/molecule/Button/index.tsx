@@ -1,10 +1,16 @@
-import type {ComponentPropsWithRef} from 'react';
-import {useMemo} from 'react';
+import {type ComponentPropsWithRef, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 type ButtonProps = {
-  color?: 'white' | 'brown' | 'gray' | 'pink' | 'lightBrown' | string;
-  size?: 'normal' | 'small' | 'full';
+  color?:
+    | 'white'
+    | 'brown'
+    | 'gray'
+    | 'pink'
+    | 'lightBrown'
+    | 'lightPink'
+    | string;
+  size?: 'normal' | 'small' | 'xSmall' | 'full';
   bold?: boolean;
 } & ComponentPropsWithRef<'button'>;
 
@@ -21,8 +27,8 @@ const Button = (props: ButtonProps) => {
   const {background, color} = useMemo(() => {
     if (disabled)
       return {
-        background: theme.color.content[400],
-        color: theme.color.text[100],
+        background: theme.color.neutral[300],
+        color: theme.color.white,
       };
     switch (colorProp) {
       case 'gray':
@@ -50,6 +56,11 @@ const Button = (props: ButtonProps) => {
           background: theme.color.primary.pointPink,
           color: theme.color.white,
         };
+      case 'lightPink':
+        return {
+          background: theme.color.primary.bgPink,
+          color: theme.color.white,
+        };
       default:
         return {
           background: theme.color.content[0],
@@ -75,7 +86,7 @@ const SButton = styled.button<
     background: string;
     color: string;
     bold?: boolean;
-    size: 'normal' | 'small' | 'full';
+    size: 'normal' | 'small' | 'xSmall' | 'full';
   }>
 >`
   white-space: nowrap;
@@ -88,8 +99,8 @@ const SButton = styled.button<
   border: 0;
   background: ${({$background}) => $background};
   color: ${({$color}) => $color};
-  font-family: inherit;
-  font-weight: ${({$bold}) => ($bold ? 700 : 'normal')};
+  font-weight: ${({$bold, theme}) =>
+    theme.typography.fontWeights[$bold ? 'bold' : 'normal']};
   font-size: 16px;
 
   &:hover {

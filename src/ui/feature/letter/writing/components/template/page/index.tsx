@@ -87,6 +87,7 @@ const Title = styled.input`
 
   &::placeholder {
     color: ${({theme}) => theme.color.neutral[400]};
+    font-family: var(--RIDIBatang);
   }
 `;
 
@@ -106,5 +107,6 @@ const Content = styled.textarea`
 
   &::placeholder {
     color: ${({theme}) => theme.color.neutral[400]};
+    font-family: var(--RIDIBatang);
   }
 `;

@@ -1,5 +1,4 @@
-import {useEffect, useState} from 'react';
-import type {ReactElement} from 'react';
+import {type ReactElement, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {PortalId} from './portal.enum';
