@@ -82,7 +82,7 @@ const Email = () => {
         style={{
           fontSize: typography.fontSizes.lg,
         }}>
-        확인
+        저장하기
       </Button>
     </EmptyLayout>
   );
@@ -101,6 +101,7 @@ const Title = styled.div`
   font-size: 22px;
   font-weight: ${({theme}) => theme.typography.fontWeights.medium};
   white-space: pre-line;
+  line-height: 30px;
 `;
 
 const SubTitle = styled.div`
