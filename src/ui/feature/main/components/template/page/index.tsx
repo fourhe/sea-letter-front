@@ -52,13 +52,19 @@ const Main = () => {
   };
 
   useEffect(() => {
-    if (data) {
+    const reset = () => {
       setTimeout(() => {
         route.replace('/main');
         client.setQueryData(['letters'], null);
-      }, 2000);
+      }, 2500);
+    };
+    if (data) {
+      reset();
     }
-  }, [client, data, route]);
+    if (id !== null && !isUpEvent) {
+      reset();
+    }
+  }, [id, client, data, route, isUpEvent]);
 
   const openLetter = useCallback(() => {
     route.push(`/main/letter/read/${id}`);

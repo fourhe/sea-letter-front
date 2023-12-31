@@ -1,18 +1,30 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {type KeyboardEvent, useState} from 'react';
 import styled from 'styled-components';
 
+import {ToolTip} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
 
+type FilterType = 'reply' | 'letter';
+
 const TrashBox = () => {
+  const [filter, setFilter] = useState<FilterType>('reply');
   const {handleOpen} = useDrawer();
   const route = useRouter();
 
   const goToHome = () => route.push('/main');
   const goToTrash = (id: number) => route.push(`trash-box/${id}`);
+
+  const handleKeyPress = (event: KeyboardEvent, callback: () => void) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      callback();
+    }
+  };
+
   return (
     <EmptyLayout
       headerShown
@@ -27,7 +39,32 @@ const TrashBox = () => {
         icon: 'Home',
         onClick: goToHome,
       }}>
-      <TextContainer>{`휴지통에 있는 편지는 1개월 동안\n보관 후 영구 삭제됩니다.`}</TextContainer>
+      <HeaderContainer>
+        <ToolTip
+          message={`휴지통에 있는 편지는 1개월 동안\n보관 후 영구 삭제됩니다.`}
+        />
+        <FilterContainer>
+          <div
+            role="button"
+            tabIndex={0}
+            onKeyDown={event => handleKeyPress(event, () => setFilter('reply'))}
+            onClick={() => setFilter('reply')}
+            className={filter === 'reply' ? 'active' : ''}>
+            답장 목록
+          </div>
+          <VerticalLine>|</VerticalLine>
+          <div
+            role="button"
+            tabIndex={0}
+            onKeyDown={event =>
+              handleKeyPress(event, () => setFilter('letter'))
+            }
+            onClick={() => setFilter('letter')}
+            className={filter === 'letter' ? 'active' : ''}>
+            편지 목록
+          </div>
+        </FilterContainer>
+      </HeaderContainer>
       <div style={{display: 'grid', gap: 16}}>
         {dummy.map(trash => (
           <TrashContainer
@@ -45,13 +82,34 @@ const TrashBox = () => {
 
 export default TrashBox;
 
-const TextContainer = styled.div`
+const HeaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 2vh 0;
   color: ${({theme}) => theme.color.neutral[500]};
-  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
-  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
+`;
+
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   text-align: center;
-  white-space: pre-wrap;
+  font-size: 18px;
+  line-height: 26px;
+
+  & > .active {
+    color: ${({theme}) => theme.color.primary.pointPink};
+    font-weight: 500;
+  }
+`;
+
+const VerticalLine = styled.div`
+  color: ${({theme}) => theme.color.neutral[500]};
+  text-align: center;
+  font-size: 18px;
+  line-height: 26px;
 `;
 
 const dummy = [
