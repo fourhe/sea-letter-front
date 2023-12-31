@@ -4,14 +4,14 @@ import {useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import styled, {useTheme} from 'styled-components';
 
+import type {User} from '@application/ports/user';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
+import {useEmail} from '@feature/setting/hook';
 
-type TEmailForm = {
-  email: string;
-};
+type TEmailForm = Pick<User, 'email'>;
 
-const initialState: TEmailForm = {
+const defaultValues: TEmailForm = {
   email: '',
 };
 
@@ -20,7 +20,7 @@ const Email = () => {
     register,
     handleSubmit,
     formState: {errors},
-  } = useForm<TEmailForm>({defaultValues: initialState});
+  } = useForm<TEmailForm>({defaultValues});
   const {typography} = useTheme();
 
   const errorMessages = useMemo(() => {
@@ -35,6 +35,8 @@ const Email = () => {
     return baseErrorMessages;
   }, [errors]);
 
+  const {updateEmail} = useEmail();
+
   return (
     <EmptyLayout
       headerShown
@@ -44,7 +46,7 @@ const Email = () => {
       headerCenterProps={{
         title: '이메일 등록/변경',
       }}>
-      <EmailForm onSubmit={handleSubmit(console.log)} id="email">
+      <EmailForm onSubmit={handleSubmit(data => updateEmail(data))} id="email">
         <div>
           <TitleContainer>
             <Title>{`알림을 받을 이메일을\n등록할 수 있어요`}</Title>

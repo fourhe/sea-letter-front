@@ -3,7 +3,9 @@ import axios from 'axios';
 
 class Api {
   private readonly axiosInstance: AxiosInstance;
+
   private readonly token: string | undefined;
+
   readonly baseURL: string;
 
   constructor(token?: string) {
@@ -62,10 +64,10 @@ class Api {
     return this.getAxiosInstance().post<T>(url, data, {headers});
   }
 
-  protected async put<T, D>(
+  protected async put<T, D = unknown>(
     url: string,
     data: D,
-    headers: AxiosRequestConfig['headers'],
+    headers?: AxiosRequestConfig['headers'],
   ) {
     return this.getAxiosInstance().put<T>(url, data, {headers});
   }
