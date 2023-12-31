@@ -3,6 +3,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb',
+    'airbnb-typescript',
     'airbnb/hooks',
     'prettier',
     'next/core-web-vitals',
@@ -10,6 +11,7 @@ module.exports = {
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: true,
     sourceType: 'module',
     ecmaVersion: 'latest',
     ecmaFeatures: {
@@ -33,6 +35,7 @@ module.exports = {
     },
   ],
   rules: {
+    '@typescript-eslint/no-use-before-define': 'off',
     'react/jsx-filename-extension': [
       'error',
       {extensions: ['.ts', '.tsx', '.jsx']},

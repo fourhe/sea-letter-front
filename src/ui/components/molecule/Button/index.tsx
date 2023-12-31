@@ -1,7 +1,7 @@
 import {type ComponentPropsWithRef, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
-type ButtonProps = {
+export type ButtonProps = {
   color?:
     | 'white'
     | 'brown'
