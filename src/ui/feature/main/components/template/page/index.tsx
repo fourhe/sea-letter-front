@@ -52,17 +52,11 @@ const Main = () => {
   };
 
   useEffect(() => {
-    const reset = () => {
+    if (data || (id !== null && !isUpEvent)) {
       setTimeout(() => {
         route.replace('/main');
         client.setQueryData(['letters'], null);
       }, 2500);
-    };
-    if (data) {
-      reset();
-    }
-    if (id !== null && !isUpEvent) {
-      reset();
     }
   }, [id, client, data, route, isUpEvent]);
 
@@ -160,7 +154,7 @@ export default Main;
 const Container = styled.div<{
   $isUpEvent: boolean;
 }>`
-  width: 297px;
+  width: 80vw;
   position: absolute;
   justify-content: center;
   display: flex;
