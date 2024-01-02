@@ -8,6 +8,7 @@ import {ToolTip} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
+import {useThrash} from '@feature/trash/hook';
 
 type FilterType = 'reply' | 'letter';
 
@@ -15,8 +16,8 @@ const TrashBox = () => {
   const [filter, setFilter] = useState<FilterType>('reply');
   const {handleOpen} = useDrawer();
   const route = useRouter();
+  const {trashList} = useThrash();
 
-  const goToHome = () => route.push('/main');
   const goToTrash = (id: number) => route.push(`trash-box/${id}`);
 
   const handleKeyPress = (event: KeyboardEvent, callback: () => void) => {
@@ -37,7 +38,6 @@ const TrashBox = () => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
       <HeaderContainer>
         <ToolTip
@@ -66,15 +66,19 @@ const TrashBox = () => {
         </FilterContainer>
       </HeaderContainer>
       <div style={{display: 'grid', gap: 16}}>
-        {dummy.map(trash => (
-          <TrashContainer
-            key={trash.id}
-            id={trash.id}
-            deletedAt={trash.deletedAt}
-            title={trash.title}
-            onClick={goToTrash}
-          />
-        ))}
+        {trashList?.length !== 0 ? (
+          trashList.map(trash => (
+            <TrashContainer
+              key={trash.id}
+              id={trash.id}
+              deletedAt={trash.deletedAt}
+              title={trash.title}
+              onClick={goToTrash}
+            />
+          ))
+        ) : (
+          <NoTrash>휴지통이 비어있어요!</NoTrash>
+        )}
       </div>
     </EmptyLayout>
   );
@@ -112,41 +116,9 @@ const VerticalLine = styled.div`
   line-height: 26px;
 `;
 
-const dummy = [
-  {
-    id: 1,
-    title: '고민이 있습니다.',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 2,
-    title: '고민이 있습니다22',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 3,
-    title: '고민이 있습니다33',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 4,
-    title: '저도 같은 고민이 있습니다.',
-    deletedAt: '2022-12-31 14:00',
-    isWriter: true,
-  },
-  {
-    id: 8,
-    title: '저도 같은 고민이 있습니다22',
-    deletedAt: '2022-12-30 15:00',
-    isWriter: false,
-  },
-  {
-    id: 9,
-    title: '저도 같은고민이 있습니다33',
-    deletedAt: '2022-12-30 14:02',
-    isWriter: false,
-  },
-];
+const NoTrash = styled.div`
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

@@ -17,7 +17,6 @@ const ReplyBox = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
   const {handleOpen} = useDrawer();
   const route = useRouter();
-  const goToHome = () => route.push('/main');
   const goToReply = (id: number) =>
     route.push(`${params['letter-id']}/reply/${id}`);
   const {replyList} = useReply({letterId: params['letter-id']});
@@ -34,7 +33,6 @@ const ReplyBox = (props: NextPageProps<ReplyProps>) => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
       <Container>
         {replyList?.length !== 0 ? (

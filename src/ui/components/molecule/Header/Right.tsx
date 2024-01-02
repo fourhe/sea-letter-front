@@ -1,4 +1,5 @@
-import {type CSSProperties, type ReactNode, useMemo} from 'react';
+import {useRouter} from 'next/navigation';
+import {type CSSProperties, type ReactNode, useCallback, useMemo} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon as Icons, type IconName} from '@components/atom';
@@ -24,13 +25,17 @@ const HeaderRight = (props: HeaderRightProps) => {
     children,
   } = props;
   const theme = useTheme();
+  const route = useRouter();
   const Icon = useMemo(() => (icon ? Icons[icon] : null), [icon]);
+
+  const goToHome = useCallback(() => route.push('/main'), [route]);
+
   const onClick = useMemo(() => {
-    if (disabled) {
-      return undefined;
-    }
+    if (icon === 'Home') return goToHome;
+    if (disabled) return undefined;
     return onClickProp;
-  }, [disabled, onClickProp]);
+  }, [disabled, goToHome, icon, onClickProp]);
+
   return (
     <Container style={style} onClick={onClick}>
       {Icon ? (

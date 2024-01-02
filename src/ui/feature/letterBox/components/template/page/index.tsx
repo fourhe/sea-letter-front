@@ -11,7 +11,6 @@ import {useLetterBox} from '@feature/letterBox/hook';
 const MailBox = () => {
   const route = useRouter();
   const {handleOpen} = useDrawer();
-  const goToHome = () => route.push('/main');
   const readMyLetter = (id: number) => route.push(`letter-box/letters/${id}`);
   const {letterBoxList} = useLetterBox();
   return (
@@ -26,7 +25,6 @@ const MailBox = () => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
       <Container>
         {letterBoxList.map(letterBoxListBox => (

@@ -1,6 +1,5 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
 import styled, {useTheme} from 'styled-components';
 
 import {Accordion} from '@components/organism';
@@ -10,8 +9,6 @@ import {EmptyLayout} from '@components/template';
 const Page = () => {
   const {handleOpen} = useDrawer();
   const theme = useTheme();
-  const route = useRouter();
-  const goHome = () => route.push('/main');
   return (
     <EmptyLayout
       headerShown
@@ -28,7 +25,6 @@ const Page = () => {
       headerRightProps={{
         style: {color: theme.color.white},
         icon: 'Home',
-        onClick: goHome,
       }}>
       {accordion.map(item => (
         <Accordion.Container key={item.id}>
