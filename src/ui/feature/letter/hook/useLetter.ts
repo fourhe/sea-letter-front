@@ -16,7 +16,7 @@ const useLetter = (props?: LetterHookProps) => {
   const token = cookies.get('access-token');
   const repository = new LetterService(token);
 
-  const {mutateAsync} = useMutation<void, AxiosError, LetterForm>({
+  const {mutateAsync: writeLetter} = useMutation<void, AxiosError, LetterForm>({
     mutationFn: variables => repository.writeLetter(variables),
   });
 
@@ -50,7 +50,7 @@ const useLetter = (props?: LetterHookProps) => {
 
   return {
     sendReply,
-    writeLetter: mutateAsync,
+    writeLetter,
     id,
     letter,
     isLetterPending,

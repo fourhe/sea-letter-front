@@ -29,7 +29,7 @@ const Container = styled.div<{open: boolean}>`
   position: fixed;
   z-index: 3;
   height: 100vh;
-  width: 72vw;
+  width: 80vw;
   background-color: ${({theme}) => theme.color.white};
   left: 0;
   transform: translateX(${({open}) => (open ? 0 : -100)}%);

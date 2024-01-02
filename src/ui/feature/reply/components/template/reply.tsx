@@ -1,10 +1,12 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
+import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout} from '@components/template';
 import {DeleteDialog} from '@feature/letterBox/components/organism';
 import {useReply} from '@feature/reply/hook';
@@ -17,10 +19,20 @@ type ReplyProps = {
 const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
   const {handleOpen: deleteOpen} = useDialog();
-  const {replyDetail} = useReply({
+  const route = useRouter();
+  const {showToast} = useToast();
+  const {replyDetail, deleteReply} = useReply({
     letterId: params['letter-id'],
     replyId: params['reply-id'],
   });
+
+  const deleteSelectedReply = async () => {
+    await deleteReply(replyDetail?.id!);
+    showToast({message: '답장이 휴지통으로 이동했습니다.'});
+    deleteOpen();
+    route.back();
+  };
+
   return (
     <EmptyLayout
       headerShown
@@ -43,9 +55,7 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
       </HeaderContainer>
       <DeleteDialog
         title={`답장을를 삭제 할까요?\n이 편지에 대한 답장도 함께 삭제되며\n삭제된 편지는 1개월간\n휴지통에 보관 됩니다.`}
-        ok={() => {
-          console.log(1);
-        }}
+        ok={deleteSelectedReply}
       />
       <Container>
         <Content>{replyDetail?.content}</Content>

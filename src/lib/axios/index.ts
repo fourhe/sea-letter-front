@@ -3,7 +3,9 @@ import axios from 'axios';
 
 class Api {
   private readonly axiosInstance: AxiosInstance;
+
   private readonly token: string | undefined;
+
   readonly baseURL: string;
 
   constructor(token?: string) {
@@ -30,10 +32,11 @@ class Api {
 
     api.interceptors.response.use(
       response => response,
-      async (error: AxiosError) => {
+      (error: AxiosError) => {
         if (error.response?.status === 401) {
-          await fetch('api/reissue/access-token');
+          fetch('api/reissue/access-token').catch(() => Promise.reject(error));
         }
+        return Promise.reject(error);
       },
     );
     return api;
@@ -56,42 +59,26 @@ class Api {
 
   protected async post<T, D>(
     url: string,
-    data: D,
+    data?: D,
     headers?: AxiosRequestConfig['headers'],
   ) {
     return this.getAxiosInstance().post<T>(url, data, {headers});
   }
 
-  protected async put<T, D>(
+  protected async put<T, D = unknown>(
     url: string,
     data: D,
-    headers: AxiosRequestConfig['headers'],
+    headers?: AxiosRequestConfig['headers'],
   ) {
     return this.getAxiosInstance().put<T>(url, data, {headers});
   }
 
-  protected async patch<T, D>(
+  protected async delete<T, D = unknown>(
     url: string,
-    data: D,
-    headers: AxiosRequestConfig['headers'],
-  ) {
-    return this.getAxiosInstance().patch<T>(url, data, {headers});
-  }
-
-  protected async delete<T, D>(
-    url: string,
-    data: D,
+    data?: D,
     headers?: AxiosRequestConfig['headers'],
   ) {
     return this.getAxiosInstance().delete<T>(url, {headers, data});
-  }
-
-  protected async head<T, D>(
-    url: string,
-    data: D,
-    headers?: AxiosRequestConfig['headers'],
-  ) {
-    return this.getAxiosInstance().head<T>(url, {headers, data});
   }
 }
 

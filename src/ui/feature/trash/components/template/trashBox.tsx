@@ -1,18 +1,25 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {useState} from 'react';
 import styled from 'styled-components';
 
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
+import {Filter} from '@feature/trash/components/organism';
+import {useThrash} from '@feature/trash/hook';
+
+export type FilterType = 'reply' | 'letter';
 
 const TrashBox = () => {
+  const [filter, setFilter] = useState<FilterType>('reply');
+  const {trashList, restoreTrash} = useThrash();
   const {handleOpen} = useDrawer();
   const route = useRouter();
 
-  const goToHome = () => route.push('/main');
   const goToTrash = (id: number) => route.push(`trash-box/${id}`);
+
   return (
     <EmptyLayout
       headerShown
@@ -25,19 +32,25 @@ const TrashBox = () => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
-      <TextContainer>{`휴지통에 있는 편지는 1개월 동안\n보관 후 영구 삭제됩니다.`}</TextContainer>
+      <HeaderContainer>
+        <Filter filter={filter} setFilter={setFilter} />
+      </HeaderContainer>
       <div style={{display: 'grid', gap: 16}}>
-        {dummy.map(trash => (
-          <TrashContainer
-            key={trash.id}
-            id={trash.id}
-            deletedAt={trash.deletedAt}
-            title={trash.title}
-            onClick={goToTrash}
-          />
-        ))}
+        {trashList?.length !== 0 ? (
+          trashList.map(trash => (
+            <TrashContainer
+              key={trash.id}
+              id={trash.id}
+              deletedAt={trash.deletedAt}
+              title={trash.title}
+              onContainerClick={goToTrash}
+              onButtonClick={restoreTrash}
+            />
+          ))
+        ) : (
+          <NoTrash>휴지통이 비어있어요!</NoTrash>
+        )}
       </div>
     </EmptyLayout>
   );
@@ -45,50 +58,17 @@ const TrashBox = () => {
 
 export default TrashBox;
 
-const TextContainer = styled.div`
+const HeaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 2vh 0;
   color: ${({theme}) => theme.color.neutral[500]};
-  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
-  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
-  text-align: center;
-  white-space: pre-wrap;
 `;
 
-const dummy = [
-  {
-    id: 1,
-    title: '고민이 있습니다.',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 2,
-    title: '고민이 있습니다22',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 3,
-    title: '고민이 있습니다33',
-    deletedAt: '2022-12-30 14:00',
-    isWriter: true,
-  },
-  {
-    id: 4,
-    title: '저도 같은 고민이 있습니다.',
-    deletedAt: '2022-12-31 14:00',
-    isWriter: true,
-  },
-  {
-    id: 8,
-    title: '저도 같은 고민이 있습니다22',
-    deletedAt: '2022-12-30 15:00',
-    isWriter: false,
-  },
-  {
-    id: 9,
-    title: '저도 같은고민이 있습니다33',
-    deletedAt: '2022-12-30 14:02',
-    isWriter: false,
-  },
-];
+const NoTrash = styled.div`
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

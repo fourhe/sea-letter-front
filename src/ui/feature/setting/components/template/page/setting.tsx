@@ -11,7 +11,6 @@ import {EmptyLayout} from '@components/template';
 const Setting = () => {
   const {handleOpen} = useDrawer();
   const route = useRouter();
-  const goToHome = () => route.push('/main');
   const goEmailSetting = () => route.push('/main/setting/email');
 
   const {color, size} = useTheme();
@@ -28,7 +27,6 @@ const Setting = () => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
       <Container>
         <div>

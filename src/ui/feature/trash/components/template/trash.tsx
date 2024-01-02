@@ -1,9 +1,12 @@
 'use client';
 
+import {notFound, useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
 import {Button} from '@components/molecule';
+import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout} from '@components/template';
+import {useThrash} from '@feature/trash/hook';
 
 type TrashProps = {
   id?: number;
@@ -11,7 +14,16 @@ type TrashProps = {
 
 const Trash = (props: NextPageProps<TrashProps>) => {
   const {params} = props;
-  console.log(params.id);
+  const route = useRouter();
+  const {showToast} = useToast();
+  const {trashDetail, restoreTrash, deleteTrash} = useThrash({id: params?.id});
+  if (!params?.id) return notFound();
+  const deleteSelectedTrash = async () => {
+    await deleteTrash(Number(params.id!));
+    showToast({message: '편지가 삭제되었습니다.'});
+    route.back();
+  };
+
   return (
     <EmptyLayout
       headerShown
@@ -21,19 +33,29 @@ const Trash = (props: NextPageProps<TrashProps>) => {
       headerRightProps={{
         children: (
           <div>
-            <Button style={{marginRight: 8}} color="lightBrown">
+            <Button
+              style={{marginRight: 8}}
+              color="lightBrown"
+              onClick={deleteSelectedTrash}>
               영구삭제
             </Button>
-            <Button color="brown">복구</Button>
+            <Button
+              color="brown"
+              onClick={async () => {
+                await restoreTrash(trashDetail?.id!);
+                route.back();
+              }}>
+              복구
+            </Button>
           </div>
         ),
       }}>
       <HeaderContainer>
-        <Title>{dummy?.title}</Title>
-        <CreatedAt>{dummy?.deleteAt}</CreatedAt>
+        <Title>{trashDetail?.title}</Title>
+        <CreatedAt>{trashDetail?.deletedAt}</CreatedAt>
       </HeaderContainer>
       <Container>
-        <Content>{dummy?.content}</Content>
+        <Content>{trashDetail?.content}</Content>
       </Container>
     </EmptyLayout>
   );
@@ -73,10 +95,3 @@ const Content = styled.div`
   line-height: 26px;
   padding: ${({theme}) => theme.size[3]}px;
 `;
-
-const dummy = {
-  title: '딸에게 보내는 심리학 편지',
-  deleteAt: '2023. 09. 24',
-  content:
-    '프랑스 대문호 빅토르 위고는 "인생 최고의 기쁨은 자신이 사랑받고 있다는 확신에서 나온다. 좀 더 정확히는, 자신의 모습에도 불구하고 사랑을 받고 있다는."이라는 말을 남겼다. 사랑을 받는다는 것은 인간에게 주어진 최고의 기쁨이다.',
-};

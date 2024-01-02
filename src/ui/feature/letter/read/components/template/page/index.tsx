@@ -1,6 +1,6 @@
 'use client';
 
-import {notFound, useRouter} from 'next/navigation';
+import {notFound} from 'next/navigation';
 import styled from 'styled-components';
 
 import {Button} from '@components/molecule';
@@ -17,9 +17,7 @@ const Read = (props: NextPageProps<ReadProps>) => {
   if (params.id === 'null') {
     notFound();
   }
-  const {push} = useRouter();
   const {setOpen} = useBottomSheet();
-  const goHome = () => push('/main');
 
   const {letter} = useLetter({letterId: params.id});
 
@@ -34,7 +32,6 @@ const Read = (props: NextPageProps<ReadProps>) => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goHome,
       }}>
       <HeaderContainer>
         <Title>{letter?.title}</Title>
