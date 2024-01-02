@@ -1,10 +1,10 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
 import {LetterBox} from '@application/ports/letterBox';
 import {useToast} from '@components/organism/Toast/hook';
+import type {ApiError} from '@lib/axios';
 import LetterBoxService from '@services/letterBox';
 
 type LetterBoxProps = {
@@ -18,7 +18,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const client = useQueryClient();
   const {showToast} = useToast();
 
-  const onError = (error: AxiosError) => showToast({message: error.message});
+  const onError = (error: ApiError) => showToast({message: error.message});
 
   const {data: letterBoxList} = useQuery({
     queryKey: ['letterBox'],
@@ -39,7 +39,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
     },
   });
 
-  const {mutateAsync: deleteLetter} = useMutation<void, AxiosError, number>({
+  const {mutateAsync: deleteLetter} = useMutation<void, ApiError, number>({
     mutationFn: id => repository.deleteLetter(id),
     onSuccess: (data, deleteId) => {
       const newDataList = client

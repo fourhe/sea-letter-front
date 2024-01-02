@@ -1,10 +1,10 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
 import type {Trash} from '@application/ports/trash';
 import {useToast} from '@components/organism/Toast/hook';
+import type {ApiError} from '@lib/axios';
 import TrashService from '@services/trash';
 
 const useThrash = (trash?: Partial<Trash>) => {
@@ -14,7 +14,7 @@ const useThrash = (trash?: Partial<Trash>) => {
   const client = useQueryClient();
   const {showToast} = useToast();
 
-  const onError = (error: AxiosError) => showToast({message: error.message});
+  const onError = (error: ApiError) => showToast({message: error.message});
 
   const {data: trashList} = useQuery({
     queryKey: ['thrash'],
@@ -36,7 +36,7 @@ const useThrash = (trash?: Partial<Trash>) => {
     enabled: !!trash?.id,
   });
 
-  const {mutateAsync: deleteTrash} = useMutation<void, AxiosError, number>({
+  const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.deleteTrash(id),
     onSuccess: (_, variables) => {
       const newTrashList = client
@@ -47,7 +47,7 @@ const useThrash = (trash?: Partial<Trash>) => {
     onError,
   });
 
-  const {mutateAsync: restoreTrash} = useMutation<void, AxiosError, number>({
+  const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.restoreTrash(id),
     onSuccess: (_, variables) => {
       const newTrashList = client
