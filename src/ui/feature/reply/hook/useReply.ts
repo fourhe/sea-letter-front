@@ -3,6 +3,7 @@ import {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
+import {useToast} from '@components/organism/Toast/hook';
 import ReplyService from '@services/reply';
 
 type ReplyHookProps = {
@@ -15,6 +16,9 @@ const useReply = (props: ReplyHookProps) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const repository = new ReplyService(token);
+  const {showToast} = useToast();
+  const onError = (error: AxiosError) => showToast({message: error.message});
+
   const {data: replyList} = useQuery({
     queryKey: ['replyList', letterId],
     queryFn: () => repository.getReplyList(letterId!),
@@ -42,6 +46,7 @@ const useReply = (props: ReplyHookProps) => {
 
   const {mutateAsync: deleteReply} = useMutation<void, AxiosError, number>({
     mutationFn: id => repository.deleteReply(id),
+    onError,
   });
 
   return {replyList, replyDetail, deleteReply};

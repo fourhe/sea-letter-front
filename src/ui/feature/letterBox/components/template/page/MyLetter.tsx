@@ -19,13 +19,14 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
   const {handleOpen: deleteOpen, handleClose} = useDialog();
   const {showToast} = useToast();
   const router = useRouter();
+  const id = params?.id ? Number(params.id) : undefined;
   const {letterDetail, deleteLetter} = useLetterBox({
-    id: params?.id ? Number(params.id) : undefined,
+    id,
   });
   const goReplyList = () => router.push(`/main/reply-box/${params.id}`);
 
   const deleteSelectedLetter = async () => {
-    await deleteLetter(Number(params.id!));
+    await deleteLetter(id!);
     showToast({message: '편지가 삭제되었습니다.'});
     handleClose();
     router.back();

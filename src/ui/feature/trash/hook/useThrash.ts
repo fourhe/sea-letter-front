@@ -4,6 +4,7 @@ import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
 import type {Trash} from '@application/ports/trash';
+import {useToast} from '@components/organism/Toast/hook';
 import TrashService from '@services/trash';
 
 const useThrash = (trash?: Partial<Trash>) => {
@@ -11,6 +12,9 @@ const useThrash = (trash?: Partial<Trash>) => {
   const token = cookies.get('access-token');
   const thrashService = new TrashService(token);
   const client = useQueryClient();
+  const {showToast} = useToast();
+
+  const onError = (error: AxiosError) => showToast({message: error.message});
 
   const {data: trashList} = useQuery({
     queryKey: ['thrash'],
@@ -40,6 +44,7 @@ const useThrash = (trash?: Partial<Trash>) => {
         .filter(item => item.id !== variables);
       client.setQueryData(['thrash'], newTrashList);
     },
+    onError,
   });
 
   const {mutateAsync: restoreTrash} = useMutation<void, AxiosError, number>({
@@ -50,6 +55,7 @@ const useThrash = (trash?: Partial<Trash>) => {
         .filter(item => item.id !== variables);
       client.setQueryData(['thrash'], newTrashList);
     },
+    onError,
   });
 
   return {trashList, trashDetail, deleteTrash, restoreTrash};
