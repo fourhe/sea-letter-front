@@ -29,11 +29,6 @@ const useReply = (props: ReplyHookProps) => {
   const {data: replyDetail} = useQuery({
     queryKey: ['replyDetail', replyId],
     queryFn: () => repository.getReplyDetail(letterId!, replyId!),
-    initialData: {
-      title: '',
-      content: '',
-      createdAt: '',
-    },
     enabled: !!replyId,
     select: data => {
       const createdAt = format(new Date(data.createdAt!));

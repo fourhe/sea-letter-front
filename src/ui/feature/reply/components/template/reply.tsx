@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
+import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout} from '@components/template';
 import {DeleteDialog} from '@feature/letterBox/components/organism';
 import {useReply} from '@feature/reply/hook';
@@ -19,13 +20,15 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
   const {handleOpen: deleteOpen} = useDialog();
   const route = useRouter();
+  const {showToast} = useToast();
   const {replyDetail, deleteReply} = useReply({
     letterId: params['letter-id'],
     replyId: params['reply-id'],
   });
 
   const deleteSelectedReply = async () => {
-    await deleteReply(params['letter-id']!);
+    await deleteReply(replyDetail?.id!);
+    showToast({message: '답장이 휴지통으로 이동했습니다.'});
     deleteOpen();
     route.back();
   };
