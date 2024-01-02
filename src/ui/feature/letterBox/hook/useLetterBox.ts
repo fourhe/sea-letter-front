@@ -1,7 +1,10 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
+import {LetterBox} from '@application/ports/letterBox';
+import {useToast} from '@components/organism/Toast/hook';
 import LetterBoxService from '@services/letterBox';
 
 type LetterBoxProps = {
@@ -12,15 +15,19 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const repository = new LetterBoxService(token);
+  const client = useQueryClient();
+  const {showToast} = useToast();
+
+  const onError = (error: AxiosError) => showToast({message: error.message});
 
   const {data: letterBoxList} = useQuery({
-    queryKey: ['mailBox'],
+    queryKey: ['letterBox'],
     queryFn: () => repository.getLetterList(),
-    initialData: [],
+    initialData: client.getQueryData(['mailBox']) || [],
   });
 
   const {data: letterDetail} = useQuery({
-    queryKey: ['letterBox', props?.id],
+    queryKey: ['letterDetail', props?.id],
     queryFn: () => repository.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     select: data => {
@@ -32,7 +39,18 @@ const useLetterBox = (props?: LetterBoxProps) => {
     },
   });
 
-  return {letterBoxList, letterDetail};
+  const {mutateAsync: deleteLetter} = useMutation<void, AxiosError, number>({
+    mutationFn: id => repository.deleteLetter(id),
+    onSuccess: (data, deleteId) => {
+      const newDataList = client
+        .getQueryData<LetterBox[]>(['letterBox'])!
+        .filter(letter => letter.id !== Number(deleteId));
+      client.setQueryData(['letterBox'], newDataList);
+    },
+    onError,
+  });
+
+  return {letterBoxList, letterDetail, deleteLetter};
 };
 
 export default useLetterBox;

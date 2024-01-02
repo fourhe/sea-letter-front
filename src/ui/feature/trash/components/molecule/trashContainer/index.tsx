@@ -1,3 +1,4 @@
+import type {MouseEventHandler} from 'react';
 import styled from 'styled-components';
 
 import {Box} from '@components/atom';
@@ -7,18 +8,29 @@ type TrashContainerProps = {
   id: number;
   title: string;
   deletedAt: string;
-  onClick: (id: number) => void;
+  onContainerClick: (id: number) => void;
+  onButtonClick: (id: number) => void;
 };
 
 const TrashContainer = (props: TrashContainerProps) => {
-  const {title, onClick, id, deletedAt} = props;
+  const {
+    title,
+    onContainerClick,
+    id,
+    deletedAt,
+    onButtonClick: onButtonClickProp,
+  } = props;
+  const onButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+    e.stopPropagation();
+    onButtonClickProp(id);
+  };
   return (
-    <Container onClick={() => onClick(id)}>
+    <Container onClick={() => onContainerClick(id)}>
       <div style={{display: 'grid', gap: 5}}>
         {title}
         <DeletedAt>{deletedAt}</DeletedAt>
       </div>
-      <Button color="pink" onClick={() => onClick(id)}>
+      <Button color="pink" onClick={onButtonClick}>
         복구
       </Button>
     </Container>

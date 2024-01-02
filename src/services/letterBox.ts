@@ -12,6 +12,10 @@ class LetterBoxService extends Api implements ILetterBoxService {
     const {data} = await this.get<LetterDetail>(`/mailbox/letters/${id}`);
     return data;
   }
+
+  async deleteLetter(id: number): Promise<void> {
+    await this.post(`/mailbox/letters/${id}`);
+  }
 }
 
 export default LetterBoxService;

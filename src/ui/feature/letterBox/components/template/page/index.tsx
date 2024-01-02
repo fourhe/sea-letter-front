@@ -11,7 +11,6 @@ import {useLetterBox} from '@feature/letterBox/hook';
 const MailBox = () => {
   const route = useRouter();
   const {handleOpen} = useDrawer();
-  const goToHome = () => route.push('/main');
   const readMyLetter = (id: number) => route.push(`letter-box/letters/${id}`);
   const {letterBoxList} = useLetterBox();
   return (
@@ -26,24 +25,34 @@ const MailBox = () => {
       }}
       headerRightProps={{
         icon: 'Home',
-        onClick: goToHome,
       }}>
       <Container>
-        {letterBoxList.map(letterBoxListBox => (
-          <MailContainer
-            key={letterBoxListBox.id}
-            id={letterBoxListBox.id}
-            title={letterBoxListBox.title}
-            hasNewReply={letterBoxListBox.hasNewReply}
-            onClick={readMyLetter}
-          />
-        ))}
+        {letterBoxList.length !== 0 ? (
+          letterBoxList.map(letterBoxListBox => (
+            <MailContainer
+              key={letterBoxListBox.id}
+              id={letterBoxListBox.id}
+              title={letterBoxListBox.title}
+              hasNewReply={letterBoxListBox.hasNewReply}
+              onClick={readMyLetter}
+            />
+          ))
+        ) : (
+          <NoLetter>아직 보낸 편지가 없어요!</NoLetter>
+        )}
       </Container>
     </EmptyLayout>
   );
 };
 
 export default MailBox;
+
+const NoLetter = styled.div`
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Container = styled.div`
   display: flex;

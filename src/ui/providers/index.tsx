@@ -1,14 +1,15 @@
 'use client';
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {Provider, createStore} from 'jotai';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {createStore, Provider} from 'jotai';
 import type {ReactNode} from 'react';
 import {ThemeProvider} from 'styled-components';
 
 import theme, {ColorScheme} from '@/ui/styles/theme';
 import StyledComponentsRegistry from '@lib/registry';
 
-const client = new QueryClient({defaultOptions: {queries: {retry: false}}});
+const client = new QueryClient();
 
 const store = createStore();
 
@@ -28,6 +29,7 @@ const Providers = (props: ProvidersProps) => {
           </ThemeProvider>
         </StyledComponentsRegistry>
       </Provider>
+      <ReactQueryDevtools client={client} initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

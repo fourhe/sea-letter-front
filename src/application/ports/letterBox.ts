@@ -15,4 +15,6 @@ export default interface ILetterBoxService {
   getLetterList(): Promise<LetterBox[]>;
 
   getLetterDetail(id: number): Promise<LetterDetail>;
+
+  deleteLetter(id: number): Promise<void>;
 }
