@@ -1,4 +1,5 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
@@ -12,15 +13,16 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const repository = new LetterBoxService(token);
+  const client = useQueryClient();
 
   const {data: letterBoxList} = useQuery({
-    queryKey: ['mailBox'],
+    queryKey: ['letterBox'],
     queryFn: () => repository.getLetterList(),
-    initialData: [],
+    initialData: client.getQueryData(['mailBox']) || [],
   });
 
   const {data: letterDetail} = useQuery({
-    queryKey: ['letterBox', props?.id],
+    queryKey: ['letterDetail', props?.id],
     queryFn: () => repository.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     select: data => {
@@ -32,7 +34,14 @@ const useLetterBox = (props?: LetterBoxProps) => {
     },
   });
 
-  return {letterBoxList, letterDetail};
+  const {mutateAsync: deleteLetter} = useMutation<void, AxiosError, number>({
+    mutationFn: id => repository.deleteLetter(id),
+    onError: error => {
+      console.log(error);
+    },
+  });
+
+  return {letterBoxList, letterDetail, deleteLetter};
 };
 
 export default useLetterBox;

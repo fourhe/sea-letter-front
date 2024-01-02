@@ -3,23 +3,34 @@
 import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
-import {DeleteDialog} from '../../organism';
-
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
+import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout} from '@components/template';
+import {DeleteDialog} from '@feature/letterBox/components/organism';
 import {useLetterBox} from '@feature/letterBox/hook';
 
 type MyLetterProps = {
-  id?: number;
+  id?: string;
 };
 
 const MyLetter = (props: NextPageProps<MyLetterProps>) => {
   const {params} = props;
-  const {handleOpen: deleteOpen} = useDialog();
-  const {letterDetail} = useLetterBox({id: params.id});
+  const {handleOpen: deleteOpen, handleClose} = useDialog();
+  const {showToast} = useToast();
   const router = useRouter();
+  const {letterDetail, deleteLetter} = useLetterBox({
+    id: params?.id ? Number(params.id) : undefined,
+  });
   const goReplyList = () => router.push(`/main/reply-box/${params.id}`);
+
+  const deleteSelectedLetter = async () => {
+    await deleteLetter(Number(params.id!));
+    showToast({message: '편지가 삭제되었습니다.'});
+    handleClose();
+    router.back();
+  };
+
   return (
     <EmptyLayout
       headerShown
@@ -42,9 +53,7 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
       </HeaderContainer>
       <DeleteDialog
         title={`편지를 삭제 할까요?\n이 편지에 대한 답장도 함께 삭제되며\n삭제된 편지는 1개월간\n휴지통에 보관 됩니다.`}
-        ok={() => {
-          console.log(1);
-        }}
+        ok={deleteSelectedLetter}
       />
       <Container>
         <Content>{letterDetail?.content}</Content>

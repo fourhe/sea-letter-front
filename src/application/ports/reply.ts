@@ -15,4 +15,6 @@ export default interface IReplyService {
   getReplyList(id: number): Promise<Reply[]>;
 
   getReplyDetail(letterId: number, replyId: number): Promise<ReplyDetail>;
+
+  deleteReply(replyId: number): Promise<void>;
 }

@@ -63,7 +63,6 @@ const DialogContainer = (props: DialogContainerProps) => {
 export default DialogContainer;
 
 const Container = styled.div<{open: boolean}>`
-  width: 50vw;
   display: ${({open}) => (open ? 'flex' : 'none')};
   flex-direction: column;
   gap: ${({theme}) => theme.size[4]}px;
