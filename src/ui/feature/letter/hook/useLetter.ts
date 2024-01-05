@@ -1,9 +1,9 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import type {AxiosError} from 'axios';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
 import type {LetterForm, LetterReplyForm} from '@application/ports/letter';
+import type {ApiError} from '@lib/axios';
 import LetterService from '@services/letter';
 
 type LetterHookProps = {
@@ -16,17 +16,15 @@ const useLetter = (props?: LetterHookProps) => {
   const token = cookies.get('access-token');
   const repository = new LetterService(token);
 
-  const {mutateAsync: writeLetter} = useMutation<void, AxiosError, LetterForm>({
+  const {mutateAsync: writeLetter} = useMutation<void, ApiError, LetterForm>({
     mutationFn: variables => repository.writeLetter(variables),
   });
 
-  const {mutateAsync: sendReply} = useMutation<
-    void,
-    AxiosError,
-    LetterReplyForm
-  >({
-    mutationFn: variables => repository.sendReply(variables),
-  });
+  const {mutateAsync: sendReply} = useMutation<void, ApiError, LetterReplyForm>(
+    {
+      mutationFn: variables => repository.sendReply(variables),
+    },
+  );
 
   const {data: id, isError: isLetterIdError} = useQuery({
     queryKey: ['letters'],

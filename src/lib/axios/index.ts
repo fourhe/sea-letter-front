@@ -1,5 +1,11 @@
-import type {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
-import axios from 'axios';
+import axios, {
+  AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  HttpStatusCode,
+} from 'axios';
+
+export type ApiError = AxiosError;
 
 class Api {
   private readonly axiosInstance: AxiosInstance;
@@ -32,8 +38,8 @@ class Api {
 
     api.interceptors.response.use(
       response => response,
-      (error: AxiosError) => {
-        if (error.response?.status === 401) {
+      (error: ApiError) => {
+        if (error.response?.status === HttpStatusCode.Unauthorized) {
           fetch('api/reissue/access-token').catch(() => Promise.reject(error));
         }
         return Promise.reject(error);

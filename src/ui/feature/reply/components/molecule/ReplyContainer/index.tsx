@@ -8,7 +8,7 @@ import {useToast} from '@components/organism/Toast/hook';
 type ReplyContainerProps = {
   id: number;
   title: string;
-  hasThanks?: boolean;
+  hasThanks: boolean;
   onClick: (id: number) => void;
 };
 
