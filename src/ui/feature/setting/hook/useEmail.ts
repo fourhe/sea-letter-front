@@ -12,6 +12,7 @@ const useEmail = () => {
   const userService = new UserService(token);
   const {showToast} = useToast();
   const onError = (error: ApiError) => showToast({message: error.message});
+
   const {mutate: updateEmail} = useMutation<
     void,
     ApiError,

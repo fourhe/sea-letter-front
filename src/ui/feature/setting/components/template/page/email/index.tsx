@@ -61,7 +61,7 @@ const Email = () => {
               required:
                 '편지 답장과 감사인사에 대한 알림을 받을 이메일을\n입력해주세요.',
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                value: emailRegex,
                 message: '올바른 형식의 이메일을 입력해주세요.',
               },
             })}

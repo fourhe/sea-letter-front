@@ -30,6 +30,7 @@ const useReply = (props: ReplyHookProps) => {
     queryKey: ['replyDetail', replyId],
     queryFn: () => repository.getReplyDetail(letterId!, replyId!),
     enabled: !!replyId,
+    refetchOnMount: false,
     select: data => {
       const createdAt = format(new Date(data.createdAt!));
       return {

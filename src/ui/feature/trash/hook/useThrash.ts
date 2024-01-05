@@ -1,4 +1,4 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
@@ -11,7 +11,6 @@ const useThrash = (trash?: Partial<Trash>) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const thrashService = new TrashService(token);
-  const client = useQueryClient();
   const {showToast} = useToast();
 
   const onError = (error: ApiError) => showToast({message: error.message});
@@ -19,7 +18,7 @@ const useThrash = (trash?: Partial<Trash>) => {
   const {data: trashList} = useQuery({
     queryKey: ['thrash'],
     queryFn: () => thrashService.getTrashList(),
-    initialData: client.getQueryData(['thrash']) || [],
+    initialData: [],
     select: data =>
       data.map(item => {
         const deletedAt = format(new Date(item.deletedAt));
@@ -33,28 +32,17 @@ const useThrash = (trash?: Partial<Trash>) => {
   const {data: trashDetail} = useQuery({
     queryKey: ['thrash', trash?.id],
     queryFn: () => thrashService.getTrashDetail(trash?.id!),
+    refetchOnMount: false,
     enabled: !!trash?.id,
   });
 
   const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.deleteTrash(id),
-    onSuccess: (_, variables) => {
-      const newTrashList = client
-        .getQueryData<Trash[]>(['thrash'])!
-        .filter(item => item.id !== variables);
-      client.setQueryData(['thrash'], newTrashList);
-    },
     onError,
   });
 
   const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.restoreTrash(id),
-    onSuccess: (_, variables) => {
-      const newTrashList = client
-        .getQueryData<Trash[]>(['thrash'])!
-        .filter(item => item.id !== variables);
-      client.setQueryData(['thrash'], newTrashList);
-    },
     onError,
   });
 
