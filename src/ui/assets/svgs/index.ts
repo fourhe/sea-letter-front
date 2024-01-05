@@ -21,5 +21,6 @@ export {default as NewMessage} from './new-message.svg';
 export {default as Message} from './message.svg';
 export {default as FaceWink} from './face-wink.svg';
 export {default as Bottle} from './bottle.svg';
+export {default as ErrorBottle} from './error-bottle.svg';
 export {default as HermitCrab} from './hermit-crab.svg';
 export {default as Ellipse} from './ellipse.svg';

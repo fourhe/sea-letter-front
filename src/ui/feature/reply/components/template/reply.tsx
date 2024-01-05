@@ -59,20 +59,10 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
       />
       <Container>
         <Content>{replyDetail?.content}</Content>
-        <Button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 8,
-            fontWeight: 700,
-            fontSize: 20,
-          }}
-          color="brown"
-          size="full">
+        <ThankYouButton color="brown" size="full">
           <Icon.FaceWink width={28} height={28} stroke="white" />
           감사 인사 전하기
-        </Button>
+        </ThankYouButton>
       </Container>
     </EmptyLayout>
   );
@@ -111,4 +101,13 @@ const Content = styled.div`
   font-family: var(--RIDIBatang);
   line-height: 26px;
   padding: ${({theme}) => theme.size[3]}px;
+`;
+
+const ThankYouButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 20px;
 `;
