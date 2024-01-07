@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
@@ -9,6 +9,7 @@ import TrashService from '@services/trash';
 
 const useThrash = (trash?: Partial<Trash>) => {
   const cookies = useCookies();
+  const client = useQueryClient();
   const token = cookies.get('access-token');
   const thrashService = new TrashService(token);
   const {showToast} = useToast();
@@ -18,7 +19,7 @@ const useThrash = (trash?: Partial<Trash>) => {
   const {data: trashList} = useQuery({
     queryKey: ['thrash'],
     queryFn: () => thrashService.getTrashList(),
-    initialData: [],
+    initialData: client.getQueryData(['thrash']) || [],
     select: data =>
       data.map(item => {
         const deletedAt = format(new Date(item.deletedAt));
@@ -43,6 +44,13 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.restoreTrash(id),
+    onSuccess: (_, deleteId) => {
+      const newTrashList = client
+        .getQueryData<Trash[]>(['thrash'])!
+        .filter(item => item.id !== deleteId);
+      client.setQueryData(['thrash'], newTrashList);
+      showToast({message: '메시지가 복구 되었습니다.'});
+    },
     onError,
   });
 
