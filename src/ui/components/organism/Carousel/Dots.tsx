@@ -7,11 +7,7 @@ const Dots = (props: DotProps) => {
   return (
     <Container>
       {new Array(length).fill('').map((_, i) => (
-        <Item
-          // eslint-disable-next-line react/no-array-index-key
-          key={i}
-          $isActive={i === activeIndex}
-        />
+        <Item key={activeIndex} $isActive={i === activeIndex} />
       ))}
     </Container>
   );

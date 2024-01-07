@@ -21,7 +21,7 @@ const transition: ValueAnimationTransition = {
 const Carousel = (props: CarouselProps) => {
   const {children, autoPlay, interval = 2000, loop} = props;
   const x = useMotionValue(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const childrenArray = Children.toArray(children);
   const {index, setIndex, dotLength, setDotLength} = useCarousel();
@@ -48,9 +48,9 @@ const Carousel = (props: CarouselProps) => {
       return;
     }
 
-    if (offset.x > clientWidth / 4) {
+    if (offset.x > clientWidth / dotLength) {
       handlePrev();
-    } else if (offset.x < -clientWidth / 4) {
+    } else if (offset.x < -clientWidth / dotLength) {
       handleNext();
     } else {
       animate(x, calculateNewX, transition);
@@ -67,17 +67,14 @@ const Carousel = (props: CarouselProps) => {
     setIndex(index - 1 < 0 ? idx : index - 1);
   }, [dotLength, index, loop, setIndex]);
 
-  useEffect(() => {
-    const controls = animate(x, calculateNewX, transition);
-    return controls.stop;
-  }, [calculateNewX, index, x]);
+  useEffect(
+    () => animate(x, calculateNewX, transition).stop,
+    [calculateNewX, index, x],
+  );
 
   useEffect(() => {
-    if (!autoPlay) {
-      return;
-    }
+    if (!autoPlay) return () => {};
     const timer = setInterval(handleNext, interval);
-    // eslint-disable-next-line consistent-return
     return () => clearInterval(timer);
   }, [autoPlay, handleNext, interval]);
 

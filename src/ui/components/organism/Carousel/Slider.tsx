@@ -7,9 +7,7 @@ const Slider = (props: SliderProps) => {
   const {children, x, onDragEnd, totalSliders} = props;
   return (
     <Container
-      style={{
-        x,
-      }}
+      style={{x}}
       drag={totalSliders > 1 && 'x'}
       dragElastic={0.3}
       onDragEnd={onDragEnd}>
