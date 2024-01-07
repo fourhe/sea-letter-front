@@ -3,12 +3,13 @@
 import Link from 'next/link';
 
 import {useAuthenticate} from '@application/authenticate';
+import {Button} from '@components/molecule';
 import {Carousel} from '@components/organism';
 import Dots from '@components/organism/Carousel/Dots';
 import {useCarousel} from '@components/organism/Carousel/hook';
 import {EmptyLayout} from '@components/template';
 
-const colors = ['#f90', '#ef0', '#e0f'];
+const colors = ['#f90', '#ef0', '#0f9', '#ff00ae', '#90f'];
 
 const Login = () => {
   const {index, dotLength} = useCarousel();
@@ -16,24 +17,27 @@ const Login = () => {
   const {logInFormUrl} = useAuthenticate();
 
   return (
-    <EmptyLayout headerShown headerCenterProps={{title: '바다로 보내는 편지'}}>
-      <div>
-        <Carousel>
-          {colors.map(item => (
-            <div
-              key={item}
-              style={{
-                height: 600,
-                backgroundColor: item,
-              }}
-            />
-          ))}
-        </Carousel>
-        <Dots length={dotLength} activeIndex={index} />
-        <Link passHref href={logInFormUrl}>
-          로그인
-        </Link>
-      </div>
+    <EmptyLayout
+      headerShown
+      headerCenterProps={{
+        children: <Dots length={dotLength} activeIndex={index} />,
+      }}>
+      <Carousel>
+        {colors.map(item => (
+          <div
+            key={item}
+            style={{
+              height: 600,
+              backgroundColor: item,
+            }}
+          />
+        ))}
+      </Carousel>
+      <Link passHref href={logInFormUrl}>
+        <Button color="pink" size="full" bold style={{fontSize: 20}}>
+          시작하기
+        </Button>
+      </Link>
     </EmptyLayout>
   );
 };

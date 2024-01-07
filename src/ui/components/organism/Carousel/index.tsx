@@ -83,14 +83,12 @@ const Carousel = (props: CarouselProps) => {
 
   return (
     <Container ref={containerRef}>
-      {childrenArray.map((child, i) => (
+      {childrenArray.map(child => (
         <Slider
-          // eslint-disable-next-line react/no-array-index-key
-          key={i}
+          key={child.toString()}
           onDragEnd={handleEndDrag}
           totalSliders={dotLength}
-          x={x}
-          i={i}>
+          x={x}>
           {child}
         </Slider>
       ))}

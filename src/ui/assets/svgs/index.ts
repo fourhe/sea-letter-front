@@ -14,7 +14,6 @@ export {default as Star} from './star.svg';
 export {default as Share} from './share.svg';
 export {default as Announcement} from './announcement.svg';
 export {default as Trash} from './trash.svg';
-export {default as Union} from './union.svg';
 export {default as Letter} from './letter.svg';
 export {default as HideLetter} from './hide-letter.svg';
 export {default as NewMessage} from './new-message.svg';
