@@ -6,7 +6,14 @@ import {
   useMotionValue,
   type ValueAnimationTransition,
 } from 'framer-motion';
-import {Children, useCallback, useEffect, useMemo, useRef} from 'react';
+import {
+  Children,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 import Container from './Container';
 import {useCarousel} from './hook';
@@ -23,7 +30,7 @@ const Carousel = (props: CarouselProps) => {
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const childrenArray = Children.toArray(children);
+  const childrenArray = Children.toArray(children) as ReactElement[];
   const {index, setIndex, dotLength, setDotLength} = useCarousel();
 
   useEffect(() => {
@@ -82,7 +89,7 @@ const Carousel = (props: CarouselProps) => {
     <Container ref={containerRef}>
       {childrenArray.map(child => (
         <Slider
-          key={child.toString()}
+          key={child.key}
           onDragEnd={handleEndDrag}
           totalSliders={dotLength}
           x={x}>
