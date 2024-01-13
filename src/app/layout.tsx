@@ -1,3 +1,4 @@
+import type {Metadata} from 'next';
 import localFont from 'next/font/local';
 import {CookiesProvider} from 'next-client-cookies/server';
 import type {ReactNode} from 'react';
@@ -8,6 +9,11 @@ import {Drawer} from '@components/organism';
 import {Menu} from 'src/ui/feature/sizeMenu/components/organism';
 
 import '@/ui/styles/index.css';
+
+export const metadata: Metadata = {
+  title: '마음을 담다',
+  description: '상처 받은 마음을 치유하는 공간',
+};
 
 const Pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
