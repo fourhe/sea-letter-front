@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import {useAuthenticate} from '@application/authenticate';
@@ -9,13 +10,18 @@ import Dots from '@components/organism/Carousel/Dots';
 import {useCarousel} from '@components/organism/Carousel/hook';
 import {EmptyLayout} from '@components/template';
 
-const colors = ['#f90', '#ef0', '#0f9', '#ff00ae', '#90f'];
+const images = [
+  '/image/on-boarding1.png',
+  '/image/on-boarding2.png',
+  '/image/on-boarding3.png',
+  '/image/on-boarding4.png',
+  '/image/on-boarding5.png',
+];
 
 const Login = () => {
   const {index, dotLength} = useCarousel();
 
   const {logInFormUrl} = useAuthenticate();
-
   return (
     <EmptyLayout
       headerShown
@@ -23,13 +29,15 @@ const Login = () => {
         children: <Dots length={dotLength} activeIndex={index} />,
       }}>
       <Carousel>
-        {colors.map(item => (
-          <div
+        {images.map(item => (
+          <Image
+            priority
+            width={327}
+            height={650}
+            fetchPriority="high"
+            src={item}
             key={item}
-            style={{
-              height: 600,
-              backgroundColor: item,
-            }}
+            alt="온보딩 이미지"
           />
         ))}
       </Carousel>
