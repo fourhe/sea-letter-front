@@ -1,9 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
-import {useAuthenticate} from '@application/authenticate';
 import {Button} from '@components/molecule';
 import {Carousel} from '@components/organism';
 import Dots from '@components/organism/Carousel/Dots';
@@ -20,8 +19,10 @@ const images = [
 
 const Login = () => {
   const {index, dotLength} = useCarousel();
+  const route = useRouter();
 
-  const {logInFormUrl} = useAuthenticate();
+  const goToKakaoLogin = () => route.push('/auth/login/kakao');
+
   return (
     <EmptyLayout
       headerShown
@@ -41,11 +42,14 @@ const Login = () => {
           />
         ))}
       </Carousel>
-      <Link passHref href={logInFormUrl}>
-        <Button color="pink" size="full" bold style={{fontSize: 20}}>
-          시작하기
-        </Button>
-      </Link>
+      <Button
+        color="pink"
+        size="full"
+        bold
+        style={{fontSize: 20}}
+        onClick={goToKakaoLogin}>
+        시작하기
+      </Button>
     </EmptyLayout>
   );
 };

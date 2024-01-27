@@ -23,3 +23,5 @@ export {default as Bottle} from './bottle.svg';
 export {default as ErrorBottle} from './error-bottle.svg';
 export {default as HermitCrab} from './hermit-crab.svg';
 export {default as Ellipse} from './ellipse.svg';
+export {default as Logo} from './logo.svg';
+export {default as KaKaoLogo} from './kakao-logo.svg';
