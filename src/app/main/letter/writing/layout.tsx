@@ -1,7 +1,8 @@
 'use client';
 
 import type {ReactNode} from 'react';
-import styled from 'styled-components';
+
+import {LayoutBackGround} from '@components/atom';
 
 type WritingLayoutProps = {
   children: ReactNode;
@@ -9,21 +10,11 @@ type WritingLayoutProps = {
 
 const WritingLayout = (props: WritingLayoutProps) => {
   const {children} = props;
-
   return (
-    <>
-      <BackGround />
+    <LayoutBackGround $color="rgba(244, 229, 225, 1)">
       {children}
-    </>
+    </LayoutBackGround>
   );
 };
 
 export default WritingLayout;
-
-const BackGround = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
-  position: absolute;
-  z-index: -1;
-  background: rgba(244, 229, 225, 1);
-`;

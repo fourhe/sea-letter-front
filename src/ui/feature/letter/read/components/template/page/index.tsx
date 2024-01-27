@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import {Button} from '@components/molecule';
 import {useBottomSheet} from '@components/organism/BottomSheet/hooks';
-import {EmptyLayout} from '@components/template';
+import {EmptyLayout, LayoutItem} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 
 type ReadProps = {
@@ -33,58 +33,23 @@ const Read = (props: NextPageProps<ReadProps>) => {
       headerRightProps={{
         icon: 'Home',
       }}>
-      <HeaderContainer>
-        <Title>{letter?.title}</Title>
-        <CreatedAt>{letter?.createdAt}</CreatedAt>
-      </HeaderContainer>
-      <Container>
-        <Content>{letter?.content}</Content>
-        <Button
-          onClick={() => setOpen(true)}
-          style={{
-            fontWeight: 700,
-            fontSize: 20,
-          }}
-          color="brown"
-          size="full">
+      <LayoutItem.HeaderContainer>
+        <LayoutItem.Title>{letter?.title}</LayoutItem.Title>
+        <LayoutItem.CreatedAt>{letter?.createdAt}</LayoutItem.CreatedAt>
+      </LayoutItem.HeaderContainer>
+      <LayoutItem.Container>
+        <LayoutItem.Content>{letter?.content}</LayoutItem.Content>
+        <ConfirmButton onClick={() => setOpen(true)} color="brown" size="full">
           답장하기
-        </Button>
-      </Container>
+        </ConfirmButton>
+      </LayoutItem.Container>
     </EmptyLayout>
   );
 };
 
 export default Read;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${({theme}) => theme.size[2]}px;
-  gap: ${({theme}) => theme.size[2]}px;
-  border-bottom: 1px solid #836561;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 100px);
-  justify-content: space-between;
-`;
-
-const Title = styled.div`
-  font-family: var(--RIDIBatang);
-  font-size: 22px;
-  letter-spacing: -0.408px;
-`;
-
-const CreatedAt = styled.div`
-  color: ${({theme}) => theme.color.neutral[500]};
-  font-size: 14px;
-  line-height: 26px;
-`;
-
-const Content = styled.div`
-  font-family: var(--RIDIBatang);
-  line-height: 26px;
-  padding: ${({theme}) => theme.size[3]}px;
+const ConfirmButton = styled(Button)`
+  font-weight: 700;
+  font-size: 20px;
 `;

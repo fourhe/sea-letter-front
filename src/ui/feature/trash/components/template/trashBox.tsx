@@ -4,6 +4,7 @@ import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import styled from 'styled-components';
 
+import {useIntersectionObserver} from '@/hook/query';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
@@ -17,6 +18,10 @@ const TrashBox = () => {
   const {trashList, restoreTrash} = useThrash();
   const {handleOpen} = useDrawer();
   const route = useRouter();
+  const {setTarget} = useIntersectionObserver({
+    hasNextPage: trashList.hasNextPage,
+    fetchNextPage: trashList.fetchNextPage,
+  });
 
   const goToTrash = (id: number) => route.push(`trash-box/${id}`);
 
@@ -36,9 +41,9 @@ const TrashBox = () => {
       <HeaderContainer>
         <Filter filter={filter} setFilter={setFilter} />
       </HeaderContainer>
-      <div style={{display: 'grid', gap: 16}}>
-        {trashList?.length !== 0 ? (
-          trashList.map(trash => (
+      <Container>
+        {trashList?.data.length !== 0 ? (
+          trashList.data.map(trash => (
             <TrashContainer
               key={trash.id}
               id={trash.id}
@@ -51,7 +56,8 @@ const TrashBox = () => {
         ) : (
           <NoTrash>휴지통이 비어있어요!</NoTrash>
         )}
-      </div>
+        <div ref={setTarget} style={{width: 1, height: 1}} />
+      </Container>
     </EmptyLayout>
   );
 };
@@ -71,4 +77,10 @@ const NoTrash = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;

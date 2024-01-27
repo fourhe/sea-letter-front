@@ -1,9 +1,15 @@
+import {PageQuery, PageQueryString} from '@application/ports/common';
+
 export type LetterBox = {
   id: number;
   title: string;
   hasNewReply: boolean;
   createdAt: string;
 };
+
+export type LetterBoxList = PageQuery<{
+  letterListResponses: LetterBox[];
+}>;
 
 export type LetterDetail = {
   title: string;
@@ -12,7 +18,7 @@ export type LetterDetail = {
 };
 
 export default interface ILetterBoxService {
-  getLetterList(): Promise<LetterBox[]>;
+  getLetterList(page: PageQueryString): Promise<LetterBoxList>;
 
   getLetterDetail(id: number): Promise<LetterDetail>;
 

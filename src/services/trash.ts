@@ -1,5 +1,5 @@
-import type {Trash, TrashDetail} from '@/application/ports/trash';
-import type {ITrashService} from '@application/ports';
+import type {TrashDetail, TrashList} from '@/application/ports/trash';
+import type {ITrashService, PageQueryString} from '@application/ports';
 import Api from '@lib/axios';
 
 class TrashService extends Api implements ITrashService {
@@ -11,8 +11,8 @@ class TrashService extends Api implements ITrashService {
     await this.post(`/trash/${id}`);
   }
 
-  async getTrashList(): Promise<Trash[]> {
-    const {data} = await this.get<Trash[]>('/trash');
+  async getTrashList(page: PageQueryString): Promise<TrashList> {
+    const {data} = await this.get<TrashList, PageQueryString>('/trash', page);
     return data;
   }
 
