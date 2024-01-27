@@ -52,36 +52,6 @@ export const TrashContainer = styled.div`
   padding: 16px 0 8px 0;
 `;
 
-export const Dashboard = styled(Box)`
-  background-color: ${({theme}) => theme.color.white};
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-`;
-
-export const DashboardContainer = styled.div<{$line?: boolean}>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  flex: 1;
-  border-right: ${({$line, theme}) =>
-    $line ? `1px solid ${theme.color.neutral[100]}` : 'none'};
-  border-left: ${({$line, theme}) =>
-    $line ? `1px solid ${theme.color.neutral[100]}` : 'none'};
-`;
-
-export const DashboardText = styled.span`
-  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
-  font-weight: ${({theme}) => theme.typography.fontWeights.normal};
-  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
-`;
-
-export const DashboardNumber = styled.span`
-  text-align: center;
-  font-size: ${({theme}) => theme.typography.fontSizes.xl}px;
-  font-weight: ${({theme}) => theme.typography.fontWeights.medium};
-  line-height: ${({theme}) => theme.typography.lineHeights.xl}px;
-`;
-
 export const Text = styled.h2`
   white-space: pre-line;
   font-size: 24px;
@@ -118,4 +88,35 @@ export const EmailButton = styled(IconButton)`
   font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
   background-color: rgba(255, 255, 255, 0.3);
   color: ${({theme}) => theme.color.primary.pointPink};
+`;
+
+export const DashboardTitle = styled.strong`
+  color: ${({theme}) => theme.color.primary.pointPink};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+`;
+
+export const Dashboard = styled(Box)`
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  background-color: ${({theme}) => theme.color.white};
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  height: 105px;
+  padding: 12px 25px 14px 25px;
+
+  ${DashboardTitle} {
+    align-self: flex-start;
+  }
+`;
+
+export const DashboardSubTitle = styled.span`
+  color: ${({theme}) => theme.color.neutral[400]};
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
 `;

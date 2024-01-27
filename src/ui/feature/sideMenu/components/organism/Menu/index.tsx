@@ -5,17 +5,18 @@ import {useTheme} from 'styled-components';
 
 import * as S from './style';
 
-import {Icon} from '@components/atom';
+import {Icon, Progress} from '@components/atom';
 import {Button} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {useToast} from '@components/organism/Toast/hook';
+import {useMenu} from '@feature/sideMenu/hook';
 import AuthenticationService from '@services/auth';
 
 const Menu = () => {
   const theme = useTheme();
   const route = useRouter();
-
-  const {handleClose} = useDrawer();
+  const {handleClose, open} = useDrawer();
+  const {menuInfo} = useMenu(open);
   const logout = async () => {
     await AuthenticationService.logOut();
     handleClose();
@@ -80,18 +81,11 @@ const Menu = () => {
       </S.TextContainer>
       <S.Half>
         <S.Dashboard>
-          <S.DashboardContainer>
-            <S.DashboardText>받은 감사</S.DashboardText>
-            <S.DashboardNumber>5</S.DashboardNumber>
-          </S.DashboardContainer>
-          <S.DashboardContainer $line>
-            <S.DashboardText>보낸 편지</S.DashboardText>
-            <S.DashboardNumber>7</S.DashboardNumber>
-          </S.DashboardContainer>
-          <S.DashboardContainer>
-            <S.DashboardText>보낸 답장</S.DashboardText>
-            <S.DashboardNumber>10</S.DashboardNumber>
-          </S.DashboardContainer>
+          <S.DashboardTitle>Lv1. 도전! 감사인사 50개 받기</S.DashboardTitle>
+          <Progress max={50} value={menuInfo?.receivedThankCount} />
+          <S.DashboardSubTitle>
+            다음 단계까지 {50 - (menuInfo?.receivedThankCount || 0)}개 남았어요
+          </S.DashboardSubTitle>
         </S.Dashboard>
       </S.Half>
       <S.Ol>

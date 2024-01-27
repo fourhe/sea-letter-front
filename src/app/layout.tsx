@@ -6,7 +6,7 @@ import type {ReactNode} from 'react';
 import Providers from '@/ui/providers';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Drawer} from '@components/organism';
-import {Menu} from 'src/ui/feature/sizeMenu/components/organism';
+import {Menu} from '@feature/sideMenu/components/organism';
 
 import '@/ui/styles/index.css';
 
