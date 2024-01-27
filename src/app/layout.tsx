@@ -1,3 +1,4 @@
+import {Analytics} from '@vercel/analytics/react';
 import type {Metadata} from 'next';
 import localFont from 'next/font/local';
 import {CookiesProvider} from 'next-client-cookies/server';
@@ -7,7 +8,6 @@ import Providers from '@/ui/providers';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Drawer} from '@components/organism';
 import {Menu} from '@feature/sideMenu/components/organism';
-
 import '@/ui/styles/index.css';
 
 export const metadata: Metadata = {
@@ -47,6 +47,7 @@ const RootLayout = ({children}: RootLayoutProps) => (
           {children}
         </Providers>
       </CookiesProvider>
+      <Analytics />
     </body>
   </html>
 );
