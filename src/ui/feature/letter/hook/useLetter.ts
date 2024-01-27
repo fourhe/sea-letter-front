@@ -2,7 +2,11 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
-import type {LetterForm, LetterReplyForm} from '@application/ports/letter';
+import type {
+  Letter,
+  LetterForm,
+  LetterReplyForm,
+} from '@application/ports/letter';
 import type {ApiError} from '@lib/axios';
 import LetterService from '@services/letter';
 
@@ -33,7 +37,12 @@ const useLetter = (props?: LetterHookProps) => {
     enabled: !!props?.isUpEvent,
   });
 
-  const {data: letter, isPending: isLetterPending} = useQuery({
+  const {data: letter, isPending: isLetterPending} = useQuery<
+    Letter,
+    ApiError,
+    Letter,
+    [string, LetterHookProps['letterId']]
+  >({
     queryKey: ['letters', props?.letterId],
     queryFn: () => repository.getLetter(props?.letterId!),
     enabled: !!props?.letterId,

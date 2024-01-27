@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
+import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
@@ -18,10 +19,22 @@ const useLetterBox = (props?: LetterBoxProps) => {
 
   const onError = (error: ApiError) => showToast({message: error.message});
 
-  const {data: letterBoxList} = useQuery({
+  const {
+    data: letterBoxList,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteScroll({
     queryKey: ['letterBox'],
-    queryFn: () => repository.getLetterList(),
-    initialData: [],
+    queryFn: ({pageParam}) =>
+      repository.getLetterList({page: pageParam, size: 10}),
+    refetchOnWindowFocus: true,
+    select: item =>
+      item.pages.flatMap(page =>
+        page.letterListResponses.map(letterList => ({
+          ...letterList,
+          createdAt: format(new Date(letterList.createdAt!)),
+        })),
+      ),
   });
 
   const {data: letterDetail} = useQuery({
@@ -29,10 +42,10 @@ const useLetterBox = (props?: LetterBoxProps) => {
     queryFn: () => repository.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     refetchOnMount: false,
-    select: data => {
-      const createdAt = format(new Date(data.createdAt!));
+    select: detailData => {
+      const createdAt = format(new Date(detailData.createdAt!));
       return {
-        ...data,
+        ...detailData,
         createdAt,
       };
     },
@@ -43,7 +56,15 @@ const useLetterBox = (props?: LetterBoxProps) => {
     onError,
   });
 
-  return {letterBoxList, letterDetail, deleteLetter};
+  return {
+    letterBoxList: {
+      data: letterBoxList || [],
+      hasNextPage,
+      fetchNextPage,
+    },
+    letterDetail,
+    deleteLetter,
+  };
 };
 
 export default useLetterBox;

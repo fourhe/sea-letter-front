@@ -3,6 +3,7 @@
 import {useRouter} from 'next/navigation';
 import styled from 'styled-components';
 
+import {useIntersectionObserver} from '@/hook/query';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {MailContainer} from '@feature/letterBox/components/molecule';
@@ -13,6 +14,10 @@ const MailBox = () => {
   const {handleOpen} = useDrawer();
   const readMyLetter = (id: number) => route.push(`letter-box/letters/${id}`);
   const {letterBoxList} = useLetterBox();
+  const {setTarget} = useIntersectionObserver({
+    hasNextPage: letterBoxList.hasNextPage,
+    fetchNextPage: letterBoxList.fetchNextPage,
+  });
   return (
     <EmptyLayout
       headerShown
@@ -27,19 +32,20 @@ const MailBox = () => {
         icon: 'Home',
       }}>
       <Container>
-        {letterBoxList.length !== 0 ? (
-          letterBoxList.map(letterBoxListBox => (
+        {letterBoxList.data.length !== 0 ? (
+          letterBoxList.data.map(({id, title, hasNewReply}) => (
             <MailContainer
-              key={letterBoxListBox.id}
-              id={letterBoxListBox.id}
-              title={letterBoxListBox.title}
-              hasNewReply={letterBoxListBox.hasNewReply}
+              key={id}
+              id={id}
+              title={title}
+              hasNewReply={hasNewReply}
               onClick={readMyLetter}
             />
           ))
         ) : (
           <NoLetter>아직 보낸 편지가 없어요!</NoLetter>
         )}
+        <div ref={setTarget} style={{width: 1, height: 1}} />
       </Container>
     </EmptyLayout>
   );

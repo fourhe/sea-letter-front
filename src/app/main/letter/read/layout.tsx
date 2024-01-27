@@ -3,10 +3,10 @@
 import {useParams, useRouter} from 'next/navigation';
 import type {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
-import styled from 'styled-components';
+import styled, {useTheme} from 'styled-components';
 
 import type {LetterReplyForm} from '@application/ports/letter';
-import {Portal} from '@components/atom';
+import {LayoutBackGround, Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
 import {BottomSheet} from '@components/organism';
@@ -23,6 +23,7 @@ const WritingLayout = (props: ReadLayoutProps) => {
   const {children} = props;
   const {id} = useParams<{id: string}>();
   const route = useRouter();
+  const {color} = useTheme();
   const {sendReply} = useLetter();
   const {setOpen} = useBottomSheet();
   const {register, handleSubmit, getValues} = useForm<LetterReplyForm>();
@@ -31,7 +32,6 @@ const WritingLayout = (props: ReadLayoutProps) => {
   const onSubmit = () => handleOpen();
   return (
     <>
-      <BackGround />
       <SendDialog
         title="답장을 바다로 보낼까요?"
         ok={async () => {
@@ -66,20 +66,14 @@ const WritingLayout = (props: ReadLayoutProps) => {
           </Button>
         </BottomSheet>
       </Portal>
-      {children}
+      <LayoutBackGround $color={color.secondary.beige}>
+        {children}
+      </LayoutBackGround>
     </>
   );
 };
 
 export default WritingLayout;
-
-const BackGround = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
-  position: absolute;
-  z-index: -1;
-  background: #fcfaf2;
-`;
 
 const Container = styled.form`
   display: flex;

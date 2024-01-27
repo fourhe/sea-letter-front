@@ -71,7 +71,7 @@ const Container = styled.form`
   padding: ${({theme}) => theme.size[4]}px;
   padding-bottom: ${({theme}) => theme.size[0]}px;
   border-radius: 12px 12px 0 0;
-  height: 100%;
+  height: 90vh;
 `;
 
 const Title = styled.input`

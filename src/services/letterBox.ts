@@ -1,10 +1,13 @@
-import type {ILetterBoxService} from '@application/ports';
-import type {LetterBox, LetterDetail} from '@application/ports/letterBox';
+import type {ILetterBoxService, PageQueryString} from '@application/ports';
+import type {LetterBoxList, LetterDetail} from '@application/ports/letterBox';
 import Api from '@lib/axios';
 
 class LetterBoxService extends Api implements ILetterBoxService {
-  async getLetterList(): Promise<LetterBox[]> {
-    const {data} = await this.get<LetterBox[]>('/mailbox/letters');
+  async getLetterList(page: PageQueryString): Promise<LetterBoxList> {
+    const {data} = await this.get<LetterBoxList, PageQueryString>(
+      '/mailbox/letters',
+      page,
+    );
     return data;
   }
 

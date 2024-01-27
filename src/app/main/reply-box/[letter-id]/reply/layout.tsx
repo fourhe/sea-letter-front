@@ -1,7 +1,9 @@
 'use client';
 
 import type {ReactNode} from 'react';
-import styled from 'styled-components';
+import {useTheme} from 'styled-components';
+
+import {LayoutBackGround} from '@components/atom';
 
 type LettersBoxLayoutProps = {
   children: ReactNode;
@@ -9,21 +11,12 @@ type LettersBoxLayoutProps = {
 
 const LettersBoxLayout = (props: LettersBoxLayoutProps) => {
   const {children} = props;
-
+  const {color} = useTheme();
   return (
-    <>
-      <BackGround />
+    <LayoutBackGround $color={color.secondary.beige}>
       {children}
-    </>
+    </LayoutBackGround>
   );
 };
 
 export default LettersBoxLayout;
-
-const BackGround = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
-  position: absolute;
-  z-index: -1;
-  background: #fcfaf2;
-`;
