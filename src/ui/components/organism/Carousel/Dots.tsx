@@ -20,18 +20,16 @@ const Dots = (props: DotProps) => {
 export default Dots;
 
 const Container = styled.div`
-  padding: 10px 0;
-  justify-content: center;
-  display: flex;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
 `;
 
 const Item = styled.span<{$isActive: boolean}>`
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  margin: 0 10px;
   display: inline-block;
-  cursor: pointer;
-  background: ${({$isActive}) => ($isActive ? '#000' : '#999')};
-  transform: ${({$isActive}) => ($isActive ? 'scale(1.3)' : 'scale(1)')};
+  background: ${({$isActive, theme}) =>
+    theme.color.primary[$isActive ? 'pointPink' : 'bgPink']};
 `;

@@ -1,6 +1,6 @@
 'use client';
 
-import {motion} from 'framer-motion';
+import {motion, type Variants} from 'framer-motion';
 import styled, {useTheme} from 'styled-components';
 
 import {useToast} from './hook';
@@ -18,12 +18,13 @@ const Toast = () => {
   const {color, containerColor, isVisible, message} = useToast();
   const theme = useTheme();
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     visible: {
       display: 'flex',
       opacity: 1,
       scale: 1,
       transform: 'translateY(-50%)',
+      transition: {duration: 0.5},
     },
     hidden: {
       display: 'none',
@@ -66,11 +67,10 @@ const Container = styled(motion.div)<ContainerProps>`
   bottom: 8px;
   left: 14.6vw;
   width: 67.5vw;
-  padding: 12px 6.5px;
+  padding: 12px 7px;
   gap: 8px;
   border-radius: 6px;
   text-align: center;
-  font-family: Pretendard, sans-serif;
   font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
   line-height: ${({theme}) => theme.typography.lineHeights.sm}px;
 `;

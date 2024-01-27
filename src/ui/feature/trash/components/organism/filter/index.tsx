@@ -27,14 +27,15 @@ const tooltipMessage =
 const Filter = (props: FilterProps) => {
   const {filter, setFilter} = props;
 
+  const filterTextKeydown = (event: KeyboardEvent<HTMLDivElement>) =>
+    handleKeyPress(event, () => setFilter('reply'));
+
   return (
     <>
       <ToolTip message={tooltipMessage} />
       <FilterContainer>
         <FilterText
-          onKeyDown={(event: KeyboardEvent<HTMLDivElement>) =>
-            handleKeyPress(event, () => setFilter('reply'))
-          }
+          onKeyDown={filterTextKeydown}
           onClick={() => setFilter('reply')}
           filterText="답장 목록"
           filterType={filter === 'reply' ? 'active' : ''}
