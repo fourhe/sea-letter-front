@@ -1,3 +1,5 @@
+import type {PageQuery, PageQueryString} from '@application/ports/common';
+
 export type Trash = {
   id: number;
   title: string;
@@ -9,8 +11,12 @@ export type TrashDetail = {
   content: string;
 } & Trash;
 
+export type TrashList = PageQuery<{
+  trashListResponses: Trash[];
+}>;
+
 export default interface ITrashService {
-  getTrashList(): Promise<Trash[]>;
+  getTrashList(page: PageQueryString): Promise<TrashList>;
 
   getTrashDetail(id: number): Promise<TrashDetail>;
 

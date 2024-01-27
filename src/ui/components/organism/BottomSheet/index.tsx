@@ -70,6 +70,6 @@ const Container = styled(motion.div)`
 `;
 
 const ContentContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
   padding: 10px;
 `;

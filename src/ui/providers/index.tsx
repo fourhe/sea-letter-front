@@ -9,7 +9,13 @@ import {ThemeProvider} from 'styled-components';
 import theme, {ColorScheme} from '@/ui/styles/theme';
 import StyledComponentsRegistry from '@lib/registry';
 
-const client = new QueryClient();
+const client = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const store = createStore();
 

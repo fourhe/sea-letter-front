@@ -20,7 +20,7 @@ export const SubTitle = styled.div`
 `;
 
 export const EmailForm = styled.form`
-  height: calc(100% - 100px);
+  height: 75vh;
 `;
 
 export const EmailContainer = styled.div`

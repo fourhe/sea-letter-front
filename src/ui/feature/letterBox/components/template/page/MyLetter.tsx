@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
 import {useToast} from '@components/organism/Toast/hook';
-import {EmptyLayout} from '@components/template';
+import {EmptyLayout, LayoutItem} from '@components/template';
 import {DeleteDialog} from '@feature/letterBox/components/organism';
 import {useLetterBox} from '@feature/letterBox/hook';
 
@@ -48,62 +48,31 @@ const MyLetter = (props: NextPageProps<MyLetterProps>) => {
           </Button>
         ),
       }}>
-      <HeaderContainer>
-        <Title>{letterDetail?.title}</Title>
-        <CreatedAt>{letterDetail?.createdAt}</CreatedAt>
-      </HeaderContainer>
+      <LayoutItem.HeaderContainer>
+        <LayoutItem.Title>{letterDetail?.title}</LayoutItem.Title>
+        <LayoutItem.CreatedAt>{letterDetail?.createdAt}</LayoutItem.CreatedAt>
+      </LayoutItem.HeaderContainer>
       <DeleteDialog
         title={`편지를 삭제 할까요?\n이 편지에 대한 답장도 함께 삭제되며\n삭제된 편지는 1개월간\n휴지통에 보관 됩니다.`}
         ok={deleteSelectedLetter}
       />
-      <Container>
-        <Content>{letterDetail?.content}</Content>
-        <Button
-          style={{
-            fontWeight: 700,
-            fontSize: 20,
-          }}
+      <LayoutItem.Container>
+        <LayoutItem.Content>{letterDetail?.content}</LayoutItem.Content>
+        <ConfirmButton
+          className="reply-button"
           onClick={goReplyList}
           color="brown"
           size="full">
           답장 확인하기
-        </Button>
-      </Container>
+        </ConfirmButton>
+      </LayoutItem.Container>
     </EmptyLayout>
   );
 };
 
 export default MyLetter;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${({theme}) => theme.size[2]}px;
-  gap: ${({theme}) => theme.size[2]}px;
-  border-bottom: 1px solid #836561;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 100px);
-  justify-content: space-between;
-`;
-
-const Title = styled.div`
-  font-family: var(--RIDIBatang);
-  font-size: 22px;
-  letter-spacing: -0.408px;
-`;
-
-const CreatedAt = styled.div`
-  color: ${({theme}) => theme.color.neutral[500]};
-  font-size: 14px;
-  line-height: 26px;
-`;
-
-const Content = styled.div`
-  font-family: var(--RIDIBatang);
-  line-height: 26px;
-  padding: ${({theme}) => theme.size[3]}px;
+const ConfirmButton = styled(Button)`
+  font-weight: 700;
+  font-size: 20px;
 `;

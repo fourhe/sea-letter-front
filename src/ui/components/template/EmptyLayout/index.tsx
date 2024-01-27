@@ -46,11 +46,11 @@ export default EmptyLayout;
 
 const Container = styled.article`
   padding: ${({theme}) => theme.size[0]} ${({theme}) => theme.size[6]}px;
-  flex: 1;
+  min-height: 90vh;
 `;
 
 const Section = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 `;

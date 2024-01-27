@@ -7,7 +7,7 @@ import {Icon} from '@components/atom';
 const Error = () => (
   <Container>
     <BottleContainer>
-      <Icon.ErrorBottle width={66} height={140} />
+      <Icon.ErrorBottle width={150} height={100} />
     </BottleContainer>
     <ErrorMessageContainer>
       <ErrorMessageTitle>잠시후 다시 확인해주세요.</ErrorMessageTitle>

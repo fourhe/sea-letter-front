@@ -1,6 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
+import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import type {Trash} from '@application/ports/trash';
 import {useToast} from '@components/organism/Toast/hook';
@@ -16,24 +17,26 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const onError = (error: ApiError) => showToast({message: error.message});
 
-  const {data: trashList} = useQuery({
+  const {
+    data: trashList,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteScroll({
     queryKey: ['thrash'],
-    queryFn: () => thrashService.getTrashList(),
-    initialData: client.getQueryData(['thrash']) || [],
-    select: data =>
-      data.map(item => {
-        const deletedAt = format(new Date(item.deletedAt));
-        return {
-          ...item,
-          deletedAt,
-        };
-      }),
+    queryFn: ({pageParam}) =>
+      thrashService.getTrashList({page: pageParam, size: 20}),
+    select: item =>
+      item.pages.flatMap(page =>
+        page.trashListResponses.map(trashItem => ({
+          ...trashItem,
+          deletedAt: format(new Date(trashItem.deletedAt!)),
+        })),
+      ),
   });
 
   const {data: trashDetail} = useQuery({
     queryKey: ['thrash', trash?.id],
     queryFn: () => thrashService.getTrashDetail(trash?.id!),
-    refetchOnMount: false,
     enabled: !!trash?.id,
   });
 
@@ -44,17 +47,23 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => thrashService.restoreTrash(id),
-    onSuccess: (_, deleteId) => {
-      const newTrashList = client
-        .getQueryData<Trash[]>(['thrash'])!
-        .filter(item => item.id !== deleteId);
-      client.setQueryData(['thrash'], newTrashList);
+    onSuccess: async () => {
+      await client.invalidateQueries({queryKey: ['thrash']});
       showToast({message: '메시지가 복구 되었습니다.'});
     },
     onError,
   });
 
-  return {trashList, trashDetail, deleteTrash, restoreTrash};
+  return {
+    trashList: {
+      data: trashList || [],
+      hasNextPage,
+      fetchNextPage,
+    },
+    trashDetail,
+    deleteTrash,
+    restoreTrash,
+  };
 };
 
 export default useThrash;

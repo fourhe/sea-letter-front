@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 
 import {useAuthenticate} from '@application/authenticate';
-import {Icon, Link} from '@components/atom';
+import {Icon, Line, Link} from '@components/atom';
 import {EmptyLayout} from '@components/template';
 
 const KakaoLoginPage = () => {
@@ -22,6 +22,7 @@ const KakaoLoginPage = () => {
           {`바다로 보내는 편지에 로그인하면, 이용약관과\n개인정보처리방침에 동의하는 것으로 간주합니다.`}
         </LogoSubTitle>
       </TextContainer>
+      <Line type="horizontal" />
       <KakaoLoginButton href={logInFormUrl}>
         <Icon.KaKaoLogo width={20} height={20} />
         <span>카카오로 로그인하기</span>
@@ -69,11 +70,10 @@ const TextContainer = styled.section`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-bottom: 1px solid ${({theme}) => theme.color.neutral[400]};
-  margin-bottom: 40px;
 `;
 
 const KakaoLoginButton = styled(Link)`
+  margin-top: 40px;
   display: flex;
   padding: 16px;
   justify-content: center;
