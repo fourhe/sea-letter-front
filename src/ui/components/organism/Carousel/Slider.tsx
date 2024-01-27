@@ -4,14 +4,10 @@ import styled from 'styled-components';
 import type {SliderProps} from './types';
 
 const Slider = (props: SliderProps) => {
-  const {children, i, x, onDragEnd, totalSliders} = props;
+  const {children, x, onDragEnd, totalSliders} = props;
   return (
     <Container
-      style={{
-        x,
-        left: `${i * 100}%`,
-        right: `${i * 100}%`,
-      }}
+      style={{x}}
       drag={totalSliders > 1 && 'x'}
       dragElastic={0.3}
       onDragEnd={onDragEnd}>

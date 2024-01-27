@@ -15,7 +15,6 @@ export type CarouselProps = {
 
 export type SliderProps = {
   x: MotionValue<number>;
-  i: number;
   children: ReactNode;
   onDragEnd: (e: Event, dragProps: PanInfo) => void;
   totalSliders: number;

@@ -118,7 +118,6 @@ const Main = () => {
     return (
       <>
         <Icon.HideLetter width={74} height={61} />
-        <Icon.Union width={28} height={56} />
         <MainText text={'위로 올려\n편지를 주워보세요.'} />
       </>
     );

@@ -47,7 +47,10 @@ const TooltipText = styled.span`
   transition:
     opacity 0.5s,
     visibility 0.5s;
+  text-align: center;
   white-space: pre-wrap;
+  font-size: ${({theme}) => theme.typography.fontSizes.xs}px;
+  line-height: ${({theme}) => theme.typography.lineHeights.xs}px;
 
   ${TooltipContainer}:hover & {
     visibility: visible;
