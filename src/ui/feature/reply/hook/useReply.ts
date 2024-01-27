@@ -27,7 +27,7 @@ const useReply = (props: ReplyHookProps) => {
   });
 
   const {data: replyDetail} = useQuery({
-    queryKey: ['replyDetail', replyId],
+    queryKey: ['replyDetail', replyId, letterId],
     queryFn: () => repository.getReplyDetail(letterId!, replyId!),
     enabled: !!replyId,
     refetchOnMount: false,
