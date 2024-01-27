@@ -1,4 +1,5 @@
 import {Analytics} from '@vercel/analytics/react';
+import {SpeedInsights} from '@vercel/speed-insights/next';
 import type {Metadata} from 'next';
 import localFont from 'next/font/local';
 import {CookiesProvider} from 'next-client-cookies/server';
@@ -48,6 +49,7 @@ const RootLayout = ({children}: RootLayoutProps) => (
         </Providers>
       </CookiesProvider>
       <Analytics />
+      <SpeedInsights />
     </body>
   </html>
 );
