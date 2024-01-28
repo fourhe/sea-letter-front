@@ -22,17 +22,29 @@ export const useInfiniteScroll = <
       TQueryKey,
       TPageParam | number
     >,
-    'getNextPageParam' | 'initialPageParam'
+    | 'getNextPageParam'
+    | 'getPreviousPageParam'
+    | 'initialPageParam'
+    | 'maxPages'
   >,
 ) =>
   useInfiniteQuery({
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.currentPage === lastPage.totalPage) {
-        return undefined;
+      if (lastPage.currentPage === lastPage.totalPages - 1) {
+        return null;
       }
       return pages.length;
     },
+    getPreviousPageParam: (firstPage, pages) => {
+      if (firstPage.currentPage === 0) {
+        return null;
+      }
+      return pages.length;
+    },
+    maxPages: 5,
     initialPageParam: 0,
+    gcTime: 0,
+    staleTime: 0,
     ...option,
   });
 
