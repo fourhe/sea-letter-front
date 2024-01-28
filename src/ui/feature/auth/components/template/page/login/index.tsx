@@ -36,6 +36,7 @@ const Login = () => {
             width={327}
             height={650}
             fetchPriority="high"
+            loading="lazy"
             src={item}
             key={item}
             alt="온보딩 이미지"
