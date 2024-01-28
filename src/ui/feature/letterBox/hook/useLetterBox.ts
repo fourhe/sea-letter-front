@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
@@ -13,6 +13,7 @@ type LetterBoxProps = {
 
 const useLetterBox = (props?: LetterBoxProps) => {
   const cookies = useCookies();
+  const client = useQueryClient();
   const token = cookies.get('access-token');
   const repository = new LetterBoxService(token);
   const {showToast} = useToast();
@@ -20,15 +21,10 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const onError = (error: ApiError) =>
     showToast({message: error.response!.data.message});
 
-  const {
-    data: letterBoxList,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteScroll({
+  const {data: letterBoxList, fetchNextPage} = useInfiniteScroll({
     queryKey: ['letterBox'],
     queryFn: ({pageParam}) =>
       repository.getLetterList({page: pageParam, size: 10}),
-    refetchOnWindowFocus: true,
     select: item =>
       item.pages.flatMap(page =>
         page.letterListResponses.map(letterList => ({
@@ -43,24 +39,24 @@ const useLetterBox = (props?: LetterBoxProps) => {
     queryFn: () => repository.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     refetchOnMount: false,
-    select: detailData => {
-      const createdAt = format(new Date(detailData.createdAt!));
-      return {
-        ...detailData,
-        createdAt,
-      };
-    },
+    select: detailData => ({
+      ...detailData,
+      createdAt: format(new Date(detailData.createdAt!)),
+    }),
   });
 
   const {mutateAsync: deleteLetter} = useMutation<void, ApiError, number>({
     mutationFn: id => repository.deleteLetter(id),
     onError,
+    onSuccess: async () => {
+      await client.invalidateQueries({queryKey: ['letterBox']});
+      showToast({message: '메시지가 삭제 되었습니다.'});
+    },
   });
 
   return {
     letterBoxList: {
       data: letterBoxList || [],
-      hasNextPage,
       fetchNextPage,
     },
     letterDetail,
