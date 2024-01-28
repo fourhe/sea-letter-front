@@ -18,11 +18,7 @@ const useThrash = (trash?: Partial<Trash>) => {
   const onError = (error: ApiError) =>
     showToast({message: error.response!.data.message});
 
-  const {
-    data: trashList,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteScroll({
+  const {data: trashList, fetchNextPage} = useInfiniteScroll({
     queryKey: ['thrash'],
     queryFn: ({pageParam}) =>
       thrashService.getTrashList({page: pageParam, size: 20}),
@@ -58,7 +54,6 @@ const useThrash = (trash?: Partial<Trash>) => {
   return {
     trashList: {
       data: trashList || [],
-      hasNextPage,
       fetchNextPage,
     },
     trashDetail,
