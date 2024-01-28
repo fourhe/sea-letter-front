@@ -17,7 +17,8 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const repository = new LetterBoxService(token);
   const {showToast} = useToast();
 
-  const onError = (error: ApiError) => showToast({message: error.message});
+  const onError = (error: ApiError) =>
+    showToast({message: error.response!.data.message});
 
   const {
     data: letterBoxList,

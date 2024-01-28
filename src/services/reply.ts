@@ -21,6 +21,10 @@ class ReplyService extends Api implements IReplyService {
   async deleteReply(replyId: number): Promise<void> {
     await this.post(`/mailbox/letters/${replyId}`);
   }
+
+  async setThanks(id: number): Promise<void> {
+    await this.post(`/mailbox/letters/${id}/thanks`);
+  }
 }
 
 export default ReplyService;
