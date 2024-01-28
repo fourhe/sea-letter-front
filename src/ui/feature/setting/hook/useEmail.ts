@@ -11,7 +11,8 @@ const useEmail = () => {
   const token = cookies.get('access-token');
   const userService = new UserService(token);
   const {showToast} = useToast();
-  const onError = (error: ApiError) => showToast({message: error.message});
+  const onError = (error: ApiError) =>
+    showToast({message: error.response!.data.message});
 
   const {mutate: updateEmail} = useMutation<
     void,

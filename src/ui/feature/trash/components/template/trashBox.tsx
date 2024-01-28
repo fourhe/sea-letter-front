@@ -19,7 +19,6 @@ const TrashBox = () => {
   const {handleOpen} = useDrawer();
   const route = useRouter();
   const {setTarget} = useIntersectionObserver({
-    hasNextPage: trashList.hasNextPage,
     fetchNextPage: trashList.fetchNextPage,
   });
 

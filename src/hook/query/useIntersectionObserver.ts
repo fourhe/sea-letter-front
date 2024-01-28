@@ -3,23 +3,26 @@ import {useCallback, useEffect, useState} from 'react';
 
 export type UseIntersectionObserverProps = {
   threshold?: number;
-  hasNextPage: boolean | undefined;
   fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
 };
 
 const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
-  const {threshold = 0.5, hasNextPage, fetchNextPage} = props;
-  const [target, setTarget] = useState<HTMLDivElement | null | undefined>(null);
+  const {threshold = 0.1, fetchNextPage} = props;
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
 
   const observerCallback = useCallback<IntersectionObserverCallback>(
     entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && hasNextPage) {
-          fetchNextPage();
+        if (entry.isIntersecting) {
+          fetchNextPage().then(r => {
+            if (r.hasNextPage) {
+              r.fetchNextPage();
+            }
+          });
         }
       });
     },
-    [hasNextPage, fetchNextPage], // observerCallback 함수가 이 값들에 의존하므로, 이 값들이 변경될 때만 새로운 함수를 생성합니다.
+    [fetchNextPage],
   );
 
   useEffect(() => {

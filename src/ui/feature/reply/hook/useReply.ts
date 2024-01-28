@@ -6,18 +6,13 @@ import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
 import ReplyService from '@services/reply';
 
-type ReplyHookProps = {
-  letterId?: number;
-  replyId?: number;
-};
-
-const useReply = (props: ReplyHookProps) => {
-  const {letterId, replyId} = props;
+const useReply = (letterId?: number, replyId?: number) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const repository = new ReplyService(token);
   const {showToast} = useToast();
-  const onError = (error: ApiError) => showToast({message: error.message});
+  const onError = (error: ApiError) =>
+    showToast({message: error.response!.data.message});
 
   const {data: replyList} = useQuery({
     queryKey: ['replyList', letterId],
@@ -45,7 +40,12 @@ const useReply = (props: ReplyHookProps) => {
     onError,
   });
 
-  return {replyList, replyDetail, deleteReply};
+  const {mutateAsync: setThank} = useMutation<void, ApiError, number>({
+    mutationFn: id => repository.setThanks(id),
+    onError,
+  });
+
+  return {replyList, replyDetail, deleteReply, setThank};
 };
 
 export default useReply;

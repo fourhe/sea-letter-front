@@ -1,9 +1,9 @@
-import type {MouseEventHandler} from 'react';
-import {useCallback, useState} from 'react';
+import {type MouseEventHandler, useCallback, useState} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Box, Icon} from '@components/atom';
 import {useToast} from '@components/organism/Toast/hook';
+import {useReply} from '@feature/reply/hook';
 
 type ReplyContainerProps = {
   id: number;
@@ -15,6 +15,7 @@ type ReplyContainerProps = {
 const ReplyContainer = (props: ReplyContainerProps) => {
   const {hasThanks: hasThanksProp, title, id, onClick} = props;
   const [hasThanks, setHasThanks] = useState(hasThanksProp);
+  const {setThank} = useReply();
   const theme = useTheme();
   const {showToast} = useToast();
 
@@ -23,8 +24,9 @@ const ReplyContainer = (props: ReplyContainerProps) => {
     : theme.color.neutral[400];
 
   const onClickThanks: MouseEventHandler<HTMLDivElement> = useCallback(
-    e => {
+    async e => {
       e.stopPropagation();
+      await setThank(id);
       setHasThanks(pre => !pre);
       if (!hasThanks) {
         showToast({
@@ -32,7 +34,7 @@ const ReplyContainer = (props: ReplyContainerProps) => {
         });
       }
     },
-    [hasThanks, showToast],
+    [hasThanks, id, setThank, showToast],
   );
 
   return (
