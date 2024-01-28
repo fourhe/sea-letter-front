@@ -21,10 +21,10 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
   const {handleOpen: deleteOpen} = useDialog();
   const route = useRouter();
   const {showToast} = useToast();
-  const {replyDetail, deleteReply, setThank} = useReply({
-    letterId: params['letter-id'],
-    replyId: params['reply-id'],
-  });
+  const {replyDetail, deleteReply, setThank} = useReply(
+    params['letter-id'],
+    params['reply-id'],
+  );
 
   const deleteSelectedReply = async () => {
     await deleteReply(replyDetail?.id!);
