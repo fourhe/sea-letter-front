@@ -6,13 +6,7 @@ import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
 import ReplyService from '@services/reply';
 
-type ReplyHookProps = {
-  letterId?: number;
-  replyId?: number;
-};
-
-const useReply = (props: ReplyHookProps) => {
-  const {letterId, replyId} = props;
+const useReply = (letterId?: number, replyId?: number) => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const repository = new ReplyService(token);
