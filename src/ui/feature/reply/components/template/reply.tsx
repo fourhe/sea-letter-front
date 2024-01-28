@@ -21,15 +21,21 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
   const {handleOpen: deleteOpen} = useDialog();
   const route = useRouter();
   const {showToast} = useToast();
-  const {replyDetail, deleteReply} = useReply({
-    letterId: params['letter-id'],
-    replyId: params['reply-id'],
-  });
+  const {replyDetail, deleteReply, setThank} = useReply(
+    params['letter-id'],
+    params['reply-id'],
+  );
 
   const deleteSelectedReply = async () => {
     await deleteReply(replyDetail?.id!);
     showToast({message: '답장이 휴지통으로 이동했습니다.'});
     deleteOpen();
+    route.back();
+  };
+
+  const thankSelectedReply = async () => {
+    await setThank(params['reply-id']!);
+    showToast({message: '감사 인사가 전해졌습니다.'});
     route.back();
   };
 
@@ -59,7 +65,7 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
       />
       <LayoutItem.Container>
         <LayoutItem.Content>{replyDetail?.content}</LayoutItem.Content>
-        <ThankYouButton color="brown" size="full">
+        <ThankYouButton color="brown" size="full" onClick={thankSelectedReply}>
           <Icon.FaceWink width={28} height={28} stroke="white" />
           감사 인사 전하기
         </ThankYouButton>

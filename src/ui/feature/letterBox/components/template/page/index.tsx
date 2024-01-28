@@ -15,7 +15,6 @@ const MailBox = () => {
   const readMyLetter = (id: number) => route.push(`letter-box/letters/${id}`);
   const {letterBoxList} = useLetterBox();
   const {setTarget} = useIntersectionObserver({
-    hasNextPage: letterBoxList.hasNextPage,
     fetchNextPage: letterBoxList.fetchNextPage,
   });
   return (

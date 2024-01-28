@@ -19,7 +19,7 @@ const ReplyBox = (props: NextPageProps<ReplyProps>) => {
   const route = useRouter();
   const goToReply = (id: number) =>
     route.push(`${params['letter-id']}/reply/${id}`);
-  const {replyList} = useReply({letterId: params['letter-id']});
+  const {replyList} = useReply(params['letter-id']);
 
   return (
     <EmptyLayout

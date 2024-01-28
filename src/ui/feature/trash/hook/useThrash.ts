@@ -15,14 +15,11 @@ const useThrash = (trash?: Partial<Trash>) => {
   const thrashService = new TrashService(token);
   const {showToast} = useToast();
 
-  const onError = (error: ApiError) => showToast({message: error.message});
+  const onError = (error: ApiError) =>
+    showToast({message: error.response!.data.message});
 
-  const {
-    data: trashList,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteScroll({
-    queryKey: ['thrash'],
+  const {data: trashList, fetchNextPage} = useInfiniteScroll({
+    queryKey: ['thrashBox'],
     queryFn: ({pageParam}) =>
       thrashService.getTrashList({page: pageParam, size: 20}),
     select: item =>
@@ -57,7 +54,6 @@ const useThrash = (trash?: Partial<Trash>) => {
   return {
     trashList: {
       data: trashList || [],
-      hasNextPage,
       fetchNextPage,
     },
     trashDetail,

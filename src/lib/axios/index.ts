@@ -1,11 +1,18 @@
 import axios, {
-  type AxiosError,
+  AxiosError,
   type AxiosInstance,
   type AxiosRequestConfig,
   HttpStatusCode,
 } from 'axios';
 
-export type ApiError = AxiosError;
+export type ApiError = AxiosError & {
+  response?: {
+    data: {
+      errorCode: string;
+      message: string;
+    };
+  };
+};
 
 class Api {
   private readonly axiosInstance: AxiosInstance;
