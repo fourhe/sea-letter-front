@@ -21,6 +21,5 @@ export default Slider;
 const Container = styled(motion.div)`
   flex: none;
   width: 100%;
-  height: 100%;
   display: inline-block;
 `;

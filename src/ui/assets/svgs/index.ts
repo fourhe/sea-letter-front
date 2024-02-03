@@ -25,3 +25,8 @@ export {default as HermitCrab} from './hermit-crab.svg';
 export {default as Ellipse} from './ellipse.svg';
 export {default as Logo} from './logo.svg';
 export {default as KaKaoLogo} from './kakao-logo.svg';
+export {default as OnBoarding1} from './onBoarding/1.svg';
+export {default as OnBoarding2} from './onBoarding/2.svg';
+export {default as OnBoarding3} from './onBoarding/3.svg';
+export {default as OnBoarding4} from './onBoarding/4.svg';
+export {default as OnBoarding5} from './onBoarding/5.svg';
