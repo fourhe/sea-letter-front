@@ -3,7 +3,7 @@ import {useCookies} from 'next-client-cookies';
 
 import UserService from '@services/user';
 
-const useMenu = (refetch: boolean) => {
+const useMenu = () => {
   const cookies = useCookies();
   const token = cookies.get('access-token');
   const userService = new UserService(token);
@@ -15,8 +15,9 @@ const useMenu = (refetch: boolean) => {
       receivedThankCount: 0,
       sentLetterCount: 0,
       sentReplyCount: 0,
+      isNewUser: false,
     },
-    enabled: !!token && refetch,
+    enabled: !!token,
   });
 
   return {menuInfo};
