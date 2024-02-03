@@ -15,8 +15,8 @@ import AuthenticationService from '@services/auth';
 const Menu = () => {
   const theme = useTheme();
   const route = useRouter();
-  const {handleClose, open} = useDrawer();
-  const {menuInfo} = useMenu(open);
+  const {handleClose} = useDrawer();
+  const {menuInfo} = useMenu();
   const logout = async () => {
     await AuthenticationService.logOut();
     handleClose();

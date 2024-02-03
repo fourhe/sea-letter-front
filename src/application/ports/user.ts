@@ -5,12 +5,16 @@ export type User = {
   receivedThankCount: number;
   sentLetterCount: number;
   sentReplyCount: number;
+  isNewUser: boolean;
 };
+
+export type MenuInfo = Pick<
+  User,
+  'receivedThankCount' | 'sentLetterCount' | 'sentReplyCount' | 'isNewUser'
+>;
 
 export default interface IUserService {
   updateUserEmail(email: Pick<User, 'email'>): Promise<void>;
 
-  getUser(): Promise<
-    Pick<User, 'receivedThankCount' | 'sentLetterCount' | 'sentReplyCount'>
-  >;
+  getUser(): Promise<MenuInfo>;
 }
