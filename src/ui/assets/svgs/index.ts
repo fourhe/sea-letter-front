@@ -30,3 +30,4 @@ export {default as OnBoarding2} from './onBoarding/2.svg';
 export {default as OnBoarding3} from './onBoarding/3.svg';
 export {default as OnBoarding4} from './onBoarding/4.svg';
 export {default as OnBoarding5} from './onBoarding/5.svg';
+export {default as NewUserLetter} from './new-user-letter.svg';

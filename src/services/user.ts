@@ -1,5 +1,5 @@
 import type {IUserService} from '@application/ports';
-import type {User} from '@application/ports/user';
+import type {MenuInfo, User} from '@application/ports/user';
 import Api from '@lib/axios';
 
 class UserService extends Api implements IUserService {
@@ -9,10 +9,7 @@ class UserService extends Api implements IUserService {
   }
 
   async getUser() {
-    const {data} =
-      await this.get<
-        Pick<User, 'receivedThankCount' | 'sentLetterCount' | 'sentReplyCount'>
-      >('/menu/info');
+    const {data} = await this.get<MenuInfo>('/menu/info');
     return data;
   }
 }
