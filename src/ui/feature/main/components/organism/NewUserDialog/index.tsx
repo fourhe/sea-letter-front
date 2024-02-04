@@ -1,22 +1,46 @@
+import {QueryObserver, useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
+import {useEffect} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {NewUserLetter} from '@/ui/assets/svgs';
+import type {MenuInfo} from '@application/ports/user';
 import {Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
 import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
 
-type NewUserDialogProps = {
-  ok: () => void;
-  title: string;
-  subTitle: string;
-};
-
-const NewUserDialog = (props: NewUserDialogProps) => {
-  const {subTitle, title, ok} = props;
+const NewUserDialog = () => {
   const {color} = useTheme();
-  const {handleClose} = useDialog();
+  const {handleOpen, handleClose} = useDialog();
+  const client = useQueryClient();
+  const route = useRouter();
+
+  const observer = new QueryObserver<MenuInfo>(client, {
+    queryKey: ['menuInfo'],
+  });
+
+  useEffect(() => {
+    let isOpen;
+    const unsubscribe = observer.subscribe(result => {
+      isOpen = result.data?.isNewUser;
+    });
+    if (isOpen && !localStorage.getItem('isNewUser')) {
+      handleOpen();
+      localStorage.setItem('isNewUser', 'true');
+    }
+    return () => {
+      unsubscribe();
+      handleClose();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const goToEmail = () => {
+    route.push('/main/setting/email');
+    handleClose();
+  };
 
   return (
     <Portal portalId={PortalId.Dialog}>
@@ -31,11 +55,11 @@ const NewUserDialog = (props: NewUserDialogProps) => {
             gap: 20,
           }}>
           <NewUserLetter />
-          <Title>{title}</Title>
-          <SubTitle>{subTitle}</SubTitle>
+          <Title>{`내가 보낸 편지에 답장이 오면\n이메일로 알려드려요!`}</Title>
+          <SubTitle>{`현재 로그인된 이메일 외의\n다른 이메일을 원한다면 변경해주세요.`}</SubTitle>
         </Dialog.Body>
         <Dialog.Footer type="vertical">
-          <Button color="brown" onClick={ok}>
+          <Button color="brown" onClick={goToEmail}>
             이메일 변경하러 가기
           </Button>
           <Button
