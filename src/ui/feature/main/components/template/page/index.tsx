@@ -17,6 +17,7 @@ import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
 import {IconButton} from '@feature/main/components/atom';
 import {MainText} from '@feature/main/components/molecule';
+import {NewUserDialog} from '@feature/main/components/organism';
 
 const message = {
   writing: '편지가 성공적으로\n바다로 보내졌습니다.',
@@ -60,9 +61,10 @@ const Main = () => {
     }
   }, [id, client, data, route, isUpEvent]);
 
-  const openLetter = useCallback(() => {
-    route.push(`/main/letter/read/${id}`);
-  }, [id, route]);
+  const openLetter = useCallback(
+    () => route.push(`/main/letter/read/${id}`),
+    [id, route],
+  );
 
   const Content = useMemo(() => {
     if (data) {
@@ -137,6 +139,7 @@ const Main = () => {
         text: '우편함',
         onClick: goMailBox,
       }}>
+      <NewUserDialog />
       <Container
         $isUpEvent={isUpEvent}
         onTouchStart={handleTouchStart}
