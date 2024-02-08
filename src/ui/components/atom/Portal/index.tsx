@@ -4,7 +4,7 @@ import {createPortal} from 'react-dom';
 import {PortalId} from './portal.enum';
 
 type PortalProps = {
-  children: ReactElement;
+  children: ReactElement | null;
   portalId: PortalId;
 };
 

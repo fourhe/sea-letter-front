@@ -14,24 +14,24 @@ export type ToastProps = {
   isVisible?: boolean;
 };
 
+const containerVariants: Variants = {
+  visible: {
+    display: 'flex',
+    opacity: 1,
+    scale: 1,
+    transform: 'translateY(-50%)',
+    transition: {duration: 0.5},
+  },
+  hidden: {
+    display: 'none',
+    opacity: 0,
+    scale: 0,
+  },
+};
+
 const Toast = () => {
   const {color, containerColor, isVisible, message} = useToast();
   const theme = useTheme();
-
-  const containerVariants: Variants = {
-    visible: {
-      display: 'flex',
-      opacity: 1,
-      scale: 1,
-      transform: 'translateY(-50%)',
-      transition: {duration: 0.5},
-    },
-    hidden: {
-      display: 'none',
-      opacity: 0,
-      scale: 0,
-    },
-  };
 
   return (
     <Container

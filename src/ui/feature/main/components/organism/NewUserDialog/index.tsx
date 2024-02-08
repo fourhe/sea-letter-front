@@ -1,7 +1,7 @@
 import {QueryObserver, useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
-import {useEffect} from 'react';
-import styled, {useTheme} from 'styled-components';
+import {type CSSProperties, useCallback, useEffect} from 'react';
+import styled from 'styled-components';
 
 import {NewUserLetter} from '@/ui/assets/svgs';
 import type {MenuInfo} from '@application/ports/user';
@@ -11,9 +11,17 @@ import {Button} from '@components/molecule';
 import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
 
+const BodyStyle: CSSProperties = {
+  width: '65vw',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  gap: 20,
+};
+
 const NewUserDialog = () => {
-  const {color} = useTheme();
-  const {handleOpen, handleClose} = useDialog();
+  const {handleOpen, handleClose, open} = useDialog();
   const client = useQueryClient();
   const route = useRouter();
 
@@ -26,7 +34,11 @@ const NewUserDialog = () => {
     const unsubscribe = observer.subscribe(result => {
       isOpen = result.data?.isNewUser;
     });
-    if (isOpen && !localStorage.getItem('isNewUser')) {
+    if (
+      typeof window !== 'undefined' &&
+      isOpen &&
+      !localStorage.getItem('isNewUser')
+    ) {
       handleOpen();
       localStorage.setItem('isNewUser', 'true');
     }
@@ -37,41 +49,30 @@ const NewUserDialog = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const goToEmail = () => {
+  const goToEmail = useCallback(() => {
     route.push('/main/setting/email');
     handleClose();
-  };
+  }, [route, handleClose]);
 
   return (
     <Portal portalId={PortalId.Dialog}>
-      <Dialog.Container>
-        <Dialog.Body
-          style={{
-            width: '65vw',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            gap: 20,
-          }}>
-          <NewUserLetter />
-          <Title>{`내가 보낸 편지에 답장이 오면\n이메일로 알려드려요!`}</Title>
-          <SubTitle>{`현재 로그인된 이메일 외의\n다른 이메일을 원한다면 변경해주세요.`}</SubTitle>
-        </Dialog.Body>
-        <Dialog.Footer type="vertical">
-          <Button color="brown" onClick={goToEmail}>
-            이메일 변경하러 가기
-          </Button>
-          <Button
-            color="white"
-            style={{
-              color: color.secondary.brown,
-            }}
-            onClick={handleClose}>
-            현재 이메일 유지하기
-          </Button>
-        </Dialog.Footer>
-      </Dialog.Container>
+      {open ? (
+        <Dialog.Container>
+          <Dialog.Body style={BodyStyle}>
+            <NewUserLetter />
+            <Title>{`내가 보낸 편지에 답장이 오면\n이메일로 알려드려요!`}</Title>
+            <SubTitle>{`현재 로그인된 이메일 외의\n다른 이메일을 원한다면 변경해주세요.`}</SubTitle>
+          </Dialog.Body>
+          <Dialog.Footer type="vertical">
+            <Button color="brown" onClick={goToEmail}>
+              이메일 변경하러 가기
+            </Button>
+            <ConfirmButton color="white" onClick={handleClose}>
+              현재 이메일 유지하기
+            </ConfirmButton>
+          </Dialog.Footer>
+        </Dialog.Container>
+      ) : null}
     </Portal>
   );
 };
@@ -92,4 +93,8 @@ const SubTitle = styled.p`
   text-align: center;
   white-space: pre-wrap;
   margin-bottom: 10px;
+`;
+
+const ConfirmButton = styled(Button)`
+  color: ${({theme}) => theme.color.secondary.brown};
 `;
