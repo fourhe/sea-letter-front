@@ -1,4 +1,4 @@
-import {PageQuery, PageQueryString} from '@application/ports/common';
+import type {PageQuery, PageQueryString} from './common';
 
 export type LetterBox = {
   id: number;

@@ -37,7 +37,7 @@ const useLetter = (props?: LetterHookProps) => {
     enabled: !!props?.isUpEvent,
   });
 
-  const {data: letter, isPending: isLetterPending} = useQuery<
+  const {data: letter} = useQuery<
     Letter,
     ApiError,
     Letter,
@@ -60,7 +60,6 @@ const useLetter = (props?: LetterHookProps) => {
     writeLetter,
     id,
     letter,
-    isLetterPending,
     isLetterIdError,
   };
 };
