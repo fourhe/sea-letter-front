@@ -12,7 +12,7 @@ type SendDialogProps = {
 
 const SendDialog = (props: SendDialogProps) => {
   const {ok, title, cancel: cancelProp} = props;
-  const {handleClose} = useDialog();
+  const {handleClose, open} = useDialog();
 
   const cancel = () => {
     if (cancelProp) cancelProp();
@@ -21,17 +21,19 @@ const SendDialog = (props: SendDialogProps) => {
 
   return (
     <Portal portalId={PortalId.Dialog}>
-      <Dialog.Container>
-        <Dialog.Body>{title}</Dialog.Body>
-        <Dialog.Footer>
-          <Button color="gray" onClick={cancel}>
-            아니요
-          </Button>
-          <Button color="brown" onClick={ok}>
-            네, 보낼게요
-          </Button>
-        </Dialog.Footer>
-      </Dialog.Container>
+      {open ? (
+        <Dialog.Container>
+          <Dialog.Body>{title}</Dialog.Body>
+          <Dialog.Footer>
+            <Button color="gray" onClick={cancel}>
+              아니요
+            </Button>
+            <Button color="brown" onClick={ok}>
+              네, 보낼게요
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Container>
+      ) : null}
     </Portal>
   );
 };
