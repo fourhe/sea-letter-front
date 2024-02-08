@@ -2,9 +2,9 @@
 
 import styled from 'styled-components';
 
-import {useAuthenticate} from '@application/authenticate';
 import {Icon, Line, Link} from '@components/atom';
 import {EmptyLayout} from '@components/template';
+import {useAuthenticate} from '@feature/auth/hook';
 
 const KakaoLoginPage = () => {
   const {logInFormUrl} = useAuthenticate();

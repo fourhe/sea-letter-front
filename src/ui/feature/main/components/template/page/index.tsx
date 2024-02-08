@@ -32,7 +32,7 @@ const Main = () => {
   const [isUpEvent, setIsUpEvent] = useState(false);
   const route = useRouter();
   const client = useQueryClient();
-  const {id, isLetterPending} = useLetter({isUpEvent});
+  const {id} = useLetter({isUpEvent});
   const {get} = useSearchParams();
   const data = get('data') as Message;
 
@@ -67,6 +67,7 @@ const Main = () => {
   );
 
   const Content = useMemo(() => {
+    // 메인에서 보여줘야 하는 상황
     if (data) {
       return (
         <MainText
@@ -75,7 +76,7 @@ const Main = () => {
         />
       );
     }
-
+    // 읽을 편지가 도착 했을 때
     if (id !== null) {
       return (
         <>
@@ -92,7 +93,8 @@ const Main = () => {
       );
     }
 
-    if (isUpEvent && !isLetterPending) {
+    // 편지가 도착하지 않았을 때
+    if (isUpEvent) {
       return (
         <>
           <Icon.HideLetter
@@ -123,7 +125,7 @@ const Main = () => {
         <MainText text={'위로 올려\n편지를 주워보세요.'} />
       </>
     );
-  }, [data, id, isUpEvent, isLetterPending, openLetter]);
+  }, [data, id, isUpEvent, openLetter]);
 
   const goMailBox = useCallback(() => route.push('/main/letter-box'), [route]);
 

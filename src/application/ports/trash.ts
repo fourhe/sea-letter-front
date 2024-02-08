@@ -1,4 +1,4 @@
-import type {PageQuery, PageQueryString} from '@application/ports/common';
+import type {PageQuery, PageQueryString} from './common';
 
 export type Trash = {
   id: number;

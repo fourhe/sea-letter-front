@@ -37,8 +37,7 @@ class Api {
     const hasToken = !!this.token;
     if (!hasAuthorizationHeader && hasToken) {
       api.interceptors.request.use(config => {
-        // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = this.token;
+        config.headers.setAuthorization(this.token!);
         return config;
       });
     }
