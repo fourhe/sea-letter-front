@@ -97,7 +97,7 @@ const Menu = () => {
           <Icon.Share height={theme.size[6]} width={theme.size[6]} />
           공유하기
         </S.ShareLi>
-        <S.Li href="/main/notice">
+        <S.Li href={process.env.NEXT_PUBLIC_REVIEW_URL} onClick={handleClose}>
           <Icon.Star height={theme.size[6]} width={theme.size[6]} />
           리뷰와 별점주기
         </S.Li>
