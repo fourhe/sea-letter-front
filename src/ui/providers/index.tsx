@@ -3,6 +3,7 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {createStore, Provider} from 'jotai';
+import {GoogleAnalytics} from 'nextjs-google-analytics';
 import type {ReactNode} from 'react';
 import {ThemeProvider} from 'styled-components';
 
@@ -36,6 +37,12 @@ const Providers = (props: ProvidersProps) => {
         </StyledComponentsRegistry>
       </Provider>
       <ReactQueryDevtools client={client} initialIsOpen={false} />
+      <GoogleAnalytics
+        gaMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+        trackPageViews
+        strategy="lazyOnload"
+        debugMode={process.env.NODE_ENV === 'development'}
+      />
     </QueryClientProvider>
   );
 };

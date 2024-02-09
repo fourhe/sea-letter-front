@@ -32,10 +32,6 @@ type RootLayoutProps = {
 
 const RootLayout = ({children}: RootLayoutProps) => (
   <html lang="ko">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>마음을 담다</title>
-    </head>
     <body className={`${Pretendard.className} ${RIDIBatang.variable}`}>
       <CookiesProvider>
         <Providers>
