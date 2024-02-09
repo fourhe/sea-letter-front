@@ -1,13 +1,16 @@
-import {useState} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
 import {useTheme} from 'styled-components';
+
+import {MenuInfo} from '@application/ports/user';
 
 type SwitchProps = {
   onClick: () => void;
+  on: boolean;
+  setOn: Dispatch<SetStateAction<MenuInfo['notificationEnabled']>>;
 };
 
 const Switch = (props: SwitchProps) => {
-  const {onClick: onClickProps} = props;
-  const [on, setOn] = useState(false);
+  const {onClick: onClickProps, setOn, on} = props;
   const theme = useTheme();
   const onClick = () => {
     setOn(pre => !pre);

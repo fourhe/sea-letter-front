@@ -3,8 +3,21 @@ import type {MenuInfo, User} from '@application/ports/user';
 import Api from '@lib/axios';
 
 class UserService extends Api implements IUserService {
-  async updateUserEmail(email: Pick<User, 'email'>) {
-    const {data} = await this.put<void, Pick<User, 'email'>>('/member', email);
+  async updateUserEmail(email: Pick<User, 'emailAddress'>) {
+    const {data} = await this.put<void, Pick<User, 'emailAddress'>>(
+      '/member',
+      email,
+    );
+    return data;
+  }
+
+  async updateUserNotification(
+    notification: Pick<User, 'notificationEnabled'>,
+  ) {
+    const {data} = await this.put<void, Pick<User, 'notificationEnabled'>>(
+      '/member',
+      notification,
+    );
     return data;
   }
 
