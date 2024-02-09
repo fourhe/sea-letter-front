@@ -1,20 +1,28 @@
 export type Email = string;
 
 export type User = {
-  email: Email;
+  emailAddress: Email | null;
   receivedThankCount: number;
-  sentLetterCount: number;
-  sentReplyCount: number;
-  isNewUser: boolean;
+  firstLogin: boolean;
+  notificationEnabled: boolean;
+  trashCount: number;
 };
 
 export type MenuInfo = Pick<
   User,
-  'receivedThankCount' | 'sentLetterCount' | 'sentReplyCount' | 'isNewUser'
+  | 'receivedThankCount'
+  | 'firstLogin'
+  | 'notificationEnabled'
+  | 'trashCount'
+  | 'emailAddress'
 >;
 
 export default interface IUserService {
-  updateUserEmail(email: Pick<User, 'email'>): Promise<void>;
+  updateUserEmail(email: Pick<User, 'emailAddress'>): Promise<void>;
+
+  updateUserNotification(
+    notification: Pick<User, 'notificationEnabled'>,
+  ): Promise<void>;
 
   getUser(): Promise<MenuInfo>;
 }

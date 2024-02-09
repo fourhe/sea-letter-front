@@ -3,6 +3,7 @@ import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
+import type {MenuInfo} from '@application/ports/user';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
 import LetterBoxService from '@services/letterBox';
@@ -50,6 +51,13 @@ const useLetterBox = (props?: LetterBoxProps) => {
     onError,
     onSuccess: async () => {
       await client.invalidateQueries({queryKey: ['letterBox']});
+      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          trashCount: prev.trashCount + 1,
+        };
+      });
       showToast({message: '메시지가 삭제 되었습니다.'});
     },
   });
