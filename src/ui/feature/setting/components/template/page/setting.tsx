@@ -1,19 +1,40 @@
 'use client';
 
+import {QueryObserver, useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
+import {useEffect, useState} from 'react';
 import styled, {useTheme} from 'styled-components';
 
+import type {MenuInfo} from '@application/ports/user';
 import {Icon} from '@components/atom';
 import {Switch} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
+import {useEmail} from '@feature/setting/hook';
 
 const Setting = () => {
   const {handleOpen} = useDrawer();
   const route = useRouter();
   const goEmailSetting = () => route.push('/main/setting/email');
-
   const {color, size} = useTheme();
+  const {updateNotification} = useEmail();
+  const client = useQueryClient();
+  const defaultValue =
+    client.getQueryData<MenuInfo>(['menuInfo'])?.notificationEnabled || false;
+  const [on, setOn] = useState<MenuInfo['notificationEnabled']>(defaultValue);
+
+  useEffect(() => {
+    const observer = new QueryObserver<MenuInfo>(client, {
+      queryKey: ['menuInfo'],
+    });
+    const unsubscribe = observer.subscribe(({data}) => {
+      setOn(data?.notificationEnabled || false);
+    });
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <EmptyLayout
@@ -37,7 +58,16 @@ const Setting = () => {
               alignItems: 'flex-start',
             }}>
             <AlarmContainer>
-              알림 받기 <Switch onClick={() => console.log(1)} />
+              알림 받기
+              <Switch
+                on={on}
+                setOn={setOn}
+                onClick={() =>
+                  updateNotification({
+                    notificationEnabled: !on,
+                  })
+                }
+              />
             </AlarmContainer>
             <SubContent>
               {`편지 답장과 감사인사에 대한 알림을\n이메일로 받을 수 있어요`}
@@ -114,7 +144,6 @@ const SubContent = styled.div`
 const Title = styled.div`
   padding: 8px 0;
   color: ${({theme}) => theme.color.neutral[800]};
-
   font-size: ${({theme}) => theme.typography.fontSizes.sm}px;
   font-weight: ${({theme}) => theme.typography.fontWeights.bold};
   line-height: ${({theme}) => theme.typography.lineHeights.sm}px;

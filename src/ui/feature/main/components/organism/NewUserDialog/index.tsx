@@ -31,16 +31,16 @@ const NewUserDialog = () => {
 
   useEffect(() => {
     let isOpen;
-    const unsubscribe = observer.subscribe(result => {
-      isOpen = result.data?.isNewUser;
+    const unsubscribe = observer.subscribe(({data}) => {
+      isOpen = data?.firstLogin && !!data?.emailAddress;
     });
     if (
       typeof window !== 'undefined' &&
       isOpen &&
-      !localStorage.getItem('isNewUser')
+      !localStorage.getItem('firstLogin')
     ) {
       handleOpen();
-      localStorage.setItem('isNewUser', 'true');
+      localStorage.setItem('firstLogin', 'true');
     }
     return () => {
       unsubscribe();

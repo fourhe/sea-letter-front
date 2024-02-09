@@ -1,6 +1,7 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {useCallback} from 'react';
 import {useTheme} from 'styled-components';
 
 import * as S from './style';
@@ -17,20 +18,20 @@ const Menu = () => {
   const route = useRouter();
   const {handleClose} = useDrawer();
   const {menuInfo} = useMenu();
-  const logout = async () => {
+  const logout = useCallback(async () => {
     await AuthenticationService.logOut();
     handleClose();
     route.push('/');
-  };
+  }, [handleClose, route]);
 
-  const goToTrash = () => {
+  const goToTrash = useCallback(() => {
     handleClose();
     route.push('/main/trash-box');
-  };
+  }, [handleClose, route]);
 
   const {showToast} = useToast();
 
-  const handleCopyClipBoard = () => {
+  const handleCopyClipBoard = useCallback(() => {
     const text = window.location.host;
     try {
       navigator.clipboard.writeText(text).then(() => {
@@ -43,7 +44,7 @@ const Menu = () => {
         message: '복사에 실패 하였습니다.',
       });
     }
-  };
+  }, [showToast]);
 
   const goToEmail = () => {
     handleClose();
@@ -82,7 +83,7 @@ const Menu = () => {
       <S.Half>
         <S.Dashboard>
           <S.DashboardTitle>Lv1. 도전! 감사인사 50개 받기</S.DashboardTitle>
-          <Progress max={50} value={menuInfo?.receivedThankCount} />
+          <Progress max={50} value={menuInfo?.receivedThankCount || 0} />
           <S.DashboardSubTitle>
             다음 단계까지 {50 - (menuInfo?.receivedThankCount || 0)}개 남았어요
           </S.DashboardSubTitle>
@@ -112,7 +113,7 @@ const Menu = () => {
             <Icon.Trash height={theme.size[6]} width={theme.size[6]} />
             휴지통
           </S.TrashIconContainer>
-          0
+          {menuInfo?.trashCount}
         </S.TrashContainer>
       </S.TrashPosition>
     </aside>

@@ -1,41 +1,61 @@
 'use client';
 
+import {QueryObserver, useQueryClient} from '@tanstack/react-query';
+import {useEffect, useMemo} from 'react';
 import {useForm, useWatch} from 'react-hook-form';
-import {useTheme} from 'styled-components';
+import styled from 'styled-components';
 
 import * as S from './style';
 
-import type {User} from '@application/ports/user';
+import type {MenuInfo, User} from '@application/ports/user';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
 import {useEmail} from '@feature/setting/hook';
 
-type TEmailForm = Pick<User, 'email'>;
-
-const defaultValues: TEmailForm = {
-  email: '',
-};
+type TEmailForm = Pick<User, 'emailAddress'>;
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Email = () => {
+  const client = useQueryClient();
+  const defaultValues: TEmailForm = useMemo(
+    () => ({
+      emailAddress:
+        client.getQueryData<MenuInfo>(['menuInfo'])?.emailAddress || '',
+    }),
+    [client],
+  );
   const {
     control,
     register,
     handleSubmit,
     formState: {errors},
+    setValue,
   } = useForm<TEmailForm>({defaultValues});
-  const {typography} = useTheme();
 
   const {updateEmail} = useEmail();
 
   const emailValue = useWatch({
     control,
-    name: 'email',
-    defaultValue: defaultValues.email,
+    name: 'emailAddress',
+    defaultValue: defaultValues.emailAddress,
   });
 
-  const disabled = emailRegex.test(emailValue);
+  const disabled = emailRegex.test(emailValue || '');
+
+  useEffect(() => {
+    const observer = new QueryObserver<MenuInfo>(client, {
+      queryKey: ['menuInfo'],
+    });
+    const unsubscribe = observer.subscribe(({data}) => {
+      setValue('emailAddress', data?.emailAddress || null);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = (data: TEmailForm) => updateEmail(data);
 
@@ -57,7 +77,7 @@ const Email = () => {
           이메일
           <S.EmailInput
             placeholder="이메일을 입력해 주세요."
-            {...register('email', {
+            {...register('emailAddress', {
               required:
                 '편지 답장과 감사인사에 대한 알림을 받을 이메일을\n입력해주세요.',
               pattern: {
@@ -67,29 +87,30 @@ const Email = () => {
             })}
           />
           <S.ErrorMessageBox>
-            <S.BulletPoint $isError={!disabled || !errors.email}>
+            <S.BulletPoint $isError={!disabled || !errors.emailAddress}>
               •
             </S.BulletPoint>
-            <S.ErrorMessage $isError={!disabled || !errors.email}>
-              {errors?.email?.message ||
+            <S.ErrorMessage $isError={!disabled || !errors.emailAddress}>
+              {errors?.emailAddress?.message ||
                 '편지 답장과 감사인사에 대한 알림을 받을 이메일을\n입력해주세요.'}
             </S.ErrorMessage>
           </S.ErrorMessageBox>
         </S.EmailContainer>
       </S.EmailForm>
-      <Button
+      <SaveButton
         disabled={!disabled}
         form="email"
         size="full"
         color="pink"
-        bold
-        style={{
-          fontSize: typography.fontSizes.lg,
-        }}>
+        bold>
         저장하기
-      </Button>
+      </SaveButton>
     </EmptyLayout>
   );
 };
 
 export default Email;
+
+const SaveButton = styled(Button)`
+  font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
+`;

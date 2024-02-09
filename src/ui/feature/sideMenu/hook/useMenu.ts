@@ -11,12 +11,6 @@ const useMenu = () => {
   const {data: menuInfo} = useQuery({
     queryKey: ['menuInfo'],
     queryFn: () => userService.getUser(),
-    initialData: {
-      receivedThankCount: 0,
-      sentLetterCount: 0,
-      sentReplyCount: 0,
-      isNewUser: false,
-    },
     enabled: !!token,
   });
 
