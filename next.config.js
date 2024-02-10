@@ -28,7 +28,7 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
     org: 'fourhe',
-    project: 'javascript-nextjs',
+    project: 'sea-letter',
     authToken: process.env.SENTRY_AUTH_TOKEN,
   },
   {
