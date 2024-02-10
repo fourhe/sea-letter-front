@@ -32,6 +32,7 @@ const WritingLayout = (props: ReadLayoutProps) => {
   const onSubmit = () => handleOpen();
   return (
     <>
+      <title>마음을 담다(편지 읽기)</title>
       <SendDialog
         title="답장을 바다로 보낼까요?"
         ok={async () => {

@@ -62,12 +62,6 @@ const accordion = [
     id: 1,
     title: '[공지사항] 바다로 보내는 편지 이용방법',
     date: '2023. 09. 24',
-    body: 'body1',
-  },
-  {
-    id: 2,
-    title: '[공지사항] 바다로 보내는 편지 이용방법',
-    date: '2023. 09. 24',
-    body: 'body2',
+    body: '공지사항',
   },
 ];
