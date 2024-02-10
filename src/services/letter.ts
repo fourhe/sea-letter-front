@@ -1,10 +1,11 @@
-import type {ILetterService} from '@application/ports';
+import type {ILetterService} from './interface';
+
+import Api from '@lib/axios';
 import type {
   Letter,
   LetterForm,
   LetterReplyForm,
-} from '@application/ports/letter';
-import Api from '@lib/axios';
+} from '@services/interface/letter';
 
 class LetterService extends Api implements ILetterService {
   async getLetterId(): Promise<number> {

@@ -1,6 +1,7 @@
-import type {IAuthenticationService} from '@application/ports';
-import type {Token} from '@application/ports/auth';
+import type {IAuthenticationService} from './interface';
+
 import Api from '@lib/axios';
+import type {Token} from '@services/interface/auth';
 
 class AuthenticationService extends Api implements IAuthenticationService {
   logInForm(): string {

@@ -3,9 +3,9 @@ import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
-import type {MenuInfo} from '@application/ports/user';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
+import type {MenuInfo} from '@services/interface/user';
 import LetterBoxService from '@services/letterBox';
 
 type LetterBoxProps = {

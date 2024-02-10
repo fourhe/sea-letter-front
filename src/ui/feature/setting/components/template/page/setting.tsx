@@ -5,12 +5,12 @@ import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import styled, {useTheme} from 'styled-components';
 
-import type {MenuInfo} from '@application/ports/user';
 import {Icon} from '@components/atom';
 import {Switch} from '@components/molecule';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {useEmail} from '@feature/setting/hook';
+import type {MenuInfo} from '@services/interface/user';
 
 const Setting = () => {
   const {handleOpen} = useDrawer();

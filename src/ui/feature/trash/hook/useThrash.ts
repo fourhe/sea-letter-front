@@ -3,10 +3,10 @@ import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
-import type {Trash} from '@application/ports/trash';
-import type {MenuInfo} from '@application/ports/user';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
+import type {Trash} from '@services/interface/trash';
+import type {MenuInfo} from '@services/interface/user';
 import TrashService from '@services/trash';
 
 const useThrash = (trash?: Partial<Trash>) => {
