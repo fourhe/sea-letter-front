@@ -1,7 +1,7 @@
 import type {Dispatch, SetStateAction} from 'react';
 import {useTheme} from 'styled-components';
 
-import {MenuInfo} from '@application/ports/user';
+import {MenuInfo} from '@services/interface/user';
 
 type SwitchProps = {
   onClick: () => void;

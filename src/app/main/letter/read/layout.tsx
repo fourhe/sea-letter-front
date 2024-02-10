@@ -5,7 +5,6 @@ import type {ReactNode} from 'react';
 import {useForm} from 'react-hook-form';
 import styled, {useTheme} from 'styled-components';
 
-import type {LetterReplyForm} from '@application/ports/letter';
 import {LayoutBackGround, Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
@@ -14,6 +13,7 @@ import {useBottomSheet} from '@components/organism/BottomSheet/hooks';
 import {useDialog} from '@components/organism/Dialog/hook';
 import {useLetter} from '@feature/letter/hook';
 import {SendDialog} from '@feature/letter/writing/components/organism';
+import type {LetterReplyForm} from '@services/interface/letter';
 
 type ReadLayoutProps = {
   children: ReactNode;
@@ -32,6 +32,7 @@ const WritingLayout = (props: ReadLayoutProps) => {
   const onSubmit = () => handleOpen();
   return (
     <>
+      <title>마음을 담다(편지 읽기)</title>
       <SendDialog
         title="답장을 바다로 보낼까요?"
         ok={async () => {

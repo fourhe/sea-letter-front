@@ -2,12 +2,12 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
+import type {ApiError} from '@lib/axios';
 import type {
   Letter,
   LetterForm,
   LetterReplyForm,
-} from '@application/ports/letter';
-import type {ApiError} from '@lib/axios';
+} from '@services/interface/letter';
 import LetterService from '@services/letter';
 
 type LetterHookProps = {

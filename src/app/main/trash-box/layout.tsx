@@ -10,7 +10,12 @@ type ThrashLayoutProps = {
 
 const TrashLayout = (props: ThrashLayoutProps) => {
   const {children} = props;
-  return <LayoutBackGround>{children}</LayoutBackGround>;
+  return (
+    <>
+      <title>마음을 담다(휴지통)</title>
+      <LayoutBackGround>{children}</LayoutBackGround>
+    </>
+  );
 };
 
 export default TrashLayout;

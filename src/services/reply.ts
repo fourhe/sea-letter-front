@@ -1,6 +1,7 @@
-import type {IReplyService} from '@application/ports';
-import type {Reply, ReplyDetail} from '@application/ports/reply';
+import type {IReplyService} from './interface';
+
 import Api from '@lib/axios';
+import type {Reply, ReplyDetail} from '@services/interface/reply';
 
 class ReplyService extends Api implements IReplyService {
   async getReplyList(id: number): Promise<Reply[]> {
