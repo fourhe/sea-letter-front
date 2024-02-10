@@ -10,7 +10,12 @@ type LetterBoxLayoutProps = {
 
 const LetterBoxLayout = (props: LetterBoxLayoutProps) => {
   const {children} = props;
-  return <LayoutBackGround>{children}</LayoutBackGround>;
+  return (
+    <>
+      <title>마음을 담다(우편함)</title>
+      <LayoutBackGround>{children}</LayoutBackGround>
+    </>
+  );
 };
 
 export default LetterBoxLayout;

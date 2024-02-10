@@ -11,7 +11,12 @@ type NoticeLayoutProps = {
 const NoticeLayout = (props: NoticeLayoutProps) => {
   const {children} = props;
 
-  return <LayoutBackGround>{children}</LayoutBackGround>;
+  return (
+    <>
+      <title>마음을 담다(설정)</title>
+      <LayoutBackGround>{children}</LayoutBackGround>
+    </>
+  );
 };
 
 export default NoticeLayout;

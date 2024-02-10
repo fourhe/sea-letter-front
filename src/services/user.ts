@@ -1,6 +1,7 @@
-import type {IUserService} from '@application/ports';
-import type {MenuInfo, User} from '@application/ports/user';
+import type {IUserService} from './interface';
+
 import Api from '@lib/axios';
+import type {MenuInfo, User} from '@services/interface/user';
 
 class UserService extends Api implements IUserService {
   async updateUserEmail(email: Pick<User, 'emailAddress'>) {

@@ -37,9 +37,6 @@
       "@domain/*": [
         "./src/domain/*"
       ],
-      "@application/*": [
-        "./src/application/*"
-      ],
       "@services/*": [
         "./src/services/*"
       ],

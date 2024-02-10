@@ -7,10 +7,10 @@ import styled from 'styled-components';
 
 import * as S from './style';
 
-import type {MenuInfo, User} from '@application/ports/user';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
 import {useEmail} from '@feature/setting/hook';
+import type {MenuInfo, User} from '@services/interface/user';
 
 type TEmailForm = Pick<User, 'emailAddress'>;
 

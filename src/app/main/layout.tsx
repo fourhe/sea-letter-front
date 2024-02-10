@@ -15,6 +15,7 @@ const MainLayout = (props: MainLayoutProps) => {
 
   return (
     <>
+      <title>마음을 담다(메인)</title>
       <BackGround />
       <Portal portalId={PortalId.Toast}>
         <Toast />

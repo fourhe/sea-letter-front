@@ -4,8 +4,8 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 
-import type {PageQuery} from '@application/ports';
 import type {ApiError} from '@lib/axios';
+import type {PageQuery} from '@services/interface';
 
 export const useInfiniteScroll = <
   TQueryFnData,

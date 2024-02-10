@@ -1,9 +1,9 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useCookies} from 'next-client-cookies';
 
-import type {MenuInfo, User} from '@application/ports/user';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
+import type {MenuInfo, User} from '@services/interface/user';
 import UserService from '@services/user';
 
 const useEmail = () => {

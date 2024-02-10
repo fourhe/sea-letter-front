@@ -4,12 +4,12 @@ import {type CSSProperties, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 
 import {NewUserLetter} from '@/ui/assets/svgs';
-import type {MenuInfo} from '@application/ports/user';
 import {Portal} from '@components/atom';
 import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
 import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
+import type {MenuInfo} from '@services/interface/user';
 
 const BodyStyle: CSSProperties = {
   width: '65vw',

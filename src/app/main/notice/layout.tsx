@@ -12,6 +12,7 @@ const NoticeLayout = (props: NoticeLayoutProps) => {
 
   return (
     <>
+      <title>마음을 담다(공지사항)</title>
       <BackGround />
       {children}
     </>

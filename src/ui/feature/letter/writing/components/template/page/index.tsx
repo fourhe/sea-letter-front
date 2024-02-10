@@ -6,11 +6,11 @@ import styled from 'styled-components';
 
 import {SendDialog} from '../../organism';
 
-import type {LetterForm} from '@application/ports/letter';
 import {Button} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
 import {EmptyLayout} from '@components/template';
 import {useLetter} from '@feature/letter/hook';
+import type {LetterForm} from '@services/interface/letter';
 
 const defaultValues: LetterForm = {
   title: '',

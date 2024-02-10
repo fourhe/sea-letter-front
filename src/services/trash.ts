@@ -1,6 +1,7 @@
-import type {TrashDetail, TrashList} from '@/application/ports/trash';
-import type {ITrashService, PageQueryString} from '@application/ports';
+import type {TrashDetail, TrashList} from './interface/trash';
+
 import Api from '@lib/axios';
+import type {ITrashService, PageQueryString} from '@services/interface';
 
 class TrashService extends Api implements ITrashService {
   async deleteTrash(id: number): Promise<void> {
