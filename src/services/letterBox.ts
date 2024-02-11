@@ -22,4 +22,6 @@ class LetterBoxService extends Api implements ILetterBoxService {
   }
 }
 
-export default LetterBoxService;
+const repository = new LetterBoxService();
+
+export default repository;

@@ -2,7 +2,6 @@ import {Analytics} from '@vercel/analytics/react';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import type {Metadata} from 'next';
 import localFont from 'next/font/local';
-import {CookiesProvider} from 'next-client-cookies/server';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
@@ -32,17 +31,15 @@ type RootLayoutProps = {
 const RootLayout = ({children}: RootLayoutProps) => (
   <html lang="ko">
     <body className={`${Pretendard.className} ${RIDIBatang.variable}`}>
-      <CookiesProvider>
-        <Providers>
-          <Drawer>
-            <Menu />
-          </Drawer>
-          <div id={PortalId.BottomSheet} />
-          <div id={PortalId.Dialog} />
-          <div id={PortalId.Toast} />
-          {children}
-        </Providers>
-      </CookiesProvider>
+      <Providers>
+        <Drawer>
+          <Menu />
+        </Drawer>
+        <div id={PortalId.BottomSheet} />
+        <div id={PortalId.Dialog} />
+        <div id={PortalId.Toast} />
+        {children}
+      </Providers>
       <Analytics />
       <SpeedInsights />
     </body>

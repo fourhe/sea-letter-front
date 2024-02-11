@@ -23,4 +23,6 @@ class TrashService extends Api implements ITrashService {
   }
 }
 
-export default TrashService;
+const repository = new TrashService();
+
+export default repository;

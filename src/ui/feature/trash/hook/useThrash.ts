@@ -1,5 +1,4 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
@@ -10,10 +9,7 @@ import type {MenuInfo} from '@services/interface/user';
 import TrashService from '@services/trash';
 
 const useThrash = (trash?: Partial<Trash>) => {
-  const cookies = useCookies();
   const client = useQueryClient();
-  const token = cookies.get('access-token');
-  const thrashService = new TrashService(token);
   const {showToast} = useToast();
 
   const onError = (error: ApiError) =>
@@ -22,7 +18,7 @@ const useThrash = (trash?: Partial<Trash>) => {
   const {data: trashList, fetchNextPage} = useInfiniteScroll({
     queryKey: ['thrashBox'],
     queryFn: ({pageParam}) =>
-      thrashService.getTrashList({page: pageParam, size: 20}),
+      TrashService.getTrashList({page: pageParam, size: 20}),
     select: item =>
       item.pages.flatMap(page =>
         page.trashListResponses.map(trashItem => ({
@@ -34,18 +30,18 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const {data: trashDetail} = useQuery({
     queryKey: ['thrash', trash?.id],
-    queryFn: () => thrashService.getTrashDetail(trash?.id!),
+    queryFn: () => TrashService.getTrashDetail(trash?.id!),
     enabled: !!trash?.id,
   });
 
   const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({
-    mutationFn: id => thrashService.deleteTrash(id),
+    mutationFn: id => TrashService.deleteTrash(id),
     onSuccess: () => client.invalidateQueries({queryKey: ['thrashBox']}),
     onError,
   });
 
   const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
-    mutationFn: id => thrashService.restoreTrash(id),
+    mutationFn: id => TrashService.restoreTrash(id),
     onSuccess: async () => {
       await client.invalidateQueries({queryKey: ['thrashBox']});
       client.setQueryData<MenuInfo>(['menuInfo'], prev => {

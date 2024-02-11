@@ -28,4 +28,6 @@ class UserService extends Api implements IUserService {
   }
 }
 
-export default UserService;
+const repository = new UserService();
+
+export default repository;
