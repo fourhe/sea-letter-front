@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import {useIntersectionObserver} from '@/hook/query';
 import {useDrawer} from '@components/organism/Drawer/hook';
+import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
 import {Filter} from '@feature/trash/components/organism';
@@ -16,6 +17,7 @@ export type FilterType = 'reply' | 'letter';
 const TrashBox = () => {
   const [filter, setFilter] = useState<FilterType>('reply');
   const {trashList, restoreTrash} = useThrash();
+  const {showToast} = useToast();
   const {handleOpen} = useDrawer();
   const route = useRouter();
   const {setTarget} = useIntersectionObserver({
@@ -23,6 +25,11 @@ const TrashBox = () => {
   });
 
   const goToTrash = (id: number) => route.push(`trash-box/${id}`);
+
+  const restoreSelectedTrash = async (id: number) => {
+    await restoreTrash(id);
+    showToast({message: '편지가 복구되었습니다.'});
+  };
 
   return (
     <EmptyLayout
@@ -49,7 +56,7 @@ const TrashBox = () => {
               deletedAt={trash.deletedAt}
               title={trash.title}
               onContainerClick={goToTrash}
-              onButtonClick={restoreTrash}
+              onButtonClick={restoreSelectedTrash}
             />
           ))
         ) : (

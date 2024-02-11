@@ -1,4 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback} from 'react';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
@@ -14,6 +15,17 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const onError = (error: ApiError) =>
     showToast({message: error.response!.data.message});
+
+  const onSuccess = useCallback(async () => {
+    await client.invalidateQueries({queryKey: ['thrashBox']});
+    client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        trashCount: prev.trashCount - 1,
+      };
+    });
+  }, [client]);
 
   const {data: trashList, fetchNextPage} = useInfiniteScroll({
     queryKey: ['thrashBox'],
@@ -36,23 +48,13 @@ const useThrash = (trash?: Partial<Trash>) => {
 
   const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => TrashService.deleteTrash(id),
-    onSuccess: () => client.invalidateQueries({queryKey: ['thrashBox']}),
+    onSuccess,
     onError,
   });
 
   const {mutateAsync: restoreTrash} = useMutation<void, ApiError, number>({
     mutationFn: id => TrashService.restoreTrash(id),
-    onSuccess: async () => {
-      await client.invalidateQueries({queryKey: ['thrashBox']});
-      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          trashCount: prev.trashCount - 1,
-        };
-      });
-      showToast({message: '메시지가 복구 되었습니다.'});
-    },
+    onSuccess,
     onError,
   });
 

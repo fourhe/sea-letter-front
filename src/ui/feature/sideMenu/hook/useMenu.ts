@@ -5,11 +5,10 @@ import UserService from '@services/user';
 
 const useMenu = () => {
   const route = usePathname();
-
   const {data: menuInfo} = useQuery({
     queryKey: ['menuInfo'],
     queryFn: () => UserService.getUser(),
-    enabled: route === '/main',
+    enabled: route.startsWith('/main'),
   });
 
   return {menuInfo};
