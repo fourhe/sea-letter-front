@@ -11,6 +11,7 @@ import {Menu} from '@feature/sideMenu/components/organism';
 import '@/ui/styles/index.css';
 
 export const metadata: Metadata = {
+  title: '마음을 담다',
   description: '상처 받은 마음을 치유하는 공간',
 };
 
