@@ -1,5 +1,4 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {useCookies} from 'next-client-cookies';
 
 import {format} from '@/utils/date';
 import type {ApiError} from '@lib/axios';
@@ -16,23 +15,19 @@ type LetterHookProps = {
 };
 
 const useLetter = (props?: LetterHookProps) => {
-  const cookies = useCookies();
-  const token = cookies.get('access-token');
-  const repository = new LetterService(token);
-
   const {mutateAsync: writeLetter} = useMutation<void, ApiError, LetterForm>({
-    mutationFn: variables => repository.writeLetter(variables),
+    mutationFn: variables => LetterService.writeLetter(variables),
   });
 
   const {mutateAsync: sendReply} = useMutation<void, ApiError, LetterReplyForm>(
     {
-      mutationFn: variables => repository.sendReply(variables),
+      mutationFn: variables => LetterService.sendReply(variables),
     },
   );
 
   const {data: id, isError: isLetterIdError} = useQuery({
     queryKey: ['letters'],
-    queryFn: () => repository.getLetterId(),
+    queryFn: () => LetterService.getLetterId(),
     initialData: null,
     enabled: !!props?.isUpEvent,
   });
@@ -44,7 +39,7 @@ const useLetter = (props?: LetterHookProps) => {
     [string, LetterHookProps['letterId']]
   >({
     queryKey: ['letters', props?.letterId],
-    queryFn: () => repository.getLetter(props?.letterId!),
+    queryFn: () => LetterService.getLetter(props?.letterId!),
     enabled: !!props?.letterId,
     select: letterData => {
       const createdAt = format(new Date(letterData.createdAt!));

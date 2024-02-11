@@ -33,4 +33,6 @@ class LetterService extends Api implements ILetterService {
   }
 }
 
-export default LetterService;
+const repository = new LetterService();
+
+export default repository;

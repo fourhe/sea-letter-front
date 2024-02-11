@@ -47,7 +47,7 @@
 
 **1. state 관리 방법**
 
-- `Recoil`
+- `jotai`
 
     - App.ts 라이프사이클을 따라가는 state 관리 라이브러리
     - 로컬 state 관리시 사용(Context 대신 사용한다고 보면 됨)
@@ -61,12 +61,7 @@
 - IDE에서 타입 확인이 쉽도록 타입 정의
 - global.d.ts : 글로벌 타입 정의
 
-**3. 외부 라이브러리 관련 유의 사항**
-
-- 외부 라이브러리는 src/lib 하위 파일 통해 사용할 수 있어야함
-- import 외부라이브러리 from '@lib/외부라이브러리' 같은 형식으로 사용
-
-**4. Asset 관련 유의 사항**
+**3. Asset 관련 유의 사항**
 
 - src/UI/assets : 코드에서 쓰는 리소스 관리
 
@@ -95,7 +90,7 @@
   refactor : 소스 리팩토링
   ```
 
-**3. rebase를 이용하여 로컬 브랜치 병합 진행**
+**3. rebase 이용하여 로컬 브랜치 병합 진행**
 
 - merge를 쓰는 경우, merge commit 이력이 로컬 브랜치에 남게 됨
 - develop, main(master) 브랜치에서 pull request에 대한 merge commit을 구분하는데 혼동을 막고 commit 이력 추적이 쉽도록 rebase 사용
@@ -104,8 +99,8 @@
 **4. 로컬에서 원격 develop 브랜치로 직접 커밋 X, Pull Request 통한 소스 병합 진행**
 
 ```bash
-feature/branchname> git commit [feat] commit message #브랜치 이름 확인!
-feature/branchname> git push origin feature/branchname
+feat/branchname> git commit [feat] commit message #브랜치 이름 확인!
+feat/branchname> git push origin feature/branchname
 
 # GitHub 접속하여 feature/branchname -> develop Pull Request 작성
 ```

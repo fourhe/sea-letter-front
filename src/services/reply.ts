@@ -28,4 +28,6 @@ class ReplyService extends Api implements IReplyService {
   }
 }
 
-export default ReplyService;
+const repository = new ReplyService();
+
+export default repository;

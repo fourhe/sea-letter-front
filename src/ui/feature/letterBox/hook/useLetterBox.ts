@@ -1,5 +1,4 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {useCookies} from 'next-client-cookies';
 
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
@@ -13,10 +12,7 @@ type LetterBoxProps = {
 };
 
 const useLetterBox = (props?: LetterBoxProps) => {
-  const cookies = useCookies();
   const client = useQueryClient();
-  const token = cookies.get('access-token');
-  const repository = new LetterBoxService(token);
   const {showToast} = useToast();
 
   const onError = (error: ApiError) =>
@@ -25,7 +21,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
   const {data: letterBoxList, fetchNextPage} = useInfiniteScroll({
     queryKey: ['letterBox'],
     queryFn: ({pageParam}) =>
-      repository.getLetterList({page: pageParam, size: 10}),
+      LetterBoxService.getLetterList({page: pageParam, size: 10}),
     select: item =>
       item.pages.flatMap(page =>
         page.letterListResponses.map(letterList => ({
@@ -37,7 +33,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
 
   const {data: letterDetail} = useQuery({
     queryKey: ['letterDetail', props?.id],
-    queryFn: () => repository.getLetterDetail(props?.id!),
+    queryFn: () => LetterBoxService.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     refetchOnMount: false,
     select: detailData => ({
@@ -47,7 +43,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
   });
 
   const {mutateAsync: deleteLetter} = useMutation<void, ApiError, number>({
-    mutationFn: id => repository.deleteLetter(id),
+    mutationFn: id => LetterBoxService.deleteLetter(id),
     onError,
     onSuccess: async () => {
       await client.invalidateQueries({queryKey: ['letterBox']});
