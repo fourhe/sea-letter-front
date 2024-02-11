@@ -1,9 +1,10 @@
 import axios, {
   AxiosError,
-  type AxiosInstance,
   type AxiosRequestConfig,
   HttpStatusCode,
 } from 'axios';
+
+import {getCookieValue} from '@/utils/cookie';
 
 export type ApiError = AxiosError & {
   response?: {
@@ -14,44 +15,40 @@ export type ApiError = AxiosError & {
   };
 };
 
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+});
+
+instance.interceptors.request.use(config => {
+  if (typeof document !== 'undefined') {
+    const token = getCookieValue('access-token');
+    if (token) {
+      config.headers.setAuthorization(token);
+    }
+  }
+  return config;
+});
+
+instance.interceptors.response.use(
+  response => response,
+  (error: ApiError) => {
+    if (error.response?.status === HttpStatusCode.Unauthorized) {
+      fetch('api/reissue/access-token').catch(() => Promise.reject(error));
+    }
+    return Promise.reject(error);
+  },
+);
+
 class Api {
-  private readonly axiosInstance: AxiosInstance;
-
-  private readonly token: string | undefined;
-
   readonly baseURL: string;
 
-  constructor(token?: string) {
-    if (token) {
-      this.token = token;
-    }
+  constructor() {
     this.baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
-    this.axiosInstance = axios.create({
-      baseURL: this.baseURL,
-    });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private getAxiosInstance() {
-    const api = this.axiosInstance;
-    const hasAuthorizationHeader = !!api.defaults.headers.common.Authorization;
-    const hasToken = !!this.token;
-    if (!hasAuthorizationHeader && hasToken) {
-      api.interceptors.request.use(config => {
-        config.headers.setAuthorization(this.token!);
-        return config;
-      });
-    }
-
-    api.interceptors.response.use(
-      response => response,
-      (error: ApiError) => {
-        if (error.response?.status === HttpStatusCode.Unauthorized) {
-          fetch('api/reissue/access-token').catch(() => Promise.reject(error));
-        }
-        return Promise.reject(error);
-      },
-    );
-    return api;
+    return instance;
   }
 
   protected async get<T, D = unknown>(

@@ -1,17 +1,14 @@
 import {useQuery} from '@tanstack/react-query';
-import {useCookies} from 'next-client-cookies';
+import {usePathname} from 'next/navigation';
 
 import UserService from '@services/user';
 
 const useMenu = () => {
-  const cookies = useCookies();
-  const token = cookies.get('access-token');
-  const userService = new UserService(token);
-
+  const route = usePathname();
   const {data: menuInfo} = useQuery({
     queryKey: ['menuInfo'],
-    queryFn: () => userService.getUser(),
-    enabled: !!token,
+    queryFn: () => UserService.getUser(),
+    enabled: route.startsWith('/main'),
   });
 
   return {menuInfo};

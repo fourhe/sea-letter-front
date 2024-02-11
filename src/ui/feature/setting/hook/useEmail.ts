@@ -1,5 +1,4 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {useCookies} from 'next-client-cookies';
 
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
@@ -7,9 +6,6 @@ import type {MenuInfo, User} from '@services/interface/user';
 import UserService from '@services/user';
 
 const useEmail = () => {
-  const cookies = useCookies();
-  const token = cookies.get('access-token');
-  const userService = new UserService(token);
   const client = useQueryClient();
   const {showToast} = useToast();
   const onError = (error: ApiError) =>
@@ -20,7 +16,7 @@ const useEmail = () => {
     ApiError,
     Pick<User, 'emailAddress'>
   >({
-    mutationFn: email => userService.updateUserEmail(email),
+    mutationFn: email => UserService.updateUserEmail(email),
     onSuccess: (_, email) => {
       client.setQueryData<MenuInfo>(['menuInfo'], prev => {
         if (!prev) return prev;
@@ -40,7 +36,7 @@ const useEmail = () => {
     Pick<User, 'notificationEnabled'>
   >({
     mutationFn: notification =>
-      userService.updateUserNotification(notification),
+      UserService.updateUserNotification(notification),
     onSuccess: () => {
       client.setQueryData<MenuInfo>(['menuInfo'], prev => {
         if (!prev) return prev;
