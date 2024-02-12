@@ -1,38 +1,29 @@
-import * as colors from './colors';
-import {media} from './media';
+import * as color from './colors';
 import opacity from './opacity';
 import size from './size';
 import typography from './typography';
 
-export const enum ColorScheme {
-  LIGHT = 'light',
-  DARK = 'dark',
-}
-
-export type Color<T extends ColorScheme> = Recursive<(typeof colors)[T]>;
+export type Color = Recursive<typeof color>;
 export type Size = Recursive<typeof size>;
-export type Media = Recursive<typeof media>;
 export type Typography = Recursive<typeof typography>;
 export type Opacity = Recursive<typeof opacity>;
 
-export type Theme<T extends ColorScheme> = {
-  color: Color<T>;
+export type Theme = {
+  color: Color;
   size: Size;
   typography: Typography;
   opacity: Opacity;
-  media: Media;
 };
 
-const themeWithoutColor: Omit<Theme<ColorScheme>, 'color'> = {
+const themeWithoutColor: Omit<Theme, 'color'> = {
   size,
   opacity,
   typography,
-  media,
 };
 
-const themeWithColorScheme: Record<ColorScheme, Theme<ColorScheme>> = {
-  light: {color: colors.light, ...themeWithoutColor},
-  dark: {color: colors.dark, ...themeWithoutColor},
+const themeWithColorScheme = {
+  color,
+  ...themeWithoutColor,
 };
 
 export default themeWithColorScheme;
