@@ -7,7 +7,7 @@ import {GoogleAnalytics} from 'nextjs-google-analytics';
 import type {ReactNode} from 'react';
 import {ThemeProvider} from 'styled-components';
 
-import theme, {ColorScheme} from '@/ui/styles/theme';
+import theme from '@/ui/styles/theme';
 import StyledComponentsRegistry from '@lib/registry';
 
 const client = new QueryClient({
@@ -31,9 +31,7 @@ const Providers = (props: ProvidersProps) => {
     <QueryClientProvider client={client}>
       <Provider store={store}>
         <StyledComponentsRegistry>
-          <ThemeProvider theme={theme[ColorScheme.LIGHT]}>
-            {children}
-          </ThemeProvider>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </StyledComponentsRegistry>
       </Provider>
       <ReactQueryDevtools client={client} initialIsOpen={false} />
