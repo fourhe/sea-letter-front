@@ -12,7 +12,7 @@ import {
 } from '@/ui/feature/error';
 import {Icon} from '@components/atom';
 
-const GlobalError = ({error}: {error: Error & {digest?: string}}) => {
+const Error = ({error}: {error: Error & {digest?: string}}) => {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -32,4 +32,4 @@ const GlobalError = ({error}: {error: Error & {digest?: string}}) => {
   );
 };
 
-export default GlobalError;
+export default Error;
