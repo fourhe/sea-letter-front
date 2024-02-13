@@ -1,20 +1,15 @@
 import type {IUserService} from './interface';
 
 import Api from '@lib/axios';
-import type {MenuInfo, User} from '@services/interface/user';
+import type {MenuInfo, User, UserNotification} from '@services/interface/user';
 
 class UserService extends Api implements IUserService {
-  async updateUserEmail(email: Pick<User, 'emailAddress'>) {
-    const {data} = await this.put<void, Pick<User, 'emailAddress'>>(
-      '/member',
-      email,
-    );
+  async updateUserEmail(email: UserNotification) {
+    const {data} = await this.put<void, UserNotification>('/member', email);
     return data;
   }
 
-  async updateUserNotification(
-    notification: Pick<User, 'notificationEnabled'>,
-  ) {
+  async updateUserNotification(notification: UserNotification) {
     const {data} = await this.put<void, Pick<User, 'notificationEnabled'>>(
       '/member',
       notification,

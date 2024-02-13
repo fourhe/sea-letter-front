@@ -1,7 +1,7 @@
 'use client';
 
 import {QueryObserver, useQueryClient} from '@tanstack/react-query';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useForm, useWatch} from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -42,11 +42,14 @@ const Email = () => {
   });
 
   const disabled = emailRegex.test(emailValue || '');
+  const [observer] = useState(
+    () =>
+      new QueryObserver<MenuInfo>(client, {
+        queryKey: ['menuInfo'],
+      }),
+  );
 
   useEffect(() => {
-    const observer = new QueryObserver<MenuInfo>(client, {
-      queryKey: ['menuInfo'],
-    });
     const unsubscribe = observer.subscribe(({data}) => {
       setValue('emailAddress', data?.emailAddress || null);
     });
@@ -57,7 +60,13 @@ const Email = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSubmit = (data: TEmailForm) => updateEmail(data);
+  const onSubmit = (data: TEmailForm) => {
+    updateEmail({
+      ...data,
+      notificationEnabled: !!client.getQueryData<MenuInfo>(['menuInfo'])
+        ?.notificationEnabled,
+    });
+  };
 
   return (
     <EmptyLayout
