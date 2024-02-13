@@ -2,7 +2,7 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
-import type {MenuInfo, User} from '@services/interface/user';
+import {MenuInfo, UserNotification} from '@services/interface/user';
 import UserService from '@services/user';
 
 const useEmail = () => {
@@ -11,11 +11,7 @@ const useEmail = () => {
   const onError = (error: ApiError) =>
     showToast({message: error.response!.data.message});
 
-  const {mutate: updateEmail} = useMutation<
-    void,
-    ApiError,
-    Pick<User, 'emailAddress'>
-  >({
+  const {mutate: updateEmail} = useMutation<void, ApiError, UserNotification>({
     mutationFn: email => UserService.updateUserEmail(email),
     onSuccess: (_, email) => {
       client.setQueryData<MenuInfo>(['menuInfo'], prev => {
@@ -33,7 +29,7 @@ const useEmail = () => {
   const {mutate: updateNotification} = useMutation<
     void,
     ApiError,
-    Pick<User, 'notificationEnabled'>
+    UserNotification
   >({
     mutationFn: notification =>
       UserService.updateUserNotification(notification),

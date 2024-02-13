@@ -17,6 +17,11 @@ export type MenuInfo = Pick<
   | 'emailAddress'
 >;
 
+export type UserNotification = Pick<
+  User,
+  'notificationEnabled' | 'emailAddress'
+>;
+
 export default interface IUserService {
   updateUserEmail(email: Pick<User, 'emailAddress'>): Promise<void>;
 

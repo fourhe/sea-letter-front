@@ -1,6 +1,6 @@
 import {QueryObserver, useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
-import {type CSSProperties, useCallback, useEffect} from 'react';
+import {type CSSProperties, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 
 import {NewUserLetter} from '@/ui/assets/svgs';
@@ -24,15 +24,17 @@ const NewUserDialog = () => {
   const {handleOpen, handleClose, open} = useDialog();
   const client = useQueryClient();
   const route = useRouter();
-
-  const observer = new QueryObserver<MenuInfo>(client, {
-    queryKey: ['menuInfo'],
-  });
+  const [observer] = useState(
+    () =>
+      new QueryObserver<MenuInfo>(client, {
+        queryKey: ['menuInfo'],
+      }),
+  );
 
   useEffect(() => {
     let isOpen;
     const unsubscribe = observer.subscribe(({data}) => {
-      isOpen = data?.firstLogin && !!data?.emailAddress;
+      isOpen = data?.firstLogin || !!data?.emailAddress;
     });
     if (
       typeof window !== 'undefined' &&
