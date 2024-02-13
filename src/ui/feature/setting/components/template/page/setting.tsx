@@ -22,11 +22,14 @@ const Setting = () => {
   const defaultValue =
     client.getQueryData<MenuInfo>(['menuInfo'])?.notificationEnabled || false;
   const [on, setOn] = useState<MenuInfo['notificationEnabled']>(defaultValue);
+  const [observer] = useState(
+    () =>
+      new QueryObserver<MenuInfo>(client, {
+        queryKey: ['menuInfo'],
+      }),
+  );
 
   useEffect(() => {
-    const observer = new QueryObserver<MenuInfo>(client, {
-      queryKey: ['menuInfo'],
-    });
     const unsubscribe = observer.subscribe(({data}) => {
       setOn(data?.notificationEnabled || false);
     });
@@ -65,6 +68,8 @@ const Setting = () => {
                 onClick={() =>
                   updateNotification({
                     notificationEnabled: !on,
+                    emailAddress: client.getQueryData<MenuInfo>(['menuInfo'])
+                      ?.emailAddress!,
                   })
                 }
               />
