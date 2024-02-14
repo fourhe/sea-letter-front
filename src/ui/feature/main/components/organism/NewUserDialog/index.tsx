@@ -24,32 +24,26 @@ const NewUserDialog = () => {
   const {handleOpen, handleClose, open} = useDialog();
   const client = useQueryClient();
   const route = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const [observer] = useState(
     () =>
       new QueryObserver<MenuInfo>(client, {
         queryKey: ['menuInfo'],
       }),
   );
-
   useEffect(() => {
-    let isOpen;
     const unsubscribe = observer.subscribe(({data}) => {
-      isOpen = data?.firstLogin || !!data?.emailAddress;
+      setIsOpen(data?.firstLogin || !data?.emailAddress);
     });
-    if (
-      typeof window !== 'undefined' &&
-      isOpen &&
-      !localStorage.getItem('firstLogin')
-    ) {
+    if (typeof window !== 'undefined' && isOpen) {
       handleOpen();
-      localStorage.setItem('firstLogin', 'true');
     }
     return () => {
       unsubscribe();
       handleClose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isOpen]);
 
   const goToEmail = useCallback(() => {
     route.push('/main/setting/email');

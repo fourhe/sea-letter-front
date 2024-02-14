@@ -44,6 +44,10 @@ const useThrash = (trash?: Partial<Trash>) => {
     queryKey: ['thrash', trash?.id],
     queryFn: () => TrashService.getTrashDetail(trash?.id!),
     enabled: !!trash?.id,
+    select: data => ({
+      ...data,
+      deletedAt: format(new Date(data.deletedAt!)),
+    }),
   });
 
   const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({

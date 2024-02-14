@@ -63,8 +63,7 @@ const Email = () => {
   const onSubmit = (data: TEmailForm) => {
     updateEmail({
       ...data,
-      notificationEnabled: !!client.getQueryData<MenuInfo>(['menuInfo'])
-        ?.notificationEnabled,
+      notificationEnabled: true,
     });
   };
 

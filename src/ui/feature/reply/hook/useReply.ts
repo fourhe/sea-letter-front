@@ -1,4 +1,6 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
+import {usePathname} from 'next/navigation';
+import {useTheme} from 'styled-components';
 
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
@@ -7,8 +9,8 @@ import ReplyService from '@services/reply';
 
 const useReply = (letterId?: number, replyId?: number) => {
   const {showToast} = useToast();
-  const onError = (error: ApiError) =>
-    showToast({message: error.response!.data.message});
+  const {color} = useTheme();
+  const path = usePathname().split('/');
 
   const {data: replyList} = useQuery({
     queryKey: ['replyList', letterId],
@@ -22,23 +24,32 @@ const useReply = (letterId?: number, replyId?: number) => {
     queryFn: () => ReplyService.getReplyDetail(letterId!, replyId!),
     enabled: !!replyId,
     refetchOnMount: false,
-    select: data => {
-      const createdAt = format(new Date(data.createdAt!));
-      return {
-        ...data,
-        createdAt,
-      };
-    },
+    select: data => ({
+      ...data,
+      createdAt: format(new Date(data.createdAt!)),
+    }),
   });
 
   const {mutateAsync: deleteReply} = useMutation<void, ApiError, number>({
     mutationFn: id => ReplyService.deleteReply(id),
-    onError,
+    onError: error => {
+      showToast({
+        message: error.response!.data.message,
+        color: color.secondary.brown,
+        containerColor: color.white,
+      });
+    },
   });
 
   const {mutateAsync: setThank} = useMutation<void, ApiError, number>({
     mutationFn: id => ReplyService.setThanks(id),
-    onError,
+    onError: error => {
+      showToast({
+        message: error.response!.data.message,
+        color: path[4] ? color.secondary.brown : color.primary.pointPink,
+        containerColor: path[4] ? color.white : undefined,
+      });
+    },
   });
 
   return {replyList, replyDetail, deleteReply, setThank};

@@ -8,9 +8,9 @@ import type {
 } from '@services/interface/letter';
 
 class LetterService extends Api implements ILetterService {
-  async getLetterId(): Promise<number> {
+  async getLetterId(): Promise<number | null> {
     const {data} = await this.get<Pick<Letter, 'id'>>('/letter');
-    return data.id!;
+    return data.id;
   }
 
   async getLetter(id: number): Promise<Letter> {

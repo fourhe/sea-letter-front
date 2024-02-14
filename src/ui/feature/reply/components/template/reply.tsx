@@ -1,6 +1,7 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {useCallback} from 'react';
 import styled from 'styled-components';
 
 import {Icon} from '@components/atom';
@@ -26,18 +27,20 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
     params['reply-id'],
   );
 
-  const deleteSelectedReply = async () => {
+  const deleteSelectedReply = useCallback(async () => {
     await deleteReply(replyDetail?.id!);
     showToast({message: '답장이 휴지통으로 이동했습니다.'});
     deleteOpen();
     route.back();
-  };
+  }, [deleteOpen, deleteReply, route, showToast, replyDetail]);
 
-  const thankSelectedReply = async () => {
+  const thankSelectedReply = useCallback(async () => {
     await setThank(params['reply-id']!);
-    showToast({message: '감사 인사가 전해졌습니다.'});
+    showToast({
+      message: '감사 인사가 전해졌습니다.',
+    });
     route.back();
-  };
+  }, [params, route, setThank, showToast]);
 
   return (
     <EmptyLayout
@@ -81,6 +84,6 @@ const ThankYouButton = styled(Button)`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: ${({theme}) => theme.typography.fontWeights.bold};
+  font-size: ${({theme}) => theme.typography.fontSizes.lg}px;
 `;

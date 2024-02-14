@@ -25,10 +25,10 @@ const useLetter = (props?: LetterHookProps) => {
     },
   );
 
-  const {data: id, isError: isLetterIdError} = useQuery({
+  const {data: id} = useQuery({
     queryKey: ['letters'],
     queryFn: () => LetterService.getLetterId(),
-    initialData: null,
+    initialData: undefined,
     enabled: !!props?.isUpEvent,
   });
 
@@ -41,13 +41,10 @@ const useLetter = (props?: LetterHookProps) => {
     queryKey: ['letters', props?.letterId],
     queryFn: () => LetterService.getLetter(props?.letterId!),
     enabled: !!props?.letterId,
-    select: letterData => {
-      const createdAt = format(new Date(letterData.createdAt!));
-      return {
-        ...letterData,
-        createdAt,
-      };
-    },
+    select: letterData => ({
+      ...letterData,
+      createdAt: format(new Date(letterData.createdAt!)),
+    }),
   });
 
   return {
@@ -55,7 +52,6 @@ const useLetter = (props?: LetterHookProps) => {
     writeLetter,
     id,
     letter,
-    isLetterIdError,
   };
 };
 

@@ -19,6 +19,7 @@ const useEmail = () => {
         return {
           ...prev,
           emailAddress: email.emailAddress,
+          notificationEnabled: email.notificationEnabled,
         };
       });
       showToast({message: '이메일이 변경되었습니다.'});
