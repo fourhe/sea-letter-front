@@ -36,27 +36,38 @@ const Main = () => {
   const {get} = useSearchParams();
   const data = get('data') as Message;
 
-  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    if (isUpEvent) return;
-    setTouchStartY(e.touches[0].clientY);
-  };
+  const handleTouchStart = useCallback(
+    (e: TouchEvent<HTMLDivElement>) => {
+      if (isUpEvent) return;
+      setTouchStartY(e.touches[0].clientY);
+    },
+    [isUpEvent],
+  );
 
-  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    if (isUpEvent) return;
-    const touchEndY = e.touches[0].clientY;
-    const deltaY = touchEndY - touchStartY;
-    if (deltaY < 0) {
-      setTouchStartY(0);
-      setIsUpEvent(true);
-    }
-    setTouchStartY(touchEndY);
-  };
+  const handleTouchMove = useCallback(
+    (e: TouchEvent<HTMLDivElement>) => {
+      if (isUpEvent) return;
+      const touchEndY = e.touches[0].clientY;
+      const deltaY = touchEndY - touchStartY;
+      if (deltaY < 0) {
+        setTouchStartY(0);
+        setIsUpEvent(true);
+      }
+      setTouchStartY(touchEndY);
+    },
+    [isUpEvent, touchStartY],
+  );
 
   useEffect(() => {
-    if (data || (id !== null && !isUpEvent)) {
+    if (data || (id && !isUpEvent)) {
       setTimeout(() => {
         route.replace('/main');
         client.setQueryData(['letters'], null);
+      }, 2500);
+    }
+    if (id === null && isUpEvent) {
+      setTimeout(() => {
+        setIsUpEvent(false);
       }, 2500);
     }
   }, [id, client, data, route, isUpEvent]);
@@ -77,24 +88,23 @@ const Main = () => {
       );
     }
     // 읽을 편지가 도착 했을 때
-    if (id !== null) {
+    if (id) {
       return (
         <>
-          <Icon.Letter width={149} height={183} onClick={openLetter} />
+          <Icon.Letter width={297} height={297} onClick={openLetter} />
           <MainText
             style={{
               position: 'absolute',
-              bottom: '-8vh',
-              left: '50%',
+              bottom: '3.5vh',
+              left: '55%',
             }}
             text={'유리병을 탭하여\n편지를 확인하세요.'}
           />
         </>
       );
     }
-
     // 편지가 도착하지 않았을 때
-    if (isUpEvent) {
+    if (isUpEvent && id === null) {
       return (
         <>
           <Icon.HideLetter
@@ -118,7 +128,6 @@ const Main = () => {
         </>
       );
     }
-
     return (
       <>
         <Icon.HideLetter width={74} height={61} />

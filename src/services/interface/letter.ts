@@ -1,5 +1,5 @@
 export type Letter = {
-  id?: number;
+  id: number | null;
   title: string;
   content: string;
   createdAt: string | null;
@@ -17,7 +17,7 @@ export type LetterReplyForm = {
 };
 
 export default interface ILetterService {
-  getLetterId(): Promise<number>;
+  getLetterId(): Promise<number | null>;
 
   getLetter(id: number): Promise<Letter>;
 
