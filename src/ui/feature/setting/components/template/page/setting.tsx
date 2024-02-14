@@ -2,13 +2,15 @@
 
 import {QueryObserver, useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import styled, {useTheme} from 'styled-components';
 
 import {Icon} from '@components/atom';
 import {Switch} from '@components/molecule';
+import {useDialog} from '@components/organism/Dialog/hook';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
+import {DeleteUserDialog} from '@feature/setting/components/organism';
 import {useEmail} from '@feature/setting/hook';
 import type {MenuInfo} from '@services/interface/user';
 
@@ -18,6 +20,7 @@ const Setting = () => {
   const goEmailSetting = () => route.push('/main/setting/email');
   const {color, size} = useTheme();
   const {updateNotification} = useEmail();
+  const {handleOpen: dialogOpen} = useDialog();
   const client = useQueryClient();
   const defaultValue =
     client.getQueryData<MenuInfo>(['menuInfo'])?.notificationEnabled || false;
@@ -39,6 +42,13 @@ const Setting = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const updateNotificationEnabled = useCallback(() => {
+    updateNotification({
+      notificationEnabled: !on,
+      emailAddress: client.getQueryData<MenuInfo>(['menuInfo'])?.emailAddress!,
+    });
+  }, [on, updateNotification, client]);
+
   return (
     <EmptyLayout
       headerShown
@@ -52,6 +62,7 @@ const Setting = () => {
       headerRightProps={{
         icon: 'Home',
       }}>
+      <DeleteUserDialog />
       <Container>
         <div>
           <Title>알림 설정</Title>
@@ -65,13 +76,7 @@ const Setting = () => {
               <Switch
                 on={on}
                 setOn={setOn}
-                onClick={() =>
-                  updateNotification({
-                    notificationEnabled: !on,
-                    emailAddress: client.getQueryData<MenuInfo>(['menuInfo'])
-                      ?.emailAddress!,
-                  })
-                }
+                onClick={updateNotificationEnabled}
               />
             </AlarmContainer>
             <SubContent>
@@ -105,7 +110,7 @@ const Setting = () => {
               fill={color.black}
             />
           </Content>
-          <Content>회원탈퇴</Content>
+          <Content onClick={dialogOpen}>회원탈퇴</Content>
         </div>
       </Container>
     </EmptyLayout>
