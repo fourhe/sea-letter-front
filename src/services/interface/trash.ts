@@ -15,8 +15,14 @@ export type TrashList = PageQuery<{
   trashListResponses: Trash[];
 }>;
 
+export type TrashFilterType = 'reply' | 'letter';
+
+export type TrashListQueryString = PageQueryString & {
+  type: TrashFilterType;
+};
+
 export default interface ITrashService {
-  getTrashList(page: PageQueryString): Promise<TrashList>;
+  getTrashList(page: TrashListQueryString): Promise<TrashList>;
 
   getTrashDetail(id: number): Promise<TrashDetail>;
 

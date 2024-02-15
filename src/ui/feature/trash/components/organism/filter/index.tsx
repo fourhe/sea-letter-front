@@ -1,13 +1,13 @@
-import type {Dispatch, KeyboardEvent, SetStateAction} from 'react';
+import {Dispatch, KeyboardEvent, SetStateAction, useCallback} from 'react';
 import styled from 'styled-components';
 
 import {ToolTip} from '@components/molecule';
 import {FilterText} from '@feature/trash/components/molecule';
-import type {FilterType} from '@feature/trash/components/template/trashBox';
+import type {TrashFilterType} from '@services/interface/trash';
 
 type FilterProps = {
   filter: string;
-  setFilter: Dispatch<SetStateAction<FilterType>>;
+  setFilter: Dispatch<SetStateAction<TrashFilterType>>;
 };
 
 const isEnterOrSpaceKey = (event: KeyboardEvent<HTMLDivElement>) =>
@@ -27,8 +27,11 @@ const tooltipMessage =
 const Filter = (props: FilterProps) => {
   const {filter, setFilter} = props;
 
-  const filterTextKeydown = (event: KeyboardEvent<HTMLDivElement>) =>
-    handleKeyPress(event, () => setFilter('reply'));
+  const filterTextKeydown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) =>
+      handleKeyPress(event, () => setFilter('reply')),
+    [setFilter],
+  );
 
   return (
     <>
