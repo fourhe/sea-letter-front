@@ -1,16 +1,18 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {usePathname} from 'next/navigation';
 import {useTheme} from 'styled-components';
 
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
+import type {MenuInfo} from '@services/interface/user';
 import ReplyService from '@services/reply';
 
 const useReply = (letterId?: number, replyId?: number) => {
   const {showToast} = useToast();
   const {color} = useTheme();
   const path = usePathname().split('/');
+  const client = useQueryClient();
 
   const {data: replyList} = useQuery({
     queryKey: ['replyList', letterId],
@@ -37,6 +39,15 @@ const useReply = (letterId?: number, replyId?: number) => {
         message: error.response!.data.message,
         color: color.secondary.brown,
         containerColor: color.white,
+      });
+    },
+    onSuccess: () => {
+      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          trashCount: prev.trashCount + 1,
+        };
       });
     },
   });
