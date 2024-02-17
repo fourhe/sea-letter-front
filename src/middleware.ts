@@ -1,25 +1,17 @@
-import {cookies} from 'next/headers';
-import type {NextRequest} from 'next/server';
-import {NextResponse} from 'next/server';
+import {NextMiddleware, NextResponse, userAgent} from 'next/server';
 
-import {isMobileUserAgent} from '@/utils/userAgent';
-
-export const middleware = (request: NextRequest) => {
-  if (request.nextUrl.pathname.startsWith('/auth')) {
-    const userAgent = request.headers.get('user-agent')!;
-    const isMobile = isMobileUserAgent(userAgent);
-    if (isMobile || process.env.NODE_ENV === 'development') {
-      return NextResponse.next();
-    }
-    return NextResponse.redirect(new URL('/desktop', request.url));
+export const middleware: NextMiddleware = ({headers, url, cookies}) => {
+  const isMobile = userAgent({headers}).device.type === 'mobile';
+  if (!isMobile && !(process.env.NODE_ENV === 'development')) {
+    return NextResponse.redirect(new URL('/desktop', url));
   }
-  const isRefreshToken = cookies().has('refresh-token');
-  if (isRefreshToken) {
+  const hasRefreshToken = cookies.has('refresh-token');
+  if (hasRefreshToken) {
     return NextResponse.next();
   }
-  return NextResponse.redirect(new URL('/auth/login', request.url));
+  return NextResponse.redirect(new URL('/auth/login', url));
 };
 
 export const config = {
-  matcher: ['/main/:path*', '/auth/:path*'],
+  matcher: '/main/:path*',
 };
