@@ -5,11 +5,11 @@ import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
 import type {ApiError} from '@lib/axios';
-import type {Trash} from '@services/interface/trash';
+import type {Trash, TrashFilterType} from '@services/interface/trash';
 import type {MenuInfo} from '@services/interface/user';
 import TrashService from '@services/trash';
 
-const useThrash = (trash?: Partial<Trash>) => {
+const useThrash = (trash?: Partial<Trash>, filter?: TrashFilterType) => {
   const client = useQueryClient();
   const {showToast} = useToast();
 
@@ -28,9 +28,9 @@ const useThrash = (trash?: Partial<Trash>) => {
   }, [client]);
 
   const {data: trashList, fetchNextPage} = useInfiniteScroll({
-    queryKey: ['thrashBox'],
+    queryKey: ['thrashBox', filter],
     queryFn: ({pageParam}) =>
-      TrashService.getTrashList({page: pageParam, size: 20}),
+      TrashService.getTrashList({page: pageParam, size: 10, type: filter!}),
     select: item =>
       item.pages.flatMap(page =>
         page.trashListResponses.map(trashItem => ({
@@ -38,12 +38,17 @@ const useThrash = (trash?: Partial<Trash>) => {
           deletedAt: format(new Date(trashItem.deletedAt!)),
         })),
       ),
+    enabled: !!filter,
   });
 
   const {data: trashDetail} = useQuery({
     queryKey: ['thrash', trash?.id],
     queryFn: () => TrashService.getTrashDetail(trash?.id!),
     enabled: !!trash?.id,
+    select: data => ({
+      ...data,
+      deletedAt: format(new Date(data.deletedAt!)),
+    }),
   });
 
   const {mutateAsync: deleteTrash} = useMutation<void, ApiError, number>({

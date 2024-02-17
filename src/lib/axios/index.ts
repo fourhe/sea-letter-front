@@ -6,14 +6,10 @@ import axios, {
 
 import {getCookieValue} from '@/utils/cookie';
 
-export type ApiError = AxiosError & {
-  response?: {
-    data: {
-      errorCode: string;
-      message: string;
-    };
-  };
-};
+export type ApiError = AxiosError<{
+  errorCode: string;
+  message: string;
+}>;
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,

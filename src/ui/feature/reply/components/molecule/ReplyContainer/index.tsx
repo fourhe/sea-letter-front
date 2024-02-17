@@ -26,6 +26,12 @@ const ReplyContainer = (props: ReplyContainerProps) => {
   const onClickThanks: MouseEventHandler<HTMLDivElement> = useCallback(
     async e => {
       e.stopPropagation();
+      if (hasThanks) {
+        showToast({
+          message: '감사 인사는 한 번만 할 수 있어요.',
+        });
+        return;
+      }
       await setThank(id);
       setHasThanks(pre => !pre);
       if (!hasThanks) {
@@ -70,5 +76,4 @@ const ThanksContainer = styled.div`
 const ThanksText = styled.p<TDollarPrefix<{color: string}>>`
   color: ${({$color}) => $color};
   font-size: 12px;
-  line-height: 21px;
 `;

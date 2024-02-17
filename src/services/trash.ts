@@ -1,7 +1,11 @@
-import type {TrashDetail, TrashList} from './interface/trash';
+import type {
+  TrashDetail,
+  TrashList,
+  TrashListQueryString,
+} from './interface/trash';
 
 import Api from '@lib/axios';
-import type {ITrashService, PageQueryString} from '@services/interface';
+import type {ITrashService} from '@services/interface';
 
 class TrashService extends Api implements ITrashService {
   async deleteTrash(id: number): Promise<void> {
@@ -12,8 +16,11 @@ class TrashService extends Api implements ITrashService {
     await this.post(`/trash/${id}`);
   }
 
-  async getTrashList(page: PageQueryString): Promise<TrashList> {
-    const {data} = await this.get<TrashList, PageQueryString>('/trash', page);
+  async getTrashList(page: TrashListQueryString): Promise<TrashList> {
+    const {data} = await this.get<TrashList, TrashListQueryString>(
+      '/trash',
+      page,
+    );
     return data;
   }
 

@@ -11,12 +11,11 @@ import {EmptyLayout} from '@components/template';
 import {TrashContainer} from '@feature/trash/components/molecule';
 import {Filter} from '@feature/trash/components/organism';
 import {useThrash} from '@feature/trash/hook';
-
-export type FilterType = 'reply' | 'letter';
+import type {TrashFilterType} from '@services/interface/trash';
 
 const TrashBox = () => {
-  const [filter, setFilter] = useState<FilterType>('reply');
-  const {trashList, restoreTrash} = useThrash();
+  const [filter, setFilter] = useState<TrashFilterType>('reply');
+  const {trashList, restoreTrash} = useThrash({}, filter);
   const {showToast} = useToast();
   const {handleOpen} = useDrawer();
   const route = useRouter();

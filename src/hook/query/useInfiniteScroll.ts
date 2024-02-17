@@ -41,6 +41,7 @@ export const useInfiniteScroll = <
       }
       return pages.length;
     },
+    placeholderData: previousData => previousData,
     maxPages: 5,
     initialPageParam: 0,
     gcTime: 0,
