@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    z-index: 1;
+    white-space: break-spaces;
+    border-radius: 20px;
+    opacity: 70%;
+    background-color: rgba(255, 255, 255, 1);
+    width: 37.5vw;
+    height: 40.4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    line-height: 40px;
+}
