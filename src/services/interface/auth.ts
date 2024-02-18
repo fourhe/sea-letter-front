@@ -10,6 +10,8 @@ interface IAuthenticationService {
   logOut(): Promise<void>;
 
   reissueToken(refreshToken: string, accessToken: string): Promise<Token>;
+
+  deleteUser(): Promise<void>;
 }
 
 export default IAuthenticationService;
