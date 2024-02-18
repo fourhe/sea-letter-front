@@ -41,6 +41,10 @@ class AuthenticationService extends Api implements IAuthenticationService {
     if (!accessToken || !refreshToken) throw new Error('No token');
     return {accessToken: newAccessToken, refreshToken: newRefreshToken};
   }
+
+  async deleteUser(): Promise<void> {
+    await this.delete('/member');
+  }
 }
 
 const authenticationService = new AuthenticationService();

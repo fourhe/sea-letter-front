@@ -6,17 +6,20 @@ import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
 import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
+import {useAuthenticate} from '@feature/auth/hook';
 
 const DeleteUserDialog = () => {
   const {handleClose, open} = useDialog();
   const route = useRouter();
+  const {deleteUser} = useAuthenticate();
   const ok = useCallback(async () => {
+    await deleteUser();
     await fetch('/api/auth/delete', {
       method: 'DELETE',
     });
     handleClose();
     route.push('/');
-  }, [handleClose, route]);
+  }, [deleteUser, handleClose, route]);
   return (
     <Portal portalId={PortalId.Dialog}>
       {open ? (

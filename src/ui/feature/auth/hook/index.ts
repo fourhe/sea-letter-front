@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 
 import AuthenticationService from '@services/auth';
 
@@ -9,7 +9,12 @@ export const useAuthenticate = () => {
     initialData: '',
   });
 
+  const {mutateAsync: deleteUser} = useMutation({
+    mutationFn: () => AuthenticationService.deleteUser(),
+  });
+
   return {
     logInFormUrl,
+    deleteUser,
   };
 };
