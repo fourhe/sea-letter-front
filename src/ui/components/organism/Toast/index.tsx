@@ -43,7 +43,7 @@ const Toast = () => {
       <Icon.CheckCircle
         width={theme.size.icon.normal}
         height={theme.size.icon.normal}
-        stroke={color ?? theme.color.secondary.brown}
+        stroke={color ?? theme.color.primary.pointPink}
       />
       {message}
     </Container>
