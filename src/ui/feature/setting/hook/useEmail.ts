@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {useToast} from '@components/organism/Toast/hook';
-import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {ApiError} from '@lib/axios';
 import {MenuInfo, UserNotification} from '@services/interface/user';
 import UserService from '@services/user';

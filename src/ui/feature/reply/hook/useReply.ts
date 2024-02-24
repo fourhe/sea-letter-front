@@ -2,9 +2,11 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {usePathname} from 'next/navigation';
 import {useTheme} from 'styled-components';
 
+import {replyQueryKeys} from './queryKeys';
+
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
-import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {ApiError} from '@lib/axios';
 import type {MenuInfo} from '@services/interface/user';
 import ReplyService from '@services/reply';
@@ -16,14 +18,14 @@ const useReply = (letterId?: number, replyId?: number) => {
   const client = useQueryClient();
 
   const {data: replyList} = useQuery({
-    queryKey: ['replyList', letterId],
+    queryKey: replyQueryKeys.replyList.list(letterId!).queryKey,
     queryFn: () => ReplyService.getReplyList(letterId!),
     initialData: [],
     enabled: !!letterId,
   });
 
   const {data: replyDetail} = useQuery({
-    queryKey: ['replyDetail', replyId, letterId],
+    queryKey: replyQueryKeys.replyDetail.detail(letterId!, replyId!).queryKey,
     queryFn: () => ReplyService.getReplyDetail(letterId!, replyId!),
     enabled: !!replyId,
     refetchOnMount: false,

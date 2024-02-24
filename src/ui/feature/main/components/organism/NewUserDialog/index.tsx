@@ -9,7 +9,7 @@ import {PortalId} from '@components/atom/Portal/portal.enum';
 import {Button} from '@components/molecule';
 import {Dialog} from '@components/organism';
 import {useDialog} from '@components/organism/Dialog/hook';
-import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {MenuInfo} from '@services/interface/user';
 
 const BodyStyle: CSSProperties = {

@@ -12,7 +12,7 @@ import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {DeleteUserDialog} from '@feature/setting/components/organism';
 import {useEmail} from '@feature/setting/hook';
-import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {MenuInfo} from '@services/interface/user';
 
 const Setting = () => {

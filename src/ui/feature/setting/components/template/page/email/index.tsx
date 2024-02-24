@@ -10,7 +10,7 @@ import * as S from './style';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
 import {useEmail} from '@feature/setting/hook';
-import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {MenuInfo, User} from '@services/interface/user';
 
 type TEmailForm = Pick<User, 'emailAddress'>;
