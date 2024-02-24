@@ -13,6 +13,8 @@ import {useToast} from '@components/organism/Toast/hook';
 import {useMenu} from '@feature/sideMenu/hook';
 import AuthenticationService from '@services/auth';
 
+const MaxValue = 50;
+
 const Menu = () => {
   const theme = useTheme();
   const route = useRouter();
@@ -83,9 +85,13 @@ const Menu = () => {
       <S.Half>
         <S.Dashboard>
           <S.DashboardTitle>Lv1. 도전! 감사인사 50개 받기</S.DashboardTitle>
-          <Progress max={50} value={menuInfoQuery?.receivedThankCount || 0} />
+          <Progress
+            max={MaxValue}
+            value={menuInfoQuery?.receivedThankCount || 0}
+          />
           <S.DashboardSubTitle>
-            다음 단계까지 {50 - (menuInfoQuery?.receivedThankCount || 0)}개
+            다음 단계까지
+            {Math.max(MaxValue - (menuInfoQuery?.receivedThankCount || 0), 0)}개
             남았어요
           </S.DashboardSubTitle>
         </S.Dashboard>
@@ -114,7 +120,7 @@ const Menu = () => {
             <Icon.Trash height={theme.size[6]} width={theme.size[6]} />
             휴지통
           </S.TrashIconContainer>
-          {menuInfoQuery?.trashCount}
+          {menuInfoQuery?.trashCount || 0}
         </S.TrashContainer>
       </S.TrashPosition>
     </aside>
