@@ -1,6 +1,7 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {useToast} from '@components/organism/Toast/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {ApiError} from '@lib/axios';
 import {MenuInfo, UserNotification} from '@services/interface/user';
 import UserService from '@services/user';
@@ -14,7 +15,7 @@ const useEmail = () => {
   const {mutate: updateEmail} = useMutation<void, ApiError, UserNotification>({
     mutationFn: email => UserService.updateUserEmail(email),
     onSuccess: (_, email) => {
-      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+      client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
         if (!prev) return prev;
         return {
           ...prev,
@@ -35,7 +36,7 @@ const useEmail = () => {
     mutationFn: notification =>
       UserService.updateUserNotification(notification),
     onSuccess: () => {
-      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+      client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
         if (!prev) return prev;
         return {
           ...prev,

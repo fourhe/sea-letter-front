@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 };
 
 const Pretendard = localFont({
-  src: '../../public/font/PretendardVariable.woff2',
+  src: './font/PretendardVariable.woff2',
   variable: '--Pretendard',
 });
 
 const RIDIBatang = localFont({
-  src: '../../public/font/RIDIBatang.otf',
+  src: './font/RIDIBatang.otf',
   variable: '--RIDIBatang',
 });
 
