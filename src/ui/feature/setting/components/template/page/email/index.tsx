@@ -10,6 +10,7 @@ import * as S from './style';
 import {Button} from '@components/molecule';
 import {EmptyLayout} from '@components/template';
 import {useEmail} from '@feature/setting/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {MenuInfo, User} from '@services/interface/user';
 
 type TEmailForm = Pick<User, 'emailAddress'>;
@@ -21,7 +22,7 @@ const Email = () => {
   const defaultValues: TEmailForm = useMemo(
     () => ({
       emailAddress:
-        client.getQueryData<MenuInfo>(['menuInfo'])?.emailAddress || '',
+        client.getQueryData<MenuInfo>(menuInfoQuery._def)?.emailAddress || '',
     }),
     [client],
   );
@@ -45,7 +46,7 @@ const Email = () => {
   const [observer] = useState(
     () =>
       new QueryObserver<MenuInfo>(client, {
-        queryKey: ['menuInfo'],
+        queryKey: menuInfoQuery._def,
       }),
   );
 

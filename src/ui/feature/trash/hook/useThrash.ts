@@ -1,9 +1,12 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useCallback} from 'react';
 
+import {thrashQueryKeys} from './queryKeys';
+
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {ApiError} from '@lib/axios';
 import type {Trash, TrashFilterType} from '@services/interface/trash';
 import type {MenuInfo} from '@services/interface/user';
@@ -17,8 +20,8 @@ const useThrash = (trash?: Partial<Trash>, filter?: TrashFilterType) => {
     showToast({message: error.response!.data.message});
 
   const onSuccess = useCallback(async () => {
-    await client.invalidateQueries({queryKey: ['thrashBox']});
-    client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+    await client.invalidateQueries({queryKey: thrashQueryKeys.thrashBox._def});
+    client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
       if (!prev) return prev;
       return {
         ...prev,
@@ -28,7 +31,7 @@ const useThrash = (trash?: Partial<Trash>, filter?: TrashFilterType) => {
   }, [client]);
 
   const {data: trashList, fetchNextPage} = useInfiniteScroll({
-    queryKey: ['thrashBox', filter],
+    queryKey: thrashQueryKeys.thrashBox.filter(filter!).queryKey,
     queryFn: ({pageParam}) =>
       TrashService.getTrashList({page: pageParam, size: 10, type: filter!}),
     select: item =>
@@ -42,7 +45,7 @@ const useThrash = (trash?: Partial<Trash>, filter?: TrashFilterType) => {
   });
 
   const {data: trashDetail} = useQuery({
-    queryKey: ['thrash', trash?.id],
+    queryKey: thrashQueryKeys.thrash.detail(trash?.id!).queryKey,
     queryFn: () => TrashService.getTrashDetail(trash?.id!),
     enabled: !!trash?.id,
     select: data => ({

@@ -1,5 +1,8 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 
+import {type LetterQueryKeys, letterQueryKeys} from './queryKeys';
+import type {LetterHookProps} from './types';
+
 import {format} from '@/utils/date';
 import type {ApiError} from '@lib/axios';
 import type {
@@ -8,11 +11,6 @@ import type {
   LetterReplyForm,
 } from '@services/interface/letter';
 import LetterService from '@services/letter';
-
-type LetterHookProps = {
-  isUpEvent?: boolean;
-  letterId?: number;
-};
 
 const useLetter = (props?: LetterHookProps) => {
   const {mutateAsync: writeLetter} = useMutation<void, ApiError, LetterForm>({
@@ -26,7 +24,7 @@ const useLetter = (props?: LetterHookProps) => {
   );
 
   const {data: id} = useQuery({
-    queryKey: ['letters'],
+    queryKey: letterQueryKeys._def,
     queryFn: () => LetterService.getLetterId(),
     initialData: undefined,
     enabled: !!props?.isUpEvent,
@@ -36,9 +34,9 @@ const useLetter = (props?: LetterHookProps) => {
     Letter,
     ApiError,
     Letter,
-    [string, LetterHookProps['letterId']]
+    LetterQueryKeys['detail']['queryKey']
   >({
-    queryKey: ['letters', props?.letterId],
+    queryKey: letterQueryKeys.detail(props?.letterId).queryKey,
     queryFn: () => LetterService.getLetter(props?.letterId!),
     enabled: !!props?.letterId,
     select: letterData => ({

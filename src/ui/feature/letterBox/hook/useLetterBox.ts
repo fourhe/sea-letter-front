@@ -1,13 +1,16 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
+import {letterBoxQueryKeys} from './queryKeys';
+
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook';
 import type {ApiError} from '@lib/axios';
 import type {MenuInfo} from '@services/interface/user';
 import LetterBoxService from '@services/letterBox';
 
-type LetterBoxProps = {
+export type LetterBoxProps = {
   id?: number;
 };
 
@@ -19,7 +22,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
     showToast({message: error.response!.data.message});
 
   const {data: letterBoxList, fetchNextPage} = useInfiniteScroll({
-    queryKey: ['letterBox'],
+    queryKey: letterBoxQueryKeys.letterBox._def,
     queryFn: ({pageParam}) =>
       LetterBoxService.getLetterList({page: pageParam, size: 10}),
     select: item =>
@@ -32,7 +35,7 @@ const useLetterBox = (props?: LetterBoxProps) => {
   });
 
   const {data: letterDetail} = useQuery({
-    queryKey: ['letterDetail', props?.id],
+    queryKey: letterBoxQueryKeys.letterDetail.detail(props?.id).queryKey,
     queryFn: () => LetterBoxService.getLetterDetail(props?.id!),
     enabled: !!props?.id,
     refetchOnMount: false,
@@ -46,8 +49,10 @@ const useLetterBox = (props?: LetterBoxProps) => {
     mutationFn: id => LetterBoxService.deleteLetter(id),
     onError,
     onSuccess: async () => {
-      await client.invalidateQueries({queryKey: ['letterBox']});
-      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+      await client.invalidateQueries({
+        queryKey: letterBoxQueryKeys.letterBox._def,
+      });
+      client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
         if (!prev) return prev;
         return {
           ...prev,

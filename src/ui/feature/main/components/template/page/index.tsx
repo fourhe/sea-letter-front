@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import {Icon} from '@components/atom';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
-import {useLetter} from '@feature/letter/hook';
+import {letterQueryKeys, useLetter} from '@feature/letter/hook';
 import {IconButton} from '@feature/main/components/atom';
 import {MainText} from '@feature/main/components/molecule';
 import {NewUserDialog} from '@feature/main/components/organism';
@@ -62,7 +62,7 @@ const Main = () => {
     if (data || (id && !isUpEvent)) {
       setTimeout(() => {
         route.replace('/main');
-        client.setQueryData(['letters'], null);
+        client.setQueryData(letterQueryKeys._def, null);
       }, 2500);
     }
     if (id === null && isUpEvent) {
