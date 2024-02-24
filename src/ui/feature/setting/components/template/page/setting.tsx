@@ -12,6 +12,7 @@ import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {DeleteUserDialog} from '@feature/setting/components/organism';
 import {useEmail} from '@feature/setting/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
 import type {MenuInfo} from '@services/interface/user';
 
 const Setting = () => {
@@ -23,12 +24,13 @@ const Setting = () => {
   const {handleOpen: dialogOpen} = useDialog();
   const client = useQueryClient();
   const defaultValue =
-    client.getQueryData<MenuInfo>(['menuInfo'])?.notificationEnabled || false;
+    client.getQueryData<MenuInfo>(menuInfoQuery._def)?.notificationEnabled ||
+    false;
   const [on, setOn] = useState<MenuInfo['notificationEnabled']>(defaultValue);
   const [observer] = useState(
     () =>
       new QueryObserver<MenuInfo>(client, {
-        queryKey: ['menuInfo'],
+        queryKey: menuInfoQuery._def,
       }),
   );
 
@@ -45,7 +47,8 @@ const Setting = () => {
   const updateNotificationEnabled = useCallback(() => {
     updateNotification({
       notificationEnabled: !on,
-      emailAddress: client.getQueryData<MenuInfo>(['menuInfo'])?.emailAddress!,
+      emailAddress: client.getQueryData<MenuInfo>(menuInfoQuery._def)
+        ?.emailAddress!,
     });
   }, [on, updateNotification, client]);
 

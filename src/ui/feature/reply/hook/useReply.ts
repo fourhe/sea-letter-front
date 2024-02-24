@@ -4,6 +4,7 @@ import {useTheme} from 'styled-components';
 
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
 import type {ApiError} from '@lib/axios';
 import type {MenuInfo} from '@services/interface/user';
 import ReplyService from '@services/reply';
@@ -42,7 +43,7 @@ const useReply = (letterId?: number, replyId?: number) => {
       });
     },
     onSuccess: () => {
-      client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+      client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
         if (!prev) return prev;
         return {
           ...prev,

@@ -17,7 +17,7 @@ const Menu = () => {
   const theme = useTheme();
   const route = useRouter();
   const {handleClose} = useDrawer();
-  const {menuInfo} = useMenu();
+  const {menuInfoQuery} = useMenu();
   const logout = useCallback(async () => {
     await AuthenticationService.logOut();
     handleClose();
@@ -83,9 +83,10 @@ const Menu = () => {
       <S.Half>
         <S.Dashboard>
           <S.DashboardTitle>Lv1. 도전! 감사인사 50개 받기</S.DashboardTitle>
-          <Progress max={50} value={menuInfo?.receivedThankCount || 0} />
+          <Progress max={50} value={menuInfoQuery?.receivedThankCount || 0} />
           <S.DashboardSubTitle>
-            다음 단계까지 {50 - (menuInfo?.receivedThankCount || 0)}개 남았어요
+            다음 단계까지 {50 - (menuInfoQuery?.receivedThankCount || 0)}개
+            남았어요
           </S.DashboardSubTitle>
         </S.Dashboard>
       </S.Half>
@@ -113,7 +114,7 @@ const Menu = () => {
             <Icon.Trash height={theme.size[6]} width={theme.size[6]} />
             휴지통
           </S.TrashIconContainer>
-          {menuInfo?.trashCount}
+          {menuInfoQuery?.trashCount}
         </S.TrashContainer>
       </S.TrashPosition>
     </aside>

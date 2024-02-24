@@ -4,6 +4,7 @@ import {useCallback} from 'react';
 import {useInfiniteScroll} from '@/hook/query';
 import {format} from '@/utils/date';
 import {useToast} from '@components/organism/Toast/hook';
+import {menuInfoQuery} from '@feature/sideMenu/hook/queryKeys';
 import type {ApiError} from '@lib/axios';
 import type {Trash, TrashFilterType} from '@services/interface/trash';
 import type {MenuInfo} from '@services/interface/user';
@@ -18,7 +19,7 @@ const useThrash = (trash?: Partial<Trash>, filter?: TrashFilterType) => {
 
   const onSuccess = useCallback(async () => {
     await client.invalidateQueries({queryKey: ['thrashBox']});
-    client.setQueryData<MenuInfo>(['menuInfo'], prev => {
+    client.setQueryData<MenuInfo>(menuInfoQuery._def, prev => {
       if (!prev) return prev;
       return {
         ...prev,
