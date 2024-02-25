@@ -1,14 +1,11 @@
-import {NextMiddleware, NextResponse} from 'next/server';
+import {NextMiddleware, NextResponse, userAgent} from 'next/server';
 
-export const middleware: NextMiddleware = ({url, cookies}) => {
-  // const isMobile = userAgent({headers}).device.type === 'mobile';
-  // const debug = cookies.get('debug')?.value;
-  // if (
-  //   (!isMobile && !(process.env.NODE_ENV === 'development')) ||
-  //   debug !== '1'
-  // ) {
-  //   return NextResponse.redirect(new URL('/desktop', url));
-  // }
+export const middleware: NextMiddleware = ({headers, url, cookies}) => {
+  const isMobile = userAgent({headers}).device.type === 'mobile';
+  const isDebug = !cookies.get('debug')?.value;
+  if (!isDebug && !isMobile) {
+    return NextResponse.redirect(new URL('/desktop', url));
+  }
   const hasRefreshToken = cookies.has('refresh-token');
   if (hasRefreshToken) {
     return NextResponse.next();
