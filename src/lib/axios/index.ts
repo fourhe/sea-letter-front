@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import axios, {
   AxiosError,
   type AxiosRequestConfig,
@@ -31,6 +32,7 @@ instance.interceptors.response.use(
     if (error.response?.status === HttpStatusCode.Unauthorized) {
       fetch('api/reissue/access-token').catch(() => Promise.reject(error));
     }
+    Sentry.captureException(error);
     return Promise.reject(error);
   },
 );
