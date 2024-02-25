@@ -1,7 +1,7 @@
 export type Reply = {
   id: number;
   title: string;
-  hasNewReply: boolean;
+  thanked: boolean;
   createdAt: string;
 };
 
