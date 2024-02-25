@@ -23,7 +23,7 @@ const Menu = () => {
   const logout = useCallback(async () => {
     await AuthenticationService.logOut();
     handleClose();
-    route.push('/');
+    route.push('/auth/login');
   }, [handleClose, route]);
 
   const goToTrash = useCallback(() => {

@@ -31,12 +31,14 @@ type RootLayoutProps = {
 
 const RootLayout = ({children}: RootLayoutProps) => (
   <html lang="ko">
-    <head>
-      <meta
-        httpEquiv="Content-Security-Policy"
-        content="upgrade-insecure-requests"
-      />
-    </head>
+    {process.env.NODE_ENV === 'production' && (
+      <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </head>
+    )}
     <body className={`${Pretendard.className} ${RIDIBatang.variable}`}>
       <Providers>
         <Drawer>
