@@ -44,7 +44,9 @@ const MailBox = () => {
         ) : (
           <NoLetter>아직 보낸 편지가 없어요!</NoLetter>
         )}
-        <div ref={setTarget} style={{width: 1, height: 1}} />
+        {letterBoxList.data.length !== 0 && (
+          <div ref={setTarget} style={{width: 1, height: 1}} />
+        )}
       </Container>
     </EmptyLayout>
   );
