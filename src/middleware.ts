@@ -2,7 +2,7 @@ import {NextMiddleware, NextResponse, userAgent} from 'next/server';
 
 export const middleware: NextMiddleware = ({headers, url, cookies}) => {
   const isMobile = userAgent({headers}).device.type === 'mobile';
-  const isDebug = !cookies.get('debug')?.value;
+  const isDebug = !!cookies.get('debug')?.value;
   if (!isDebug && !isMobile) {
     return NextResponse.redirect(new URL('/desktop', url));
   }
