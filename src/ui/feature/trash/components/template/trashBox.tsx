@@ -61,7 +61,9 @@ const TrashBox = () => {
         ) : (
           <NoTrash>휴지통이 비어있어요!</NoTrash>
         )}
-        <div ref={setTarget} style={{width: 1, height: 1}} />
+        {trashList?.data.length !== 0 && (
+          <div ref={setTarget} style={{width: 1, height: 1}} />
+        )}
       </Container>
     </EmptyLayout>
   );
