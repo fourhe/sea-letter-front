@@ -21,9 +21,14 @@ const Menu = () => {
   const {handleClose} = useDrawer();
   const {menuInfoQuery} = useMenu();
   const logout = useCallback(async () => {
-    await AuthenticationService.logOut();
-    handleClose();
-    route.push('/');
+    try {
+      await AuthenticationService.logOut();
+    } catch (e) {
+      /* empty */
+    } finally {
+      handleClose();
+      route.push('/');
+    }
   }, [handleClose, route]);
 
   const goToTrash = useCallback(() => {
