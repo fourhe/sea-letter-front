@@ -2,7 +2,11 @@ import {NextMiddleware, NextResponse, userAgent} from 'next/server';
 
 export const middleware: NextMiddleware = ({headers, url, cookies}) => {
   const isMobile = userAgent({headers}).device.type === 'mobile';
-  if (!isMobile && !(process.env.NODE_ENV === 'development')) {
+  const debug = cookies.get('debug')?.value;
+  if (
+    (!isMobile && !(process.env.NODE_ENV === 'development')) ||
+    debug !== '1'
+  ) {
     return NextResponse.redirect(new URL('/desktop', url));
   }
   const hasRefreshToken = cookies.has('refresh-token');
