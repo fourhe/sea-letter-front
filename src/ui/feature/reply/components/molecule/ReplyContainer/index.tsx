@@ -8,12 +8,12 @@ import {useReply} from '@feature/reply/hook';
 type ReplyContainerProps = {
   id: number;
   title: string;
-  hasThanks: boolean;
+  thanked: boolean;
   onClick: (id: number) => void;
 };
 
 const ReplyContainer = (props: ReplyContainerProps) => {
-  const {hasThanks: hasThanksProp, title, id, onClick} = props;
+  const {thanked: hasThanksProp, title, id, onClick} = props;
   const [hasThanks, setHasThanks] = useState(hasThanksProp);
   const {setThank} = useReply();
   const theme = useTheme();
