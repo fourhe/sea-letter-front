@@ -9,7 +9,7 @@ export const GET = async (request: NextRequest) => {
   if (!code) throw new Error('No code');
   const {accessToken, refreshToken} = await AuthenticationService.logIn(code);
   cookies().set('access-token', accessToken);
-  cookies().set('refresh-token', refreshToken, {httpOnly: true});
+  cookies().set('refresh-token', refreshToken);
 
   return NextResponse.redirect(new URL('/', request.url));
 };

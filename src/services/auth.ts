@@ -1,5 +1,6 @@
 import type {IAuthenticationService} from './interface';
 
+import {deleteCookies, getCookieValue} from '@/utils/cookie';
 import Api from '@lib/axios';
 import type {Token} from '@services/interface/auth';
 
@@ -17,9 +18,15 @@ class AuthenticationService extends Api implements IAuthenticationService {
     return {accessToken, refreshToken};
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async logOut(): Promise<void> {
-    await fetch('/api/auth/logout');
+    await this.post(
+      '/logout',
+      {},
+      {
+        'Refresh-Token': getCookieValue('refresh-token'),
+      },
+    );
+    deleteCookies(['access-token', 'refresh-token']);
   }
 
   async reissueToken(
