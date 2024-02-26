@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {useCallback, useEffect, useState} from 'react';
 import styled, {useTheme} from 'styled-components';
 
-import {Icon} from '@components/atom';
+import {Icon, Link} from '@components/atom';
 import {Switch} from '@components/molecule';
 import {useDialog} from '@components/organism/Dialog/hook';
 import {useDrawer} from '@components/organism/Drawer/hook';
@@ -98,7 +98,9 @@ const Setting = () => {
         <div>
           <Title>기타 설정</Title>
           <Content>
-            이용약관/개인정보처리방침
+            <Link href={process.env.NEXT_PUBLIC_PRIVACY_URL}>
+              개인정보처리방침
+            </Link>
             <Icon.ChevronRight
               width={size.icon.normal}
               height={size.icon.normal}
@@ -106,7 +108,9 @@ const Setting = () => {
             />
           </Content>
           <Content>
-            불편신고 및 개선요청
+            <Link href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}>
+              불편신고 및 개선요청
+            </Link>
             <Icon.ChevronRight
               width={size.icon.normal}
               height={size.icon.normal}
