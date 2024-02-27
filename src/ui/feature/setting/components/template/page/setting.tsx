@@ -108,7 +108,7 @@ const Setting = () => {
             />
           </Content>
           <Content>
-            <Link href={process.env.NEXT_PUBLIC_INSTAGRAM_URL}>
+            <Link href={process.env.NEXT_PUBLIC_INCONVENIENCE_URL}>
               불편신고 및 개선요청
             </Link>
             <Icon.ChevronRight

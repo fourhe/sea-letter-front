@@ -11,8 +11,9 @@ import {Menu} from '@feature/sideMenu/components/organism';
 import '@/ui/styles/index.css';
 
 export const metadata: Metadata = {
-  title: '마음을 담다',
-  description: '상처 받은 마음을 치유하는 공간',
+  title: '바다편지',
+  description:
+    '당신의 이야기를 유리병에 담아 바다로 보내보세요. 유리병을 주운 누군가가 당신에게 답장을 보낼 거예요. 고민이 있는 당신을 위한 익명 편지 서비스.',
 };
 
 const Pretendard = localFont({
@@ -36,6 +37,10 @@ const RootLayout = ({children}: RootLayoutProps) => (
         <meta
           httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
+        />
+        <meta
+          name="naver-site-verification"
+          content="1f555e4d40fae007db49a89631e5b6552c104226"
         />
       </head>
     )}

@@ -1,8 +1,11 @@
-'use client';
-
+import type {Metadata} from 'next';
 import type {ReactNode} from 'react';
 
-import {LayoutBackGround} from '@components/atom';
+import {Layout} from '@feature/setting/components/template';
+
+export const metadata: Metadata = {
+  title: '바다편지(설정)',
+};
 
 type NoticeLayoutProps = {
   children: ReactNode;
@@ -11,12 +14,7 @@ type NoticeLayoutProps = {
 const NoticeLayout = (props: NoticeLayoutProps) => {
   const {children} = props;
 
-  return (
-    <>
-      <title>마음을 담다(설정)</title>
-      <LayoutBackGround>{children}</LayoutBackGround>
-    </>
-  );
+  return <Layout>{children}</Layout>;
 };
 
 export default NoticeLayout;
