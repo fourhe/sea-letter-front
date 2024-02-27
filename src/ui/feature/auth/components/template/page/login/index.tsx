@@ -57,7 +57,7 @@ const Login = () => {
 
   return (
     <>
-      <title>마음을 담다(온보딩)</title>
+      <title>바다편지(온보딩)</title>
       <EmptyLayout
         headerShown
         headerCenterProps={{

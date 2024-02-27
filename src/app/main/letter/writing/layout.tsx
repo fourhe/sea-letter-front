@@ -1,23 +1,19 @@
-'use client';
-
+import type {Metadata} from 'next';
 import type {ReactNode} from 'react';
 
-import {LayoutBackGround} from '@components/atom';
+import {Layout} from '@feature/letter/writing/components/template';
 
 type WritingLayoutProps = {
   children: ReactNode;
 };
 
+export const metadata: Metadata = {
+  title: '바다편지(편지쓰기)',
+};
+
 const WritingLayout = (props: WritingLayoutProps) => {
   const {children} = props;
-  return (
-    <>
-      <title>마음을 담다(편지 쓰기)</title>
-      <LayoutBackGround $color="rgba(244, 229, 225, 1)">
-        {children}
-      </LayoutBackGround>
-    </>
-  );
+  return <Layout>{children}</Layout>;
 };
 
 export default WritingLayout;
