@@ -1,7 +1,11 @@
-'use client';
-
+import type {Metadata} from 'next';
 import type {ReactNode} from 'react';
-import styled from 'styled-components';
+
+import {Layout} from '@feature/notice/components/template';
+
+export const metadata: Metadata = {
+  title: '바다편지(공지사항)',
+};
 
 type NoticeLayoutProps = {
   children: ReactNode;
@@ -10,21 +14,7 @@ type NoticeLayoutProps = {
 const NoticeLayout = (props: NoticeLayoutProps) => {
   const {children} = props;
 
-  return (
-    <>
-      <title>마음을 담다(공지사항)</title>
-      <BackGround />
-      {children}
-    </>
-  );
+  return <Layout> {children}</Layout>;
 };
 
 export default NoticeLayout;
-
-const BackGround = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
-  position: absolute;
-  z-index: -1;
-  background: rgba(241, 212, 220, 1);
-`;

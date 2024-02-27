@@ -9,28 +9,25 @@ import {useAuthenticate} from '@feature/auth/hook';
 const KakaoLoginPage = () => {
   const {logInFormUrl} = useAuthenticate();
   return (
-    <>
-      <title>마음을 담다(로그인)</title>
-      <EmptyLayout headerShown>
-        <LogoContainer>
-          <Icon.Logo width={120} height={120} />
-          <LogoText>바다편지</LogoText>
-        </LogoContainer>
-        <TextContainer>
-          <LogoTitle>
-            {`간편하게 로그인하고\n당신의 이야기를 바다로 보내보세요`}
-          </LogoTitle>
-          <LogoSubTitle>
-            {`바다로 보내는 편지에 로그인하면, 이용약관과\n개인정보처리방침에 동의하는 것으로 간주합니다.`}
-          </LogoSubTitle>
-        </TextContainer>
-        <Line type="horizontal" />
-        <KakaoLoginButton href={logInFormUrl}>
-          <Icon.KaKaoLogo width={20} height={20} />
-          <span>카카오로 로그인하기</span>
-        </KakaoLoginButton>
-      </EmptyLayout>
-    </>
+    <EmptyLayout headerShown>
+      <LogoContainer>
+        <Icon.Logo width={120} height={120} />
+        <LogoText>바다편지</LogoText>
+      </LogoContainer>
+      <TextContainer>
+        <LogoTitle>
+          {`간편하게 로그인하고\n당신의 이야기를 바다로 보내보세요`}
+        </LogoTitle>
+        <LogoSubTitle>
+          {`바다로 보내는 편지에 로그인하면, 이용약관과\n개인정보처리방침에 동의하는 것으로 간주합니다.`}
+        </LogoSubTitle>
+      </TextContainer>
+      <Line type="horizontal" />
+      <KakaoLoginButton href={logInFormUrl}>
+        <Icon.KaKaoLogo width={20} height={20} />
+        <span>카카오로 로그인하기</span>
+      </KakaoLoginButton>
+    </EmptyLayout>
   );
 };
 

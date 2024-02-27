@@ -1,19 +1,16 @@
-import type {Metadata} from 'next';
+'use client';
+
 import type {ReactNode} from 'react';
 
-import {Layout} from '@feature/reply/components/template';
+import {LayoutBackGround} from '@components/atom';
 
 type LetterBoxLayoutProps = {
   children: ReactNode;
 };
 
-export const metadata: Metadata = {
-  title: '바다편지(답장함)',
-};
-
 const LetterBoxLayout = (props: LetterBoxLayoutProps) => {
   const {children} = props;
-  return <Layout>{children}</Layout>;
+  return <LayoutBackGround>{children}</LayoutBackGround>;
 };
 
 export default LetterBoxLayout;
