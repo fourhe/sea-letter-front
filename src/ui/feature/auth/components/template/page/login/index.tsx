@@ -56,40 +56,37 @@ const Login = () => {
   const goToKakaoLogin = () => route.push('/auth/login/kakao');
 
   return (
-    <>
-      <title>바다편지(온보딩)</title>
-      <EmptyLayout
-        headerShown
-        headerCenterProps={{
-          children: <Dots length={dotLength} activeIndex={index} />,
-        }}>
-        <Carousel>
-          {OnBoardings.map((OnBoarding, i) => (
-            <ImageContainer key={OnBoarding.title}>
-              {i === 0 && <OnBoarding.Image />}
-              {i === 0 ? (
-                <LogoTitle>{OnBoarding.title}</LogoTitle>
-              ) : (
-                <Title>{OnBoarding.title}</Title>
-              )}
-              <SubTitle>{OnBoarding.subtitle}</SubTitle>
-              {!!OnBoarding?.subtitle2 && (
-                <SubTitle>{OnBoarding?.subtitle2}</SubTitle>
-              )}
-              {i !== 0 && <OnBoarding.Image />}
-            </ImageContainer>
-          ))}
-        </Carousel>
-        <Button
-          color="pink"
-          size="full"
-          bold
-          style={{fontSize: 20}}
-          onClick={goToKakaoLogin}>
-          시작하기
-        </Button>
-      </EmptyLayout>
-    </>
+    <EmptyLayout
+      headerShown
+      headerCenterProps={{
+        children: <Dots length={dotLength} activeIndex={index} />,
+      }}>
+      <Carousel>
+        {OnBoardings.map((OnBoarding, i) => (
+          <ImageContainer key={OnBoarding.title}>
+            {i === 0 && <OnBoarding.Image />}
+            {i === 0 ? (
+              <LogoTitle>{OnBoarding.title}</LogoTitle>
+            ) : (
+              <Title>{OnBoarding.title}</Title>
+            )}
+            <SubTitle>{OnBoarding.subtitle}</SubTitle>
+            {!!OnBoarding?.subtitle2 && (
+              <SubTitle>{OnBoarding?.subtitle2}</SubTitle>
+            )}
+            {i !== 0 && <OnBoarding.Image />}
+          </ImageContainer>
+        ))}
+      </Carousel>
+      <Button
+        color="pink"
+        size="full"
+        bold
+        style={{fontSize: 20}}
+        onClick={goToKakaoLogin}>
+        시작하기
+      </Button>
+    </EmptyLayout>
   );
 };
 
