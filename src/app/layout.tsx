@@ -32,18 +32,6 @@ type RootLayoutProps = {
 
 const RootLayout = ({children}: RootLayoutProps) => (
   <html lang="ko">
-    {process.env.NODE_ENV === 'production' && (
-      <head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-        <meta
-          name="naver-site-verification"
-          content="1f555e4d40fae007db49a89631e5b6552c104226"
-        />
-      </head>
-    )}
     <body className={`${Pretendard.className} ${RIDIBatang.variable}`}>
       <Providers>
         <Drawer>
