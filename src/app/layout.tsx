@@ -2,7 +2,6 @@ import {Analytics} from '@vercel/analytics/react';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import type {Metadata} from 'next';
 import localFont from 'next/font/local';
-import Head from 'next/head';
 import type {ReactNode} from 'react';
 
 import Providers from '@/ui/providers';
@@ -34,7 +33,7 @@ type RootLayoutProps = {
 const RootLayout = ({children}: RootLayoutProps) => (
   <html lang="ko">
     {process.env.NODE_ENV === 'production' && (
-      <Head>
+      <head>
         <meta
           httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
@@ -43,7 +42,7 @@ const RootLayout = ({children}: RootLayoutProps) => (
           name="naver-site-verification"
           content="1f555e4d40fae007db49a89631e5b6552c104226"
         />
-      </Head>
+      </head>
     )}
     <body className={`${Pretendard.className} ${RIDIBatang.variable}`}>
       <Providers>
