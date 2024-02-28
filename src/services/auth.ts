@@ -25,7 +25,7 @@ class AuthenticationService extends Api implements IAuthenticationService {
   async reissueToken(
     refreshToken: string,
     accessToken: string,
-  ): Promise<Token> {
+  ): Promise<Token['accessToken']> {
     const {headers} = await this.get(
       `${this.baseURL}/reissue/access-token`,
       {},
@@ -36,10 +36,9 @@ class AuthenticationService extends Api implements IAuthenticationService {
       },
     );
     const newAccessToken = headers['access-token'];
-    const newRefreshToken = headers['refresh-token'];
 
     if (!accessToken || !refreshToken) throw new Error('No token');
-    return {accessToken: newAccessToken, refreshToken: newRefreshToken};
+    return newAccessToken;
   }
 
   async deleteUser(): Promise<void> {
