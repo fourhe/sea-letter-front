@@ -8,9 +8,11 @@ export const GET = async (request: NextRequest) => {
   const code = request.nextUrl.searchParams.get('code');
   if (!code) throw new Error('No code');
   const {accessToken, refreshToken} = await AuthenticationService.logIn(code);
-  cookies().set('access-token', accessToken, {maxAge: 60 * 60 * 3});
+  cookies().set('access-token', accessToken, {
+    maxAge: 60 * 60 * 2,
+  });
   cookies().set('refresh-token', refreshToken, {
-    maxAge: 60 * 60 * 24 * 14,
+    maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
   });
 
