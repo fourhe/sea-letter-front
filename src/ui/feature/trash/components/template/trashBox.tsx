@@ -1,7 +1,7 @@
 'use client';
 
+import {atom, useAtom} from 'jotai';
 import {useRouter} from 'next/navigation';
-import {useState} from 'react';
 import styled from 'styled-components';
 
 import {useIntersectionObserver} from '@/hook/query';
@@ -13,8 +13,10 @@ import {Filter} from '@feature/trash/components/organism';
 import {useThrash} from '@feature/trash/hook';
 import type {TrashFilterType} from '@services/interface/trash';
 
+const trashFilterAtom = atom<TrashFilterType>('reply');
+
 const TrashBox = () => {
-  const [filter, setFilter] = useState<TrashFilterType>('reply');
+  const [filter, setFilter] = useAtom(trashFilterAtom);
   const {trashList, restoreTrash} = useThrash({}, filter);
   const {showToast} = useToast();
   const {handleOpen} = useDrawer();
