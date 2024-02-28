@@ -9,7 +9,10 @@ interface IAuthenticationService {
 
   logOut(): Promise<void>;
 
-  reissueToken(refreshToken: string, accessToken: string): Promise<Token>;
+  reissueToken(
+    refreshToken: string,
+    accessToken: string,
+  ): Promise<Token['accessToken']>;
 
   deleteUser(): Promise<void>;
 }
