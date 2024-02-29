@@ -9,7 +9,7 @@ export const GET = async (request: NextRequest) => {
   if (!code) throw new Error('No code');
   const {accessToken, refreshToken} = await AuthenticationService.logIn(code);
   cookies().set('access-token', accessToken, {
-    maxAge: 60 * 60 * 2,
+    maxAge: 60 * 60 * 24 * 7,
   });
   cookies().set('refresh-token', refreshToken, {
     maxAge: 60 * 60 * 24 * 7,

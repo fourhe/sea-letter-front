@@ -11,6 +11,8 @@ export const GET = async () => {
     oldRefreshToken,
     oldAccessToken,
   );
-  cookies().set('access-token', accessToken, {maxAge: 60 * 60 * 2});
+  cookies().set('access-token', accessToken, {
+    maxAge: 60 * 60 * 24 * 7,
+  });
   return new NextResponse();
 };
