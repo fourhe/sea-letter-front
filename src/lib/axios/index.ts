@@ -32,6 +32,13 @@ instance.interceptors.response.use(
     if (error.response?.status === HttpStatusCode.Unauthorized) {
       fetch('api/reissue/access-token').catch(() => Promise.reject(error));
     }
+    if (error.response) {
+      Sentry.captureException(error.response.data);
+    } else if (error.request) {
+      Sentry.captureException(error.request);
+    } else {
+      Sentry.captureException(error.message);
+    }
     Sentry.captureException(error);
     return Promise.reject(error);
   },
