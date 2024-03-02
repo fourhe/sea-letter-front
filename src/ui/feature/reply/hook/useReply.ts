@@ -57,6 +57,11 @@ const useReply = (letterId?: number, replyId?: number) => {
 
   const {mutateAsync: setThank} = useMutation<void, ApiError, number>({
     mutationFn: id => ReplyService.setThanks(id),
+    onSuccess: async () => {
+      await client.invalidateQueries({
+        queryKey: replyQueryKeys.replyList.list(letterId!).queryKey,
+      });
+    },
     onError: error => {
       showToast({
         message: error.response!.data.message,

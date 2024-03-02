@@ -3,6 +3,7 @@ export type Reply = {
   title: string;
   thanked: boolean;
   createdAt: string;
+  read: boolean;
 };
 
 export type ReplyDetail = {

@@ -43,6 +43,7 @@ const ReplyBox = (props: NextPageProps<ReplyProps>) => {
               id={replyBox.id}
               title={replyBox.title}
               thanked={replyBox.thanked}
+              read={replyBox.read}
             />
           ))
         ) : (
