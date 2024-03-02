@@ -53,10 +53,12 @@ const ReplyContainer = (props: ReplyContainerProps) => {
   return (
     <Container onClick={() => onClick(id)}>
       {title}
-      <ThanksContainer onClick={onClickThanks}>
-        <Icon.FaceWink width={28} height={28} stroke={color} />
-        <ThanksText $color={color}>감사인사</ThanksText>
-      </ThanksContainer>
+      {read ? (
+        <ThanksContainer onClick={onClickThanks}>
+          <Icon.FaceWink width={28} height={28} stroke={color} />
+          <ThanksText $color={color}>감사인사</ThanksText>
+        </ThanksContainer>
+      ) : null}
     </Container>
   );
 };
