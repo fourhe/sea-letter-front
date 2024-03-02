@@ -1,8 +1,9 @@
 'use client';
 
+import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 import {useCallback} from 'react';
-import styled from 'styled-components';
+import styled, {useTheme} from 'styled-components';
 
 import {Icon} from '@components/atom';
 import {Button} from '@components/molecule';
@@ -10,7 +11,8 @@ import {useDialog} from '@components/organism/Dialog/hook';
 import {useToast} from '@components/organism/Toast/hook';
 import {EmptyLayout, LayoutItem} from '@components/template';
 import {DeleteDialog} from '@feature/letterBox/components/organism';
-import {useReply} from '@feature/reply/hook';
+import {replyQueryKeys, useReply} from '@feature/reply/hook';
+import type {Reply as TReply} from '@services/interface/reply';
 
 type ReplyProps = {
   'reply-id'?: number;
@@ -21,7 +23,9 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
   const {params} = props;
   const {handleOpen: deleteOpen} = useDialog();
   const route = useRouter();
+  const client = useQueryClient();
   const {showToast} = useToast();
+  const {color} = useTheme();
   const {replyDetail, deleteReply, setThank} = useReply(
     params['letter-id'],
     params['reply-id'],
@@ -35,12 +39,33 @@ const Reply = (props: NextPageProps<ReplyProps>) => {
   }, [deleteOpen, deleteReply, route, showToast, replyDetail]);
 
   const thankSelectedReply = useCallback(async () => {
-    await setThank(params['reply-id']!);
-    showToast({
-      message: '감사 인사가 전해졌습니다.',
-    });
-    route.back();
-  }, [params, route, setThank, showToast]);
+    const findReplyData = client
+      .getQueryData<TReply[]>(
+        replyQueryKeys.replyList.list(params['letter-id']!).queryKey,
+      )
+      ?.find(reply => reply.id === Number(params['reply-id']!));
+    if (!findReplyData?.thanked) {
+      await setThank(params['reply-id']!);
+      showToast({
+        message: '감사 인사가 전해졌습니다.',
+      });
+      route.back();
+    } else {
+      showToast({
+        message: '감사 인사는 한 번만 할 수 있어요.',
+        color: color.secondary.brown,
+        containerColor: color.white,
+      });
+    }
+  }, [
+    client,
+    color.secondary.brown,
+    color.white,
+    params,
+    route,
+    setThank,
+    showToast,
+  ]);
 
   return (
     <EmptyLayout

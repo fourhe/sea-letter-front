@@ -10,10 +10,11 @@ type ReplyContainerProps = {
   title: string;
   thanked: boolean;
   onClick: (id: number) => void;
+  read: boolean;
 };
 
 const ReplyContainer = (props: ReplyContainerProps) => {
-  const {thanked: hasThanksProp, title, id, onClick} = props;
+  const {thanked: hasThanksProp, title, id, onClick, read} = props;
   const [hasThanks, setHasThanks] = useState(hasThanksProp);
   const {setThank} = useReply();
   const theme = useTheme();
@@ -26,6 +27,12 @@ const ReplyContainer = (props: ReplyContainerProps) => {
   const onClickThanks: MouseEventHandler<HTMLDivElement> = useCallback(
     async e => {
       e.stopPropagation();
+      if (!read) {
+        showToast({
+          message: '편지를 읽은 후 다시 시도해주세요.',
+        });
+        return;
+      }
       if (hasThanks) {
         showToast({
           message: '감사 인사는 한 번만 할 수 있어요.',
@@ -40,7 +47,7 @@ const ReplyContainer = (props: ReplyContainerProps) => {
         });
       }
     },
-    [hasThanks, id, setThank, showToast],
+    [hasThanks, id, read, setThank, showToast],
   );
 
   return (
