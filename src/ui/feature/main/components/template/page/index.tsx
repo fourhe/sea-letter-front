@@ -2,29 +2,23 @@
 
 import {useQueryClient} from '@tanstack/react-query';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {
-  type TouchEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import {type TouchEvent, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-import {Icon} from '@components/atom';
 import {useDrawer} from '@components/organism/Drawer/hook';
 import {EmptyLayout} from '@components/template';
 import {letterQueryKeys, useLetter} from '@feature/letter/hook';
 import {IconButton} from '@feature/main/components/atom';
-import {MainText} from '@feature/main/components/molecule';
-import {NewUserDialog} from '@feature/main/components/organism';
+import {Content, NewUserDialog} from '@feature/main/components/organism';
 
-const message = {
+export const message = {
   writing: '편지가 성공적으로\n바다로 보내졌습니다.',
   reply: '답장이 성공적으로\n바다로 보내졌습니다.',
 } as const;
 
-type Message = keyof typeof message | null;
+export type Message = keyof typeof message | null;
+
+const Time = 2000;
 
 const Main = () => {
   const {handleOpen} = useDrawer();
@@ -63,12 +57,12 @@ const Main = () => {
       setTimeout(() => {
         route.replace('/main');
         client.setQueryData(letterQueryKeys._def, null);
-      }, 2500);
+      }, Time);
     }
     if (id === null && isUpEvent) {
       setTimeout(() => {
         setIsUpEvent(false);
-      }, 2500);
+      }, Time);
     }
   }, [id, client, data, route, isUpEvent]);
 
@@ -76,65 +70,6 @@ const Main = () => {
     () => route.push(`/main/letter/read/${id}`),
     [id, route],
   );
-
-  const Content = useMemo(() => {
-    // 메인에서 보여줘야 하는 상황
-    if (data) {
-      return (
-        <MainText
-          style={{fontWeight: 700, fontSize: 20, lineHeight: '28px'}}
-          text={message[data]}
-        />
-      );
-    }
-    // 읽을 편지가 도착 했을 때
-    if (id) {
-      return (
-        <>
-          <Icon.Letter width={297} height={297} onClick={openLetter} />
-          <MainText
-            style={{
-              position: 'absolute',
-              bottom: '3.5vh',
-              left: '55%',
-            }}
-            text={'유리병을 탭하여\n편지를 확인하세요.'}
-          />
-        </>
-      );
-    }
-    // 편지가 도착하지 않았을 때
-    if (isUpEvent && id === null) {
-      return (
-        <>
-          <Icon.HideLetter
-            width={74}
-            height={61}
-            style={{
-              position: 'absolute',
-              top: '-2vh',
-              right: '50%',
-            }}
-          />
-          <MainText
-            style={{
-              position: 'absolute',
-              bottom: '-15vh',
-            }}
-            text={
-              '아직 편지가 떠내려오지 않았어요!\n누군가 편지를 보내길 기다려 주세요:)'
-            }
-          />
-        </>
-      );
-    }
-    return (
-      <>
-        <Icon.HideLetter width={74} height={61} />
-        <MainText text={'위로 올려\n편지를 주워보세요.'} />
-      </>
-    );
-  }, [data, id, isUpEvent, openLetter]);
 
   const goMailBox = useCallback(() => route.push('/main/letter-box'), [route]);
 
@@ -155,7 +90,12 @@ const Main = () => {
         $isUpEvent={isUpEvent}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}>
-        {Content}
+        <Content
+          message={data ? message[data] : null}
+          id={id}
+          isUpEvent={isUpEvent}
+          openLetter={openLetter}
+        />
       </Container>
       <IconButton />
     </EmptyLayout>
@@ -164,9 +104,11 @@ const Main = () => {
 
 export default Main;
 
-const Container = styled.div<{
-  $isUpEvent: boolean;
-}>`
+const Container = styled.div<
+  TDollarPrefix<{
+    isUpEvent: boolean;
+  }>
+>`
   width: 80vw;
   position: absolute;
   justify-content: center;
