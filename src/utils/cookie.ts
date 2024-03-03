@@ -13,9 +13,3 @@ export const getCookieValue = (cookieName: string) => {
 
   return null;
 };
-
-export const deleteCookies = (cookieName: string[]) => {
-  cookieName.forEach(name => {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  });
-};
