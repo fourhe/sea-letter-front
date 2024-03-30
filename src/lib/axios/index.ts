@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 import axios, {
   AxiosError,
+  type AxiosInstance,
   type AxiosRequestConfig,
   HttpStatusCode,
 } from 'axios';
@@ -12,48 +13,53 @@ export type ApiError = AxiosError<{
   message: string;
 }>;
 
-const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-});
-
-instance.interceptors.request.use(config => {
-  if (typeof document !== 'undefined') {
-    const token = getCookieValue('access-token');
-    if (token) {
-      config.headers.setAuthorization(token);
-    }
-  }
-  return config;
-});
-
-instance.interceptors.response.use(
-  response => response,
-  (error: ApiError) => {
-    if (error.response?.status === HttpStatusCode.Unauthorized) {
-      fetch('api/reissue/access-token').catch(() => Promise.reject(error));
-    }
-    if (error.response) {
-      Sentry.captureException(error.response.data);
-    } else if (error.request) {
-      Sentry.captureException(error.request);
-    } else {
-      Sentry.captureException(error.message);
-    }
-    Sentry.captureException(error);
-    return Promise.reject(error);
-  },
-);
-
 class Api {
+  private readonly instance: AxiosInstance;
+
   readonly baseURL: string;
 
   constructor() {
     this.baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
+    this.instance = axios.create({
+      baseURL: this.baseURL,
+    });
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  private setInterceptor() {
+    this.instance.interceptors.request.use(config => {
+      if (typeof window !== 'undefined') {
+        const token = getCookieValue('access-token');
+        if (token) {
+          config.headers.setAuthorization(token);
+        }
+      }
+      return config;
+    });
+
+    this.instance.interceptors.response.use(
+      response => response,
+      (error: ApiError) => {
+        if (error.response?.status === HttpStatusCode.Unauthorized) {
+          fetch(`${this.baseURL}/api/reissue/access-token`).catch(() =>
+            Promise.reject(error),
+          );
+        }
+        if (error.response) {
+          Sentry.captureException(error.response.data);
+        } else if (error.request) {
+          Sentry.captureException(error.request);
+        } else {
+          Sentry.captureException(error.message);
+        }
+        Sentry.captureException(error);
+        return Promise.reject(error);
+      },
+    );
+  }
+
   private getAxiosInstance() {
-    return instance;
+    this.setInterceptor();
+    return this.instance;
   }
 
   protected async get<T, D = unknown>(
