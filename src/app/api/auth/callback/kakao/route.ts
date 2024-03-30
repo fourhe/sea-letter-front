@@ -14,6 +14,7 @@ export const GET = async (request: NextRequest) => {
   cookies().set('refresh-token', refreshToken, {
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
+    secure: true,
   });
 
   return NextResponse.redirect(new URL('/', request.url));

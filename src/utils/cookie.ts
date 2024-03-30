@@ -1,4 +1,11 @@
-export const getCookieValue = (cookieName: string) => {
+type CookieKey = {
+  'access-token': string;
+  'refresh-token': string;
+};
+
+type CookieKeys = keyof CookieKey;
+
+export const getCookieValue = (cookieName: CookieKeys) => {
   const cookies = document.cookie.split(';');
 
   const foundCookie = cookies.find(cookie => {
