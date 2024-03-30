@@ -1,6 +1,7 @@
 'use client';
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {createStore, Provider} from 'jotai';
 import {GoogleAnalytics} from 'nextjs-google-analytics';
